@@ -5,4 +5,6 @@
 package frc.robot.subsystems.wrist;
 
 /** Add your docs here. */
-public final class WristPolicy {}
+public final class WristPolicy {
+    public static final int ID_PORT = 0; 
+}

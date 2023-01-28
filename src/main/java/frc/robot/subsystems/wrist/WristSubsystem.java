@@ -4,11 +4,17 @@
 
 package frc.robot.subsystems.wrist;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.wrist.WristPolicy;
 
 public class WristSubsystem extends SubsystemBase {
   /** Creates a new WristSubsystem. */
-  public WristSubsystem() {}
+  private CANSparkMax wristMotor;
+  public WristSubsystem() {
+    wristMotor = new CANSparkMax(0, null);
+  }
 
   @Override
   public void periodic() {
