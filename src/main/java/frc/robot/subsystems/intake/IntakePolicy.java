@@ -6,5 +6,6 @@ package frc.robot.subsystems.intake;
 
 /** Add your docs here. */
 public final class IntakePolicy {
-    public static final int IntakeID = 0;
+    public static final int INTAKE_ID_PORT = 0;
+    public static double power;
 }
