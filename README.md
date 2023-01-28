@@ -1,0 +1,12 @@
+## Subsystems
+- Swevre Drive
+- Elevator
+    - 2 motors, one on each side
+- Bogey
+    - 1 motor
+    - Horizontal elevator 
+- Wrist
+    - 1 motor
+    - Rotational Arm
+- Intake
+    - 1 motor
