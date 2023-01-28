@@ -1,3 +1,4 @@
+# 2023 Bronc Botz Codebase
 ## Subsystems
 - Swevre Drive
 - Elevator
@@ -10,3 +11,7 @@
     - Rotational Arm
 - Intake
     - 1 motor
+    
+# Bronc Botz Command Based Structure
+For information concerning our structure, take a look at this [repository](https://github.com/BroncBotz3481/FRC2022-MENTOR).
+
