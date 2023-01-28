@@ -5,4 +5,13 @@
 package frc.robot.subsystems.elevator;
 
 /** Add your docs here. */
-public final class ElevatorPolicy {}
+public final class ElevatorPolicy {
+    public static final int LEFT_ELEV_ID_PORT = 0;
+    public static final int RIGHT_ELEV_ID_PORT = 1;
+    public static final boolean INV_LEFT = true;
+    public static final boolean INV_RIGHT = false;
+    public static double elevatorPower;
+    public static double targetSpeed;
+    public static double rightEncoderVelocity,leftEncoderVelocity;
+    public static double rightEncoderPosition,leftEncoderPosition;
+}
