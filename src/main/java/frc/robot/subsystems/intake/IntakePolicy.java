@@ -5,4 +5,6 @@
 package frc.robot.subsystems.intake;
 
 /** Add your docs here. */
-public final class IntakePolicy {}
+public final class IntakePolicy {
+    public static final int IntakeID = 0;
+}
