@@ -4,14 +4,58 @@
 
 package frc.robot.subsystems.bogey;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BogeySubsystem extends SubsystemBase {
   /** Creates a new BogeySubsystem. */
-  public BogeySubsystem() {}
+  private final CANSparkMax bogeyMotor;
+  private final SparkMaxPIDController PIDController;
+  private final RelativeEncoder bogeyEncoder;
+
+  public BogeySubsystem() {
+    bogeyMotor = new CANSparkMax(BogeyPolicy.BOGEY_ID_PORT, MotorType.kBrushless);
+    PIDController = bogeyMotor.getPIDController();
+    bogeyEncoder = bogeyMotor.getEncoder();
+    set(0,0,0,0,0);
+  }
+///
+  public void set(double p, double i, double d, double f, double iz) {
+    PIDController.setP(p);
+    PIDController.setI(i);
+    PIDController.setD(d);
+    PIDController.setFF(f);
+    PIDController.setIZone(iz);
+  }
+
+  public void moveArm(double power) {
+    BogeyPolicy.bogeyPower = power;
+    bogeyMotor.set(BogeyPolicy.bogeyPower);
+  }
+
+  public void pidMove(double targetSpeed) {
+    BogeyPolicy.targetSpeed = targetSpeed;
+    PIDController.setReference(BogeyPolicy.targetSpeed, ControlType.kVelocity);
+    //ArmPolicy.presets();
+  }
+
+  public void stopArm() {
+    moveArm(0);
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    BogeyPolicy.encoderVelocity = bogeyEncoder.getVelocity();
+    BogeyPolicy.encoderPosition = bogeyEncoder.getPosition();
   }
 }
+
+    
+    
+    
+

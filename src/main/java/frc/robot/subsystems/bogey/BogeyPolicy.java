@@ -5,4 +5,10 @@
 package frc.robot.subsystems.bogey;
 
 /** Add your docs here. */
-public final class BogeyPolicy {}
+public final class BogeyPolicy {
+    public static final int BOGEY_ID_PORT = 0;
+    public static double bogeyPower;
+    public static double targetSpeed;
+    public static double encoderVelocity;
+    public static double encoderPosition;
+}
