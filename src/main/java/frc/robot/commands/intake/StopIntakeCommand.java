@@ -6,16 +6,17 @@ package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.intake.IntakeSubsystem;
-import frc.robot.subsystems.intake.IntakePolicy;
 
-public class SpitCommand extends CommandBase {
-  /** Creates a new SpitCommand. */
-  IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
-
-  public SpitCommand(IntakeSubsystem subsystem) {
+public class StopIntakeCommand extends CommandBase {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final IntakeSubsystem m_IntakeSubsystem;
+  /** 
+   * @param subsystem
+   *  Creates a new StopIntakeCommand. */
+  public StopIntakeCommand(IntakeSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_IntakeSubsystem = subsystem;
-    addRequirements(m_IntakeSubsystem);
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +28,7 @@ public class SpitCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_IntakeSubsystem.runIntake(1);
+    m_IntakeSubsystem.stopIntake();
   }
 
   // Called once the command ends or is interrupted.
