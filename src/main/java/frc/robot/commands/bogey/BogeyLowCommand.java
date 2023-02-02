@@ -5,11 +5,18 @@
 package frc.robot.commands.bogey;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.bogey.BogeySubsystem;
 
 public class BogeyLowCommand extends CommandBase {
-  /** Creates a new BogeyLowCommand. */
-  public BogeyLowCommand() {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final BogeySubsystem m_BogeySubsystem;
+  /** 
+   * @param subsystem 
+   * Creates a new BogeyLowCommand. */
+  public BogeyLowCommand(BogeySubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_BogeySubsystem = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
