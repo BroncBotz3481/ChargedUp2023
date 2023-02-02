@@ -25,7 +25,7 @@ public class RaiseWristCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_WristSubsystem.setMotor(-5000);;
+    m_WristSubsystem.setMotor(5000);;
   }
 
   // Called once the command ends or is interrupted.
