@@ -6,9 +6,9 @@ package frc.robot.commands.bogey;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class BogeyHighCommand extends CommandBase {
-  /** Creates a new BogeyHighCommand. */
-  public BogeyHighCommand() {
+public class StopBogeyCommand extends CommandBase {
+  /** Creates a new StopBogeyCommand. */
+  public StopBogeyCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

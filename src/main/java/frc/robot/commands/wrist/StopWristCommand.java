@@ -2,13 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.bogey;
+package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class BogeyHighCommand extends CommandBase {
-  /** Creates a new BogeyHighCommand. */
-  public BogeyHighCommand() {
+public class StopWristCommand extends CommandBase {
+  /** Creates a new StopWristCommand. */
+  public StopWristCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
