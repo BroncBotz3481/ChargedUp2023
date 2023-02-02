@@ -10,9 +10,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.wrist.WristPolicy;
 
 public class WristSubsystem extends SubsystemBase {
   /** Creates a new WristSubsystem. */
