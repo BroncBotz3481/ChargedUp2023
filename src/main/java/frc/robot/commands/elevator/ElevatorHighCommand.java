@@ -27,7 +27,7 @@ public class ElevatorHighCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (ElevatorPolicy.rightEncoderVelocity < ElevatorPolicy.high){
+    if (ElevatorPolicy.rightEncoderPosition < ElevatorPolicy.high){
       m_ElevatorSubsystem.pidMove(12000);
     }
   }

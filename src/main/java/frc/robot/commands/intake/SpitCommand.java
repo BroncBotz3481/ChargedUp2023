@@ -7,6 +7,7 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 
+
 public class SpitCommand extends CommandBase {
   /** Creates a new SpitCommand. */
   IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
