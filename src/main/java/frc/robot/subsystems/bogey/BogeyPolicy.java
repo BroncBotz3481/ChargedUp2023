@@ -11,4 +11,7 @@ public final class BogeyPolicy {
     public static double targetSpeed;
     public static double encoderVelocity;
     public static double encoderPosition;
+    public static final double low = 50;
+    public static final double mid = 100;
+    public static final double high = 150;
 }
