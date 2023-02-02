@@ -14,4 +14,8 @@ public final class ElevatorPolicy {
     public static double targetSpeed;
     public static double rightEncoderVelocity,leftEncoderVelocity;
     public static double rightEncoderPosition,leftEncoderPosition;
+    public static double ticks;
+    public static final double low = 50;
+    public static final double mid = 100;
+    public static final double high = 150;
 }

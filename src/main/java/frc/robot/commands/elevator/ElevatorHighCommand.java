@@ -5,24 +5,38 @@
 package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.elevator.ElevatorPolicy;
+import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
 public class ElevatorHighCommand extends CommandBase {
   /** Creates a new ElevatorCommand. */
-  public ElevatorHighCommand() {
+  private final ElevatorSubsystem m_ElevatorSubsystem;
+
+  public ElevatorHighCommand(ElevatorSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_ElevatorSubsystem = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_ElevatorSubsystem.stopEle();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (ElevatorPolicy.rightEncoderVelocity < ElevatorPolicy.high){
+      m_ElevatorSubsystem.pidMove(12000);
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_ElevatorSubsystem.stopEle();
+  }
 
   // Returns true when the command should end.
   @Override

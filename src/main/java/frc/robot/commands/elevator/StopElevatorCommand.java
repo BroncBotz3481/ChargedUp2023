@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
-public class ElevatorLowCommand extends CommandBase {
-  /** Creates a new ElevatorLowCommand. */
+public class StopElevatorCommand extends CommandBase {
+  /** Creates a new StopElevatorCommand. */
   private final ElevatorSubsystem m_ElevatorSubsystem;
-
-  public ElevatorLowCommand(ElevatorSubsystem subsystem) {
+  public StopElevatorCommand(ElevatorSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_ElevatorSubsystem = subsystem;
     addRequirements(subsystem);
@@ -27,9 +26,7 @@ public class ElevatorLowCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (ElevatorPolicy.rightEncoderVelocity < ElevatorPolicy.low){
-      m_ElevatorSubsystem.pidMove(12000);
-    }
+    m_ElevatorSubsystem.stopEle();
   }
 
   // Called once the command ends or is interrupted.
