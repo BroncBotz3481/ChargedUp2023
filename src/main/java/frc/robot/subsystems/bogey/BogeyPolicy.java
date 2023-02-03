@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.bogey;
 
+import frc.robot.subsystems.elevator.ElevatorPolicy;
+
 /** Add your docs here. */
 public final class BogeyPolicy {
     public static final int BOGEY_ID_PORT = 0;
@@ -11,10 +13,23 @@ public final class BogeyPolicy {
     public static double targetSpeed;
     public static double encoderVelocity;
     public static double encoderPosition;
+    public static double elevatorPosition;
+    public static double ratioPosition;
+
     public static final double low = 50;
     public static final double mid = 100;
     public static final double high = 150;
 
+    public static boolean setPointDefault(){
+
+        if(encoderPosition >= 0)
+        {
+            return true;
+        }
+
+        return false;
+     }
+     
     public static boolean isHigh(){
         return encoderPosition>high;
     }

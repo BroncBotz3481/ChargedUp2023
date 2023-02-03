@@ -8,9 +8,36 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import frc.robot.subsystems.bogey.BogeySubsystem;
+import frc.robot.subsystems.bogey.BogeyPolicy;
+import frc.robot.commands.bogey.BogeyHighCommand;
+import frc.robot.commands.bogey.BogeyMidCommand;
+import frc.robot.commands.bogey.BogeyLowCommand;
+import frc.robot.commands.bogey.StopBogeyCommand;
+
+import frc.robot.subsystems.elevator.ElevatorSubsystem;
+import frc.robot.subsystems.elevator.ElevatorPolicy;
+import frc.robot.commands.elevator.ElevatorHighCommand;
+import frc.robot.commands.elevator.ElevatorMidCommand;
+import frc.robot.commands.elevator.ElevatorLowCommand;
+import frc.robot.commands.elevator.StopElevatorCommand;
+
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.intake.IntakePolicy;
+import frc.robot.commands.intake.SpinCommand;
+import frc.robot.commands.intake.SpitCommand;
+import frc.robot.commands.intake.StopIntakeCommand;
+
+import frc.robot.subsystems.wrist.WristSubsystem;
+import frc.robot.subsystems.wrist.WristPolicy;
+import frc.robot.commands.wrist.DropWristCommand;
+import frc.robot.commands.wrist.RaiseWristCommand;
+import frc.robot.commands.wrist.StopWristCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,7 +47,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final BogeySubsystem m_bogeySubsystem = new BogeySubsystem();
+  private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final WristSubsystem m_wristSubsystem = new WristSubsystem();
+  public XboxController controller0;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -29,6 +60,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    controller0 = new XboxController(0);
     configureBindings();
   }
 
@@ -43,7 +75,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
+
+  /* *  new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
@@ -56,8 +89,9 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+ /*/ public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
-  }
+    */
+  } 
 }
