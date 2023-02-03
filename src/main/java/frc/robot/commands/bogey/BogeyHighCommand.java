@@ -36,6 +36,7 @@ public class BogeyHighCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_BogeySubsystem.stopArm();
+    BogeyPolicy.encoderPosition = 0;
   }
 
   // Returns true when the command should end.
