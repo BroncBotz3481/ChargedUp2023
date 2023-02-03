@@ -16,14 +16,14 @@ public final class BogeyPolicy {
     public static final double high = 150;
 
     public static boolean isHigh(){
-        return encoderPosition<high;
+        return encoderPosition>high;
     }
     
-    public static boolean isMedium(){
-        return encoderPosition<mid;
+    public static boolean isMid(){
+        return encoderPosition>mid;
     }
 
     public static boolean isLow(){
-        return encoderPosition<low;
+        return encoderPosition>low;
     }
 }
