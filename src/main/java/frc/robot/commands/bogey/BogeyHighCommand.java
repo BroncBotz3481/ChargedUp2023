@@ -28,7 +28,7 @@ public class BogeyHighCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(BogeyPolicy.encoderPosition < BogeyPolicy.low)
+    if(BogeyPolicy.isHigh())
       m_BogeySubsystem.pidMove(12000);
   }
 

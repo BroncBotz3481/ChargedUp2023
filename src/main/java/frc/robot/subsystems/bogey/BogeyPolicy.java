@@ -14,4 +14,16 @@ public final class BogeyPolicy {
     public static final double low = 50;
     public static final double mid = 100;
     public static final double high = 150;
+
+    public static boolean isHigh(){
+        return encoderPosition<high;
+    }
+    
+    public static boolean isMedium(){
+        return encoderPosition<mid;
+    }
+
+    public static boolean isLow(){
+        return encoderPosition<low;
+    }
 }
