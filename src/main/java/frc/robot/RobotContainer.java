@@ -26,6 +26,7 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.commands.elevator.ElevatorHighCommand;
 import frc.robot.commands.elevator.ElevatorMidCommand;
+import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.ElevatorLowCommand;
 import frc.robot.commands.elevator.StopElevatorCommand;
 
@@ -88,6 +89,7 @@ public class RobotContainer {
     m_operatorController.rightTrigger().whileTrue(new DropWristCommand(m_wristSubsystem)); //bind drop wrist while right trig pressed
 
     new Trigger(()->{return m_operatorController.getRightTriggerAxis() > 0.05;}).whileTrue(new ManualBogeyCommand(m_bogeySubsystem, m_operatorController::getRightY));
+    new Trigger(()->{return m_operatorController.getLeftTriggerAxis() > 0.05;}).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, m_operatorController::getLeftY));
 
   }
     
