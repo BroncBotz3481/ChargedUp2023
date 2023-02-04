@@ -38,10 +38,9 @@ public class BogeySubsystem extends SubsystemBase {
     bogeyMotor.set(BogeyPolicy.bogeyPower);
   }
 
-  public void pidMove(double targetSpeed) {
-    BogeyPolicy.targetSpeed = targetSpeed;
-    PIDController.setReference(BogeyPolicy.targetSpeed, ControlType.kVelocity);
-    //ArmPolicy.presets();
+  public void pidMove(double targetPosition) {
+    BogeyPolicy.position = targetPosition;
+    PIDController.setReference(BogeyPolicy.position, ControlType.kPosition);
   }
 
   public void stopArm() {

@@ -4,16 +4,13 @@
 
 package frc.robot.subsystems.bogey;
 
-import frc.robot.subsystems.elevator.ElevatorPolicy;
-
 /** Add your docs here. */
 public final class BogeyPolicy {
     public static final int BOGEY_ID_PORT = 0;
     public static double bogeyPower;
-    public static double targetSpeed;
+    public static double position;
     public static double encoderVelocity;
     public static double encoderPosition;
-    public static double elevatorPosition;
     public static double ratioPosition;
 
     public static final double low = 50;

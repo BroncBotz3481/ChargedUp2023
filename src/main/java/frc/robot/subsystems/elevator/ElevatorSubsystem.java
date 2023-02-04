@@ -22,7 +22,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     rightElevatorMotor = new CANSparkMax(ElevatorPolicy.RIGHT_ELEV_ID_PORT, MotorType.kBrushless);
     PIDController = rightElevatorMotor.getPIDController();
     leftElevatorMotor.setInverted(ElevatorPolicy.INV_LEFT);//True
-    rightElevatorMotor.setInverted(!ElevatorPolicy.INV_RIGHT);//False
+    rightElevatorMotor.setInverted(ElevatorPolicy.INV_RIGHT);//False
     leftElevatorMotor.follow(rightElevatorMotor);
     rightEncoder = rightElevatorMotor.getEncoder();
     leftEncoder = leftElevatorMotor.getEncoder();
@@ -42,10 +42,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
   }
 
-  public void pidMove(double targetSpeed) {
-    ElevatorPolicy.targetSpeed = targetSpeed;
-    PIDController.setReference(ElevatorPolicy.targetSpeed, ControlType.kVelocity);
-    //ArmPolicy.presets();
+  public void pidMove(double targetPosition) {
+    ElevatorPolicy.position = targetPosition;
+    PIDController.setReference(ElevatorPolicy.position, ControlType.kPosition);
   }
 
   public void stopEle() {
