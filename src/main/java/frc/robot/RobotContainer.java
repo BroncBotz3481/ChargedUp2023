@@ -18,6 +18,7 @@ import frc.robot.subsystems.bogey.BogeySubsystem;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.commands.bogey.BogeyHighCommand;
 import frc.robot.commands.bogey.BogeyMidCommand;
+import frc.robot.commands.bogey.ManualBogeyCommand;
 import frc.robot.commands.bogey.BogeyLowCommand;
 import frc.robot.commands.bogey.StopBogeyCommand;
 
@@ -25,7 +26,6 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.commands.elevator.ElevatorHighCommand;
 import frc.robot.commands.elevator.ElevatorMidCommand;
-import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.ElevatorLowCommand;
 import frc.robot.commands.elevator.StopElevatorCommand;
 
@@ -82,9 +82,11 @@ public class RobotContainer {
     m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
     m_wristSubsystem.setDefaultCommand(new StopWristCommand(m_wristSubsystem));//Replace with turtle command
     
-  }
 
+
+    new Trigger(()->{return m_operatorController.getRightTriggerAxis() > 0.05;}).whileTrue(new ManualBogeyCommand(m_bogeySubsystem, m_operatorController::getRightY));
     
+  }
 
      /*new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
