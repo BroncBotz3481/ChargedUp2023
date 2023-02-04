@@ -80,7 +80,11 @@ public class RobotContainer {
     m_elevatorSubsystem.setDefaultCommand(new StopElevatorCommand(m_elevatorSubsystem));//Replace with turtle command
     m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
     m_wristSubsystem.setDefaultCommand(new StopWristCommand(m_wristSubsystem));//Replace with turtle command
-    
+
+    //m_operatorController.blankTrigger().whileTrue(new CrapMyselfCommand(m_iHateLife));
+      m_operatorController.leftTrigger().whileTrue(new SpitCommand(m_intakeSubsystem)); //bind spit command while left trig pressed
+      m_operatorController.leftBumper().whileTrue(new SpinCommand(m_intakeSubsystem)); //bind spin command while left bumper pressed
+      m_operatorController.rightTrigger().whileTrue(new DropWristCommand(m_wristSubsystem)); //bind drop wrist while right trig pressed
   }
 
 
