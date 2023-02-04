@@ -25,6 +25,7 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.commands.elevator.ElevatorHighCommand;
 import frc.robot.commands.elevator.ElevatorMidCommand;
+import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.ElevatorLowCommand;
 import frc.robot.commands.elevator.StopElevatorCommand;
 
@@ -54,10 +55,10 @@ public class RobotContainer {
   private final WristSubsystem m_wristSubsystem = new WristSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController m_driverController =
-      new XboxController(OperatorConstants.kDriverControllerPort);
-  private final XboxController m_operatorController = 
-      new XboxController(OperatorConstants.kOperatorControllerPort)
+  private final CommandXboxController m_driverController =
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_operatorController = 
+      new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -81,14 +82,17 @@ public class RobotContainer {
     m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
     m_wristSubsystem.setDefaultCommand(new StopWristCommand(m_wristSubsystem));//Replace with turtle command
 
+    
 
-
-     new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    //  new Trigger(m_exampleSubsystem::exampleCondition)
+    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    new Trigger(()->{return m_operatorController.getLeftTriggerAxis() > 0.05;}).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, m_operatorController::getLeftY));
+    
+
   }
 
   /**
@@ -96,7 +100,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
- / public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return new AutonomousCommand();
     
