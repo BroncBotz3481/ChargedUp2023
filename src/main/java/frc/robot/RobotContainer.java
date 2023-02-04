@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -53,10 +54,10 @@ public class RobotContainer {
   private final WristSubsystem m_wristSubsystem = new WristSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final CommandXboxController m_operatorController = 
-      new CommandXboxController(OperatorConstants.kOperatorControllerPort)
+  private final XboxController m_driverController =
+      new XboxController(OperatorConstants.kDriverControllerPort);
+  private final XboxController m_operatorController = 
+      new XboxController(OperatorConstants.kOperatorControllerPort)
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -75,6 +76,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    m_bogeySubsystem.setDefaultCommand(new StopBogeyCommand(m_bogeySubsystem));//Replace with turtle command
+    m_elevatorSubsystem.setDefaultCommand(new StopElevatorCommand(m_elevatorSubsystem));//Replace with turtle command
+    m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
+    m_wristSubsystem.setDefaultCommand(new StopWristCommand(m_wristSubsystem));//Replace with turtle command
+
+
 
      new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
@@ -91,7 +98,7 @@ public class RobotContainer {
    */
  / public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return new AutonomousCommand();
     
   } 
 }
