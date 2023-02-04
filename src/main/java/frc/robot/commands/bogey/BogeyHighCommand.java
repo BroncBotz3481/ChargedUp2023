@@ -28,20 +28,21 @@ public class BogeyHighCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!BogeyPolicy.isHigh())
-      m_BogeySubsystem.pidMove(12000);
+    m_BogeySubsystem.pidMove(12000);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_BogeySubsystem.stopArm();
-    BogeyPolicy.encoderPosition = 0;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(BogeyPolicy.encoderPosition>=BogeyPolicy.high){
+      return true;
+    }
     return false;
   }
 }

@@ -31,14 +31,14 @@ public final class BogeyPolicy {
      }
      
     public static boolean isHigh(){
-        return encoderPosition>high;
+        return encoderPosition<high;
     }
     
     public static boolean isMid(){
-        return encoderPosition>mid;
+        return encoderPosition<mid;
     }
 
     public static boolean isLow(){
-        return encoderPosition>low;
+        return encoderPosition<low;
     }
 }

@@ -37,12 +37,14 @@ public class BogeyLowCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_BogeySubsystem.stopArm();
-    BogeyPolicy.encoderPosition = 0;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(BogeyPolicy.encoderPosition>=BogeyPolicy.low){
+      return true;
+    }
     return false;
   }
 }
