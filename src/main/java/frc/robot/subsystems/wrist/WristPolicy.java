@@ -8,7 +8,7 @@ package frc.robot.subsystems.wrist;
 public final class WristPolicy {
     public static final int WRIST_ID_PORT = 0;
     public static double power;
-    public static double speed;
+    public static double position;
     public static double encoderVelocity;
     public static double encoderPosition;
 }

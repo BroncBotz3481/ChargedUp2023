@@ -38,9 +38,9 @@ public class WristSubsystem extends SubsystemBase {
     wristMotor.set(WristPolicy.power);
   }
 
-  public void setMotor(double speed){
-    WristPolicy.speed = speed;
-    PIDController.setReference(WristPolicy.speed, ControlType.kVelocity);
+  public void setMotor(double targetPosition){
+    WristPolicy.position = targetPosition;
+    PIDController.setReference(WristPolicy.position, ControlType.kPosition);
   }
 
   public void stopMotor(){

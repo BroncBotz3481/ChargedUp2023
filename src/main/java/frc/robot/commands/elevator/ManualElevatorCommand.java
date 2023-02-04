@@ -4,38 +4,38 @@
 
 package frc.robot.commands.elevator;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
-public class ElevatorMidCommand extends CommandBase {
-  /** Creates a new ElevatorMidCommand. */
-  private final ElevatorSubsystem m_ElevatorSubsystem;
-
-  public ElevatorMidCommand(ElevatorSubsystem subsystem) {
+public class ManualElevatorCommand extends CommandBase {
+  /** Creates a new ManualElevatorCommand. */
+  private final ElevatorSubsystem m_elevatorSubsystem;
+  private final DoubleSupplier powSupplier;
+  public ManualElevatorCommand(ElevatorSubsystem subsystem, DoubleSupplier powDoubleSupplier) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_ElevatorSubsystem = subsystem;
-    addRequirements(subsystem);
+    m_elevatorSubsystem = subsystem;
+    powSupplier = powDoubleSupplier;
+    addRequirements(m_elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ElevatorSubsystem.stopEle();
+    m_elevatorSubsystem.stopEle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!ElevatorPolicy.isMid()){
-      m_ElevatorSubsystem.pidMove(12000);
-    }
+    m_elevatorSubsystem.moveElevator(powSupplier.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_ElevatorSubsystem.stopEle();
+    m_elevatorSubsystem.stopEle();
   }
 
   // Returns true when the command should end.

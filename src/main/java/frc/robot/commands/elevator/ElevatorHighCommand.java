@@ -34,7 +34,6 @@ public class ElevatorHighCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_ElevatorSubsystem.stopEle();
-    ElevatorPolicy.rightEncoderPosition = 0;
   }
 
   // Returns true when the command should end.

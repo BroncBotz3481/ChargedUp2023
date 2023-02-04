@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,6 +25,7 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.commands.elevator.ElevatorHighCommand;
 import frc.robot.commands.elevator.ElevatorMidCommand;
+import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.ElevatorLowCommand;
 import frc.robot.commands.elevator.StopElevatorCommand;
 
@@ -51,16 +53,16 @@ public class RobotContainer {
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final WristSubsystem m_wristSubsystem = new WristSubsystem();
-  public XboxController controller0;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_operatorController = 
+      new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    controller0 = new XboxController(0);
     configureBindings();
   }
 
@@ -75,23 +77,35 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    m_bogeySubsystem.setDefaultCommand(new StopBogeyCommand(m_bogeySubsystem));//Replace with turtle command
+    m_elevatorSubsystem.setDefaultCommand(new StopElevatorCommand(m_elevatorSubsystem));//Replace with turtle command
+    m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
+    m_wristSubsystem.setDefaultCommand(new StopWristCommand(m_wristSubsystem));//Replace with turtle command
 
-  /* *  new Trigger(m_exampleSubsystem::exampleCondition)
+    //m_operatorController.blankTrigger().whileTrue(new CrapMyselfCommand(m_iHateLife));
+    m_operatorController.leftTrigger().whileTrue(new SpitCommand(m_intakeSubsystem)); //bind spit command while left trig pressed
+    m_operatorController.leftBumper().whileTrue(new SpinCommand(m_intakeSubsystem)); //bind spin command while left bumper pressed
+    m_operatorController.rightTrigger().whileTrue(new DropWristCommand(m_wristSubsystem)); //bind drop wrist while right trig pressed
+  }
+
+    
+
+     /*new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-  }
-
+  } 
+ 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
- /*/ public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
-    */
+    return new AutonomousCommand();
+    
   } 
 }
