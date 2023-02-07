@@ -29,8 +29,7 @@ public class BogeyMidCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!BogeyPolicy.isMid())
-      m_BogeySubsystem.pidMove(12000);
+    m_BogeySubsystem.pidMove(150);
   }
 
   // Called once the command ends or is interrupted.
@@ -42,7 +41,7 @@ public class BogeyMidCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(BogeyPolicy.encoderPosition>=BogeyPolicy.mid){
+    if(BogeyPolicy.encoderPosition>=BogeyPolicy.setPosition){
       return true;
     }
     return false;

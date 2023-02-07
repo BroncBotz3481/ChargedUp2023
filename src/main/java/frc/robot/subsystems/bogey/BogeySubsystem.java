@@ -39,8 +39,8 @@ public class BogeySubsystem extends SubsystemBase {
   }
 
   public void pidMove(double targetPosition) {
-    BogeyPolicy.position = targetPosition;
-    PIDController.setReference(BogeyPolicy.position, ControlType.kPosition);
+    BogeyPolicy.setPosition = targetPosition;
+    PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
   }
 
   public void stopArm() {
