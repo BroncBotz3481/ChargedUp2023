@@ -43,8 +43,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void pidMove(double targetPosition) {
-    ElevatorPolicy.position = targetPosition;
-    PIDController.setReference(ElevatorPolicy.position, ControlType.kPosition);
+    ElevatorPolicy.setPosition = targetPosition;
+    PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
   }
 
   public void stopEle() {

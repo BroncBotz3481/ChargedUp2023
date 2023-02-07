@@ -27,7 +27,7 @@ public class ElevatorHighCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ElevatorSubsystem.pidMove(12000);
+    m_ElevatorSubsystem.pidMove(200);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,7 +39,7 @@ public class ElevatorHighCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(ElevatorPolicy.rightEncoderPosition>=ElevatorPolicy.high){
+    if(ElevatorPolicy.rightEncoderPosition>=ElevatorPolicy.setPosition){
       return true;
     }
     return false;

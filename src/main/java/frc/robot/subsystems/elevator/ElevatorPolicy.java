@@ -14,19 +14,20 @@ public final class ElevatorPolicy {
     public static double position;
     public static double rightEncoderVelocity,leftEncoderVelocity;
     public static double rightEncoderPosition,leftEncoderPosition;
-    public static final double low = 50;
-    public static final double mid = 100;
-    public static final double high = 150;
+    public static double setPosition;
+    // public static final double low = 50;
+    // public static final double mid = 100;
+    // public static final double high = 150;
 
-    public static boolean isHigh(){
-        return rightEncoderPosition > high;
-    }
+    // public static boolean isHigh(){
+    //     return rightEncoderPosition > high;
+    // }
 
-    public static boolean isMid(){
-        return rightEncoderPosition > mid;
-    }
+    // public static boolean isMid(){
+    //     return rightEncoderPosition > mid;
+    // }
 
-    public static boolean isLow(){
-        return rightEncoderPosition > mid;
-    }
+    // public static boolean isLow(){
+    //     return rightEncoderPosition > mid;
+    // }
 }
