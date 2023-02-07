@@ -88,8 +88,8 @@ public class RobotContainer {
     m_operatorController.leftBumper().whileTrue(new SpinCommand(m_intakeSubsystem)); //bind spin command while left bumper pressed
     m_operatorController.rightTrigger().whileTrue(new DropWristCommand(m_wristSubsystem)); //bind drop wrist while right trig pressed
 
-    new Trigger(()->{return m_operatorController.getRightTriggerAxis() > 0.05;}).whileTrue(new ManualBogeyCommand(m_bogeySubsystem, m_operatorController::getRightY));
-    new Trigger(()->{return m_operatorController.getLeftTriggerAxis() > 0.05;}).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, m_operatorController::getLeftY));
+    new Trigger(()->{return m_operatorController.getRightY() > 0.05;}).whileTrue(new ManualBogeyCommand(m_bogeySubsystem, m_operatorController::getRightY));
+    new Trigger(()->{return m_operatorController.getLeftY() > 0.05;}).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, m_operatorController::getLeftY));
 
   }
     
