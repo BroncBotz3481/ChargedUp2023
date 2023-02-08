@@ -5,6 +5,7 @@
 package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
 public class ResetElevatorCommand extends CommandBase {
@@ -37,6 +38,9 @@ public class ResetElevatorCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(ElevatorPolicy.rightEncoderPosition <= 0){
+      return true;
+    }
     return false;
   }
 }

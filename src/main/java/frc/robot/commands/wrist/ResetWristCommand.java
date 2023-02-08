@@ -5,6 +5,7 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
 public class ResetWristCommand extends CommandBase {
@@ -25,7 +26,7 @@ public class ResetWristCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_WristSubsystem.setMotor(5000);
+    m_WristSubsystem.setMotor(0);
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +38,9 @@ public class ResetWristCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(WristPolicy.encoderPosition <= 0){
+      return true;
+    }
     return false;
   }
 }

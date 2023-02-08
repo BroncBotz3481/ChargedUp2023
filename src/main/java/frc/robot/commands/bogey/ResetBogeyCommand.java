@@ -5,6 +5,7 @@
 package frc.robot.commands.bogey;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 
 public class ResetBogeyCommand extends CommandBase {
@@ -37,6 +38,9 @@ public class ResetBogeyCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(BogeyPolicy.encoderPosition <= 0){
+      return true;
+    }
     return false;
   }
 }
