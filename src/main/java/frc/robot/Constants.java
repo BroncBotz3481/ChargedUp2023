@@ -18,21 +18,21 @@ public final class Constants {
     public static final int kOperatorControllerPort = 1;
   }
   public static class BogeyPresets {
-    public static final double high = 200;
-    public static final double mid = 150;
-    public static final double low = 100;
+    public static final double HIGH = 200;
+    public static final double MID = 150;
+    public static final double LOW = 100;
   }
 
   public static class ElevatorPresets {
-    public static final double high = 200;
-    public static final double mid = 150;
-    public static final double low = 100;
+    public static final double HIGH = 200;
+    public static final double MID = 150;
+    public static final double LOW = 100;
   }
 
   public static class WristPresets {
-    public static final double home = 0;
-    public static final double flat = 50;
-    public static final double down = 100;
+    public static final double HOME = 0;
+    public static final double FLAT = 50;
+    public static final double DOWN = 100;
   }
 
 }
