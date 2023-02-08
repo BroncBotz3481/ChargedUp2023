@@ -92,6 +92,14 @@ public class RobotContainer {
     new Trigger(()->{return m_operatorController.getRightY() > 0.05;}).whileTrue(new ManualBogeyCommand(m_bogeySubsystem, m_operatorController::getRightY));
     new Trigger(()->{return m_operatorController.getLeftY() > 0.05;}).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, m_operatorController::getLeftY));
     
+    m_operatorController.y().toggleOnTrue(Commands.parallel(new ElevatorHighCommand(m_elevatorSubsystem),
+    new BogeyHighCommand(m_bogeySubsystem)));
+
+    m_operatorController.x().toggleOnTrue(Commands.parallel(new ElevatorMidCommand(m_elevatorSubsystem),
+    new BogeyMidCommand(m_bogeySubsystem)));
+
+    // m_operatorController.a().toggleOnTrue(Commands.parallel(new ElevatorLowCommand(m_elevatorSubsystem),
+    // new BogeyLowCommand(m_bogeySubsystem)));
   }
     
 
