@@ -20,6 +20,7 @@ import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.commands.bogey.BogeyHighCommand;
 import frc.robot.commands.bogey.BogeyMidCommand;
 import frc.robot.commands.bogey.ManualBogeyCommand;
+import frc.robot.commands.bogey.ResetBogeyCommand;
 import frc.robot.commands.bogey.BogeyLowCommand;
 import frc.robot.commands.bogey.StopBogeyCommand;
 
@@ -28,6 +29,7 @@ import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.commands.elevator.ElevatorHighCommand;
 import frc.robot.commands.elevator.ElevatorMidCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
+import frc.robot.commands.elevator.ResetElevatorCommand;
 import frc.robot.commands.elevator.ElevatorLowCommand;
 import frc.robot.commands.elevator.StopElevatorCommand;
 
@@ -41,6 +43,7 @@ import frc.robot.subsystems.wrist.WristSubsystem;
 import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.commands.wrist.DropWristCommand;
 import frc.robot.commands.wrist.RaiseWristCommand;
+import frc.robot.commands.wrist.ResetWristCommand;
 import frc.robot.commands.wrist.StopWristCommand;
 
 /**
@@ -89,6 +92,8 @@ public class RobotContainer {
     m_operatorController.leftBumper().whileTrue(new SpinCommand(m_intakeSubsystem)); //bind spin command while left bumper pressed
     m_operatorController.rightTrigger().whileTrue(new DropWristCommand(m_wristSubsystem)); //bind drop wrist while right trig pressed
 
+    m_operatorController.b().onTrue(Commands.parallel(new ResetWristCommand(m_wristSubsystem), new ResetElevatorCommand(m_elevatorSubsystem), new ResetBogeyCommand(m_bogeySubsystem))); //runs all reset commands at once
+;
     new Trigger(()->{return m_operatorController.getRightY() > 0.05;}).whileTrue(new ManualBogeyCommand(m_bogeySubsystem, m_operatorController::getRightY));
     new Trigger(()->{return m_operatorController.getLeftY() > 0.05;}).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, m_operatorController::getLeftY));
     
