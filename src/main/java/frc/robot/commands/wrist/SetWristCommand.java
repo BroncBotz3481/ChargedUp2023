@@ -5,13 +5,16 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.wrist.WristSubsystem;;
+import frc.robot.subsystems.wrist.WristSubsystem;
+import frc.robot.subsystems.wrist.WristPolicy;
 
-public class RaiseWristCommand extends CommandBase {
+public class SetWristCommand extends CommandBase {
   /** Creates a new WristCommand. */
-  WristSubsystem m_WristSubsystem = new WristSubsystem(); //creates new object of class WristSubsystem
-  public RaiseWristCommand(WristSubsystem subsystem) { //constructor for RaiseWristCommand class; WristSubsystem object as parameter
+  private final WristSubsystem m_WristSubsystem; //creates new object of class WristSubsystem
+  private double targetPosition;
+  public SetWristCommand(WristSubsystem subsystem, double target) { //constructor for RaiseWristCommand class; WristSubsystem object as parameter
     m_WristSubsystem = subsystem; //sets command object to parameter, so it can be used throughout this class
+    targetPosition = target;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_WristSubsystem); //ensures subsystem can only be used by one command at a time
   }
@@ -25,7 +28,7 @@ public class RaiseWristCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_WristSubsystem.setMotor(5000);; //when RaiseWristCommand is executed, wrist motor set to 5000. (+) so wrist raises
+    m_WristSubsystem.setMotor(targetPosition); //when RaiseWristCommand is executed, wrist motor set to 5000. (+) so wrist raises
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +40,9 @@ public class RaiseWristCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(WristPolicy.encoderPosition>=WristPolicy.setPosition){
+      return true;
+    }
     return false;
   }
 }

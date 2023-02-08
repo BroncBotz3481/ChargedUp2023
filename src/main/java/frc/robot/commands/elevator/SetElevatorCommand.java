@@ -2,46 +2,46 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.bogey;
+package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.bogey.BogeySubsystem;
-import frc.robot.subsystems.bogey.BogeyPolicy;
+import frc.robot.subsystems.elevator.ElevatorPolicy;
+import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
-public class BogeyMidCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final BogeySubsystem m_BogeySubsystem;
-  /** 
-   * @param subsystem 
-   * Creates a new BogeyMidCommand. */
-  public BogeyMidCommand(BogeySubsystem subsystem) {
+public class SetElevatorCommand extends CommandBase {
+  /** Creates a new ElevatorCommand. */
+  private final ElevatorSubsystem m_ElevatorSubsystem;
+  private double targetPosition;
+
+  public SetElevatorCommand(ElevatorSubsystem subsystem, double target) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_BogeySubsystem = subsystem;
+    m_ElevatorSubsystem = subsystem;
+    targetPosition = target;
     addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_BogeySubsystem.stopArm();
+    m_ElevatorSubsystem.stopEle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_BogeySubsystem.pidMove(150);
+    m_ElevatorSubsystem.pidMove(targetPosition);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_BogeySubsystem.stopArm();
+    m_ElevatorSubsystem.stopEle();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(BogeyPolicy.encoderPosition>=BogeyPolicy.setPosition){
+    if(ElevatorPolicy.rightEncoderPosition>=ElevatorPolicy.setPosition){
       return true;
     }
     return false;

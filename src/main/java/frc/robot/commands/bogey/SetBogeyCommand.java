@@ -8,16 +8,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 
-public class BogeyLowCommand extends CommandBase {
+public class SetBogeyCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final BogeySubsystem m_BogeySubsystem;
+  private double targetPosition;
   /** 
-   * @param subsystem 
-   * Creates a new BogeyLowCommand. */
-  public BogeyLowCommand(BogeySubsystem subsystem) {
+   * @param subsystem
+   * Creates a new BogeyHighCommand. */
+  public SetBogeyCommand(BogeySubsystem subsystem, double target) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_BogeySubsystem = subsystem;
-    addRequirements(subsystem);
+    targetPosition = target;
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +30,7 @@ public class BogeyLowCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      m_BogeySubsystem.pidMove(100);
+    m_BogeySubsystem.pidMove(targetPosition);
   }
 
   // Called once the command ends or is interrupted.
