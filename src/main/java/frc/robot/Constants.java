@@ -35,4 +35,8 @@ public final class Constants {
     public static final double DOWN = 100;
   }
 
+  public static class IntakePresets {
+    public static final double TRAY = 75;
+    public static final double SLIDE = 50;
+  }
 }

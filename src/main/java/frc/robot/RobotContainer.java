@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.Constants.BogeyPresets;
+import frc.robot.Constants.ElevatorPresets;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.WristPresets;
 import frc.robot.commands.Autos;
@@ -18,14 +20,19 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.subsystems.bogey.BogeySubsystem;
 import frc.robot.subsystems.bogey.BogeyPolicy;
+
 import frc.robot.commands.bogey.ManualBogeyCommand;
 import frc.robot.commands.bogey.ResetBogeyCommand;
+import frc.robot.commands.bogey.SetBogeyCommand;
+
 import frc.robot.commands.bogey.StopBogeyCommand;
 
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
+
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.ResetElevatorCommand;
+import frc.robot.commands.elevator.SetElevatorCommand;
 import frc.robot.commands.elevator.StopElevatorCommand;
 
 import frc.robot.subsystems.intake.IntakeSubsystem;
@@ -84,14 +91,19 @@ public class RobotContainer {
     //m_operatorController.blankTrigger().whileTrue(new CrapMyselfCommand(m_iHateLife));
     m_operatorController.leftTrigger().whileTrue(new SpitCommand(m_intakeSubsystem)); //bind spit command while left trig pressed
     m_operatorController.leftBumper().whileTrue(new SpinCommand(m_intakeSubsystem)); //bind spin command while left bumper pressed
-    m_operatorController.rightTrigger().whileTrue(new SetWristCommand(m_wristSubsystem, WristPresets.FLAT)); //bind drop wrist while right trig pressed
+    m_operatorController.rightTrigger().whileTrue(new SetWristCommand(m_wristSubsystem, WristPresets.DOWN)); //bind drop wrist while right trig pressed
 
     m_operatorController.b().onTrue(Commands.parallel(new ResetWristCommand(m_wristSubsystem), new ResetElevatorCommand(m_elevatorSubsystem), new ResetBogeyCommand(m_bogeySubsystem))); //runs all reset commands at once
 
-;
+    m_operatorController.rightStick().onTrue(new ResetBogeyCommand(m_bogeySubsystem)); 
+    m_operatorController.leftStick().onTrue(new ResetElevatorCommand(m_elevatorSubsystem));
+
+    m_operatorController.povDown().onTrue(Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.LOW), new SetBogeyCommand(m_bogeySubsystem, BogeyPresets.LOW)));
+    m_operatorController.povLeft().onTrue(Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.MID), new SetBogeyCommand(m_bogeySubsystem, BogeyPresets.MID)));
+    m_operatorController.povUp().onTrue(Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.HIGH), new SetBogeyCommand(m_bogeySubsystem, BogeyPresets.HIGH)));
+
     new Trigger(()->{return m_operatorController.getRightY() > 0.05;}).whileTrue(new ManualBogeyCommand(m_bogeySubsystem, m_operatorController::getRightY));
     new Trigger(()->{return m_operatorController.getLeftY() > 0.05;}).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, m_operatorController::getLeftY));
-
   }
     
 
