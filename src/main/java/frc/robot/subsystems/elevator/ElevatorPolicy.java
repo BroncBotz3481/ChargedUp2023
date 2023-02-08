@@ -11,7 +11,6 @@ public final class ElevatorPolicy {
     public static final boolean INV_LEFT = true;
     public static final boolean INV_RIGHT = false;
     public static double elevatorPower;
-    public static double position;
     public static double rightEncoderVelocity,leftEncoderVelocity;
     public static double rightEncoderPosition,leftEncoderPosition;
     public static double setPosition;
