@@ -5,24 +5,34 @@
 package frc.robot.commands.bogey;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.bogey.BogeySubsystem;
 
 public class ResetBogeyCommand extends CommandBase {
+  private final BogeySubsystem m_BogeySubsystem;
   /** Creates a new ResetBogeyCommand. */
-  public ResetBogeyCommand() {
+  public ResetBogeyCommand(BogeySubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_BogeySubsystem = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_BogeySubsystem.stopArm();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_BogeySubsystem.pidMove(0);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_BogeySubsystem.stopArm();
+  }
 
   // Returns true when the command should end.
   @Override
