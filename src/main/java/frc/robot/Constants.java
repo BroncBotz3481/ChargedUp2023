@@ -27,16 +27,17 @@ public final class Constants {
     public static final double HIGH = 200;
     public static final double MID = 150;
     public static final double LOW = 100;
+
+    public static final double TRAY_HEIGHT = 125;
+    public static final double SLIDE_HEIGHT = 75;
   }
 
   public static class WristPresets {
     public static final double HOME = 0;
     public static final double FLAT = 50;
     public static final double DOWN = 100;
+
+    public static final double SLIDE_HEIGHT = 75;
   }
 
-  public static class IntakePresets {
-    public static final double TRAY = 75;
-    public static final double SLIDE = 50;
-  }
 }
