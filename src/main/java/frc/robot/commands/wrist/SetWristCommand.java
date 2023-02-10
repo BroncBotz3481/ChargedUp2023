@@ -23,12 +23,13 @@ public class SetWristCommand extends CommandBase {
   @Override
   public void initialize() {
     m_WristSubsystem.stopMotor(); //stops the wrist motor when robot initialized
+    m_WristSubsystem.setMotor(targetPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_WristSubsystem.setMotor(targetPosition); //when RaiseWristCommand is executed, wrist motor set to 5000. (+) so wrist raises
+   //when RaiseWristCommand is executed, wrist motor set to 5000. (+) so wrist raises
   }
 
   // Called once the command ends or is interrupted.

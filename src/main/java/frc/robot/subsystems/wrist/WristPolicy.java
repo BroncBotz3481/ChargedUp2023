@@ -6,7 +6,7 @@ package frc.robot.subsystems.wrist;
 
 /** Add your docs here. */
 public final class WristPolicy {
-    public static final int WRIST_ID_PORT = 0;
+    public static final int WRIST_ID_PORT = 10;
     public static double power;
     public static double setPosition;
     public static double encoderVelocity;

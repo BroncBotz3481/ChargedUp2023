@@ -9,8 +9,11 @@ import frc.robot.subsystems.intake.IntakeSubsystem;
 
 
 public class SpitCommand extends CommandBase {
-  /** Creates a new SpitCommand. */
-  IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final IntakeSubsystem m_IntakeSubsystem;
+  /** 
+   * @param subsystem
+   *  Creates a new SpitCommand. */
 
   public SpitCommand(IntakeSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.

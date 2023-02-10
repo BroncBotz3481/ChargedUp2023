@@ -10,7 +10,7 @@ import frc.robot.subsystems.wrist.WristSubsystem;
 
 public class ResetWristCommand extends CommandBase {
   /** Creates a new ResetWristCommand. */
-  WristSubsystem m_WristSubsystem = new WristSubsystem();
+  private final WristSubsystem m_WristSubsystem;
   public ResetWristCommand(WristSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_WristSubsystem = subsystem;
@@ -20,13 +20,12 @@ public class ResetWristCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_WristSubsystem.stopMotor();
+    m_WristSubsystem.setMotor(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_WristSubsystem.setMotor(0);
   }
 
   // Called once the command ends or is interrupted.

@@ -20,13 +20,13 @@ public class ResetElevatorCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ElevatorSubsystem.stopEle();
+    m_ElevatorSubsystem.pidMove(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ElevatorSubsystem.pidMove(0);
+
   }
 
   // Called once the command ends or is interrupted.
@@ -38,7 +38,7 @@ public class ResetElevatorCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(ElevatorPolicy.rightEncoderPosition <= 0){
+    if(ElevatorPolicy.rightEncoderPosition <= 0 && ElevatorPolicy.leftEncoderPosition <= 0){
       return true;
     }
     return false;

@@ -26,7 +26,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     leftElevatorMotor.follow(rightElevatorMotor);
     rightEncoder = rightElevatorMotor.getEncoder();
     leftEncoder = leftElevatorMotor.getEncoder();
-    set(0,0,0,0,0);
+    leftEncoder.setInverted(ElevatorPolicy.INV_LEFT);
+    rightEncoder.setInverted(ElevatorPolicy.INV_RIGHT);
+    //TODO: REFERENCE TO EACH SUBSYSTEM AFTER TESTING
+    set(0.01,0,0,0,0);
   }
 
   public void set(double p, double i, double d, double f, double iz) {

@@ -24,12 +24,13 @@ public class SetElevatorCommand extends CommandBase {
   @Override
   public void initialize() {
     m_ElevatorSubsystem.stopEle();
+    m_ElevatorSubsystem.pidMove(targetPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ElevatorSubsystem.pidMove(targetPosition);
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -41,7 +42,9 @@ public class SetElevatorCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(ElevatorPolicy.rightEncoderPosition>=ElevatorPolicy.setPosition){
+    if(ElevatorPolicy.rightEncoderPosition>=ElevatorPolicy.setPosition 
+    && ElevatorPolicy.leftEncoderPosition>=ElevatorPolicy.setPosition)
+    {
       return true;
     }
     return false;

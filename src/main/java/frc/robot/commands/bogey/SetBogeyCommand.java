@@ -25,12 +25,12 @@ public class SetBogeyCommand extends CommandBase {
   @Override
   public void initialize() {
     m_BogeySubsystem.stopArm();
+    m_BogeySubsystem.pidMove(targetPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_BogeySubsystem.pidMove(targetPosition);
   }
 
   // Called once the command ends or is interrupted.
