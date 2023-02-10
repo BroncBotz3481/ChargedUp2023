@@ -7,13 +7,17 @@ package frc.robot.commands.wrist;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
-public class StopWristCommand extends CommandBase {
+public class StopWristCommand extends CommandBase
+{
+
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final WristSubsystem m_WristSubsystem;
-  /** 
-   * @param subsystem
-   * Creates a new StopWristCommand. */
-  public StopWristCommand(WristSubsystem subsystem) {                //constructor method
+
+  /**
+   * @param subsystem Creates a new StopWristCommand.
+   */
+  public StopWristCommand(WristSubsystem subsystem)
+  {                //constructor method
     // Use addRequirements() here to declare subsystem dependencies.
     m_WristSubsystem = subsystem;         //allows private variable to be used in other methods in the class
     addRequirements(subsystem);
@@ -21,25 +25,29 @@ public class StopWristCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize()
+  {
     m_WristSubsystem.stopMotor();          //calls stop motor when command is initialized
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute()
+  {
     m_WristSubsystem.stopMotor();              //calls stops motor when command is executed
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
     m_WristSubsystem.stopMotor();               //stops wrist motor
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return false;                     //returns false
   }
 }

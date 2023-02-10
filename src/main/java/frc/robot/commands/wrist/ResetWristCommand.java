@@ -8,10 +8,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
-public class ResetWristCommand extends CommandBase {
-  /** Creates a new ResetWristCommand. */
+public class ResetWristCommand extends CommandBase
+{
+
+  /**
+   * Creates a new ResetWristCommand.
+   */
   private final WristSubsystem m_WristSubsystem;
-  public ResetWristCommand(WristSubsystem subsystem) {
+
+  public ResetWristCommand(WristSubsystem subsystem)
+  {
     // Use addRequirements() here to declare subsystem dependencies.
     m_WristSubsystem = subsystem;
     addRequirements(subsystem);
@@ -19,25 +25,30 @@ public class ResetWristCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize()
+  {
     m_WristSubsystem.setMotor(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute()
+  {
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
     m_WristSubsystem.stopMotor();
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    if(WristPolicy.encoderPosition <= 0){
+  public boolean isFinished()
+  {
+    if (WristPolicy.encoderPosition <= 0)
+    {
       return true;
     }
     return false;

@@ -4,16 +4,21 @@
 
 package frc.robot.commands.elevator;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
+import java.util.function.DoubleSupplier;
 
-public class ManualElevatorCommand extends CommandBase {
-  /** Creates a new ManualElevatorCommand. */
+public class ManualElevatorCommand extends CommandBase
+{
+
+  /**
+   * Creates a new ManualElevatorCommand.
+   */
   private final ElevatorSubsystem m_elevatorSubsystem;
-  private final DoubleSupplier powSupplier;
-  public ManualElevatorCommand(ElevatorSubsystem subsystem, DoubleSupplier powDoubleSupplier) {
+  private final DoubleSupplier    powSupplier;
+
+  public ManualElevatorCommand(ElevatorSubsystem subsystem, DoubleSupplier powDoubleSupplier)
+  {
     // Use addRequirements() here to declare subsystem dependencies.
     m_elevatorSubsystem = subsystem;
     powSupplier = powDoubleSupplier;
@@ -22,25 +27,29 @@ public class ManualElevatorCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize()
+  {
     m_elevatorSubsystem.stopEle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute()
+  {
     m_elevatorSubsystem.moveElevator(powSupplier.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
     m_elevatorSubsystem.stopEle();
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return false;
   }
 }

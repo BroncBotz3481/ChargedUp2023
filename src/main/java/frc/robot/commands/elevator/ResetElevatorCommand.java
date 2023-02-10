@@ -8,10 +8,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
-public class ResetElevatorCommand extends CommandBase {
+public class ResetElevatorCommand extends CommandBase
+{
+
   private final ElevatorSubsystem m_ElevatorSubsystem;
-  /** Creates a new ResetElevatorCommand. */
-  public ResetElevatorCommand(ElevatorSubsystem subsystem) {
+
+  /**
+   * Creates a new ResetElevatorCommand.
+   */
+  public ResetElevatorCommand(ElevatorSubsystem subsystem)
+  {
     // Use addRequirements() here to declare subsystem dependencies.
     m_ElevatorSubsystem = subsystem;
     addRequirements(subsystem);
@@ -19,26 +25,31 @@ public class ResetElevatorCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize()
+  {
     m_ElevatorSubsystem.pidMove(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute()
+  {
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
     m_ElevatorSubsystem.stopEle();
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    if(ElevatorPolicy.rightEncoderPosition <= 0 && ElevatorPolicy.leftEncoderPosition <= 0){
+  public boolean isFinished()
+  {
+    if (ElevatorPolicy.rightEncoderPosition <= 0 && ElevatorPolicy.leftEncoderPosition <= 0)
+    {
       return true;
     }
     return false;

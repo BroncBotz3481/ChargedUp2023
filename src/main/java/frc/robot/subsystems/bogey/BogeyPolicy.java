@@ -4,38 +4,42 @@
 
 package frc.robot.subsystems.bogey;
 
-/** Add your docs here. */
-public final class BogeyPolicy {
-    public static final int BOGEY_ID_PORT = 0;
-    public static double bogeyPower;
-    public static double encoderVelocity;
-    public static double encoderPosition;
-    public static double ratioPosition;
-    public static double setPosition;
+/**
+ * Add your docs here.
+ */
+public final class BogeyPolicy
+{
 
-    // public static final double low = 50;
-    // public static final double mid = 100;
-    // public static final double high = 150;
+  public static final int    BOGEY_ID_PORT = 0;
+  public static       double bogeyPower;
+  public static       double encoderVelocity;
+  public static       double encoderPosition;
+  public static       double ratioPosition;
+  public static       double setPosition;
 
-    // public static boolean setPointDefault(){
+  // public static final double low = 50;
+  // public static final double mid = 100;
+  // public static final double high = 150;
 
-    //     if(encoderPosition >= 0)
-    //     {
-    //         return true;
-    //     }
+  // public static boolean setPointDefault(){
 
-    //     return false;
-    //  }
-     
-    // public static boolean isHigh(){
-    //     return encoderPosition<high;
-    // }
-    
-    // public static boolean isMid(){
-    //     return encoderPosition<mid;
-    // }
+  //     if(encoderPosition >= 0)
+  //     {
+  //         return true;
+  //     }
 
-    // public static boolean isLow(){
-    //     return encoderPosition<low;
-    // }
+  //     return false;
+  //  }
+
+  // public static boolean isHigh(){
+  //     return encoderPosition<high;
+  // }
+
+  // public static boolean isMid(){
+  //     return encoderPosition<mid;
+  // }
+
+  // public static boolean isLow(){
+  //     return encoderPosition<low;
+  // }
 }

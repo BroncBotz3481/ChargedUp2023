@@ -7,10 +7,16 @@ package frc.robot.commands.elevator;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
-public class StopElevatorCommand extends CommandBase {
-  /** Creates a new StopElevatorCommand. */
+public class StopElevatorCommand extends CommandBase
+{
+
+  /**
+   * Creates a new StopElevatorCommand.
+   */
   private final ElevatorSubsystem m_ElevatorSubsystem;
-  public StopElevatorCommand(ElevatorSubsystem subsystem) {
+
+  public StopElevatorCommand(ElevatorSubsystem subsystem)
+  {
     // Use addRequirements() here to declare subsystem dependencies.
     m_ElevatorSubsystem = subsystem;
     addRequirements(subsystem);
@@ -18,25 +24,29 @@ public class StopElevatorCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize()
+  {
     m_ElevatorSubsystem.stopEle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute()
+  {
     m_ElevatorSubsystem.stopEle();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
     m_ElevatorSubsystem.stopEle();
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return false;
   }
 }

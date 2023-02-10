@@ -7,13 +7,17 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 
-public class SpinCommand extends CommandBase {
+public class SpinCommand extends CommandBase
+{
+
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem m_IntakeSubsystem;
-  /** 
-   * @param subsystem
-  Creates a new SpinCommand. */
-  public SpinCommand(IntakeSubsystem subsystem) {
+
+  /**
+   * @param subsystem Creates a new SpinCommand.
+   */
+  public SpinCommand(IntakeSubsystem subsystem)
+  {
     // Use addRequirements() here to declare subsystem dependencies.
     m_IntakeSubsystem = subsystem;
     addRequirements(subsystem);
@@ -21,25 +25,29 @@ public class SpinCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize()
+  {
     m_IntakeSubsystem.stopIntake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute()
+  {
     m_IntakeSubsystem.runIntake(-1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
     m_IntakeSubsystem.stopIntake();
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return false;
   }
 }

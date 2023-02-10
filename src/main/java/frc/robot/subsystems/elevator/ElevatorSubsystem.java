@@ -4,20 +4,27 @@
 
 package frc.robot.subsystems.elevator;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-public class ElevatorSubsystem extends SubsystemBase {
-  /** Creates a new ElevatorSubsystem. */
-  private final CANSparkMax leftElevatorMotor;
-  private final CANSparkMax rightElevatorMotor;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class ElevatorSubsystem extends SubsystemBase
+{
+
+  /**
+   * Creates a new ElevatorSubsystem.
+   */
+  private final CANSparkMax           leftElevatorMotor;
+  private final CANSparkMax           rightElevatorMotor;
   private final SparkMaxPIDController PIDController;
-  private final RelativeEncoder rightEncoder;
-  private final RelativeEncoder leftEncoder;
-  public ElevatorSubsystem() {
+  private final RelativeEncoder       rightEncoder;
+  private final RelativeEncoder       leftEncoder;
+
+  public ElevatorSubsystem()
+  {
     leftElevatorMotor = new CANSparkMax(ElevatorPolicy.LEFT_ELEV_ID_PORT, MotorType.kBrushless);
     rightElevatorMotor = new CANSparkMax(ElevatorPolicy.RIGHT_ELEV_ID_PORT, MotorType.kBrushless);
     PIDController = rightElevatorMotor.getPIDController();
@@ -29,10 +36,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     leftEncoder.setInverted(ElevatorPolicy.INV_LEFT);
     rightEncoder.setInverted(ElevatorPolicy.INV_RIGHT);
     //TODO: REFERENCE TO EACH SUBSYSTEM AFTER TESTING
-    set(0.01,0,0,0,0);
+    set(0.01, 0, 0, 0, 0);
   }
 
-  public void set(double p, double i, double d, double f, double iz) {
+  public void set(double p, double i, double d, double f, double iz)
+  {
     PIDController.setP(p);
     PIDController.setI(i);
     PIDController.setD(d);
@@ -40,22 +48,26 @@ public class ElevatorSubsystem extends SubsystemBase {
     PIDController.setIZone(iz);
   }
 
-  public void moveElevator(double power) {
+  public void moveElevator(double power)
+  {
     ElevatorPolicy.elevatorPower = power;
     rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
   }
 
-  public void pidMove(double targetPosition) {
+  public void pidMove(double targetPosition)
+  {
     ElevatorPolicy.setPosition = targetPosition;
     PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
   }
 
-  public void stopEle() {
+  public void stopEle()
+  {
     moveElevator(0);
   }
 
   @Override
-  public void periodic() {
+  public void periodic()
+  {
     // This method will be called once per scheduler run
     ElevatorPolicy.rightEncoderVelocity = rightEncoder.getVelocity();
     ElevatorPolicy.rightEncoderPosition = rightEncoder.getPosition();

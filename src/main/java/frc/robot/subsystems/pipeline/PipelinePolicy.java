@@ -13,19 +13,21 @@
 package frc.robot.subsystems.pipeline;
 
 import edu.wpi.first.math.geometry.Transform3d;
-
 import java.util.List;
 
-public final class PipelinePolicy {
-    public static boolean targetExists;
+public final class PipelinePolicy
+{
 
-    public static double[] pipeline; //This will hold yaw,pitch,area,and skew respectively in that order
+  public static boolean targetExists;
 
-    public static Transform3d transformation;
+  public static double[] pipeline; //This will hold yaw,pitch,area,and skew respectively in that order
 
-    public static List corners;
+  public static Transform3d transformation;
 
-    public void aVisionProcessingAlgorithmThatAutomagicallyWorks(){
-        //magic ensues...
-    }
+  public static List corners;
+
+  public void aVisionProcessingAlgorithmThatAutomagicallyWorks()
+  {
+    //magic ensues...
+  }
 }

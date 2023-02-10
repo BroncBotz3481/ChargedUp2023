@@ -5,50 +5,59 @@
 package frc.robot.subsystems.wrist;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class WristSubsystem extends SubsystemBase {
-  /** Creates a new WristSubsystem. */
-  private final CANSparkMax wristMotor;
-  private final RelativeEncoder encoder;
+public class WristSubsystem extends SubsystemBase
+{
+
+  /**
+   * Creates a new WristSubsystem.
+   */
+  private final CANSparkMax           wristMotor;
+  private final RelativeEncoder       encoder;
   private final SparkMaxPIDController PIDController;
 
-  public WristSubsystem() {
-    wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT,MotorType.kBrushless);
+  public WristSubsystem()
+  {
+    wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT, MotorType.kBrushless);
     encoder = wristMotor.getEncoder();
     PIDController = wristMotor.getPIDController();
     setPIDF(0, 0, 0, 0, 0);
   }
 
-  public void setPIDF(double P, double I, double D, double F, double integralZone){
+  public void setPIDF(double P, double I, double D, double F, double integralZone)
+  {
     PIDController.setP(P);
     PIDController.setI(I);
     PIDController.setD(D);
     PIDController.setFF(F);
     PIDController.setIZone(integralZone);
-}
+  }
 
-  public void runMotor(double power){
+  public void runMotor(double power)
+  {
     WristPolicy.power = power;
     wristMotor.set(WristPolicy.power);
   }
 
-  public void setMotor(double targetPosition){
+  public void setMotor(double targetPosition)
+  {
     WristPolicy.setPosition = targetPosition;
     PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
   }
 
-  public void stopMotor(){
+  public void stopMotor()
+  {
     runMotor(0);
   }
 
   @Override
-  public void periodic() {
+  public void periodic()
+  {
     // This method will be called once per scheduler run
     WristPolicy.encoderVelocity = encoder.getVelocity();
     WristPolicy.encoderPosition = encoder.getPosition();
