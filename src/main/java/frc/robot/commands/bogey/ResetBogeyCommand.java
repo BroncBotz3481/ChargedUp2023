@@ -27,7 +27,7 @@ public class ResetBogeyCommand extends CommandBase
   @Override
   public void initialize()
   {
-    m_BogeySubsystem.pidMove(0);
+    m_BogeySubsystem.runPID(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

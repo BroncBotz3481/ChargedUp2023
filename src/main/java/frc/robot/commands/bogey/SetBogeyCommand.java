@@ -30,7 +30,7 @@ public class SetBogeyCommand extends CommandBase
   public void initialize()
   {
     m_BogeySubsystem.stopArm();
-    m_BogeySubsystem.pidMove(targetPosition);
+    m_BogeySubsystem.runPID(targetPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

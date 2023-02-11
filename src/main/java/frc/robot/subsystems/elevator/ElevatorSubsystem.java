@@ -51,7 +51,7 @@ public class ElevatorSubsystem extends SubsystemBase
     rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
   }
 
-  public void pidMove(double targetPosition)
+  public void runPID(double targetPosition)
   {
     ElevatorPolicy.setPosition = targetPosition;
     PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);

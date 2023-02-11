@@ -30,7 +30,7 @@ public class SetElevatorCommand extends CommandBase
   public void initialize()
   {
     m_ElevatorSubsystem.stopEle();
-    m_ElevatorSubsystem.pidMove(targetPosition);
+    m_ElevatorSubsystem.runPID(targetPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

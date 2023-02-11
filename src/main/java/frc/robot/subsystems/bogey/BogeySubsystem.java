@@ -6,6 +6,7 @@ package frc.robot.subsystems.bogey;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -17,19 +18,27 @@ public class BogeySubsystem extends SubsystemBase
   /**
    * Creates a new BogeySubsystem.
    */
-  private final CANSparkMax           bogeyMotor;
+  private final CANSparkMax bogeyMotor;
   private final SparkMaxPIDController PIDController;
-  private final RelativeEncoder       bogeyEncoder;
+  private final RelativeEncoder bogeyEncoder;
 
+
+  /** 
+   * The Constructor initializes the motor, pidcontroller and encoder
+  */
   public BogeySubsystem()
   {
     bogeyMotor = new CANSparkMax(BogeyPolicy.BOGEY_ID_PORT, MotorType.kBrushless);
+    bogeyMotor.restoreFactoryDefaults();
     PIDController = bogeyMotor.getPIDController();
     bogeyEncoder = bogeyMotor.getEncoder();
+    bogeyMotor.setIdleMode(IdleMode.kBrake);
     
     set(BogeyPolicy.PROPORTION,BogeyPolicy.INTEGRAL,BogeyPolicy.DERIVATIVE,BogeyPolicy.FEEDFORWARD,BogeyPolicy.INTEGRAL_ZONE);
   }
-
+  /**
+    Initializes all PIDF constants for the PIDController 
+  */
   public void set(double p, double i, double d, double f, double iz) {
     PIDController.setP(p);
     PIDController.setI(i);
@@ -38,17 +47,23 @@ public class BogeySubsystem extends SubsystemBase
     PIDController.setIZone(iz);
   }
 
+  /** 
+   * Moves the arm with power as the parameter 
+   * */
   public void moveArm(double power)
   {
     BogeyPolicy.bogeyPower = power;
     bogeyMotor.set(BogeyPolicy.bogeyPower);
   }
 
-  public void pidMove(double targetPosition)
+  public void runPID(double targetPosition) /** Moves the bogey using a PID control loop */
   {
     BogeyPolicy.setPosition = targetPosition;
     PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
   }
+  /** 
+   * Stops the arm by passing in 0 power
+  */
 
   public void stopArm()
   {

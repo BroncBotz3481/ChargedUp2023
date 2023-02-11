@@ -27,7 +27,7 @@ public class ResetElevatorCommand extends CommandBase
   @Override
   public void initialize()
   {
-    m_ElevatorSubsystem.pidMove(0);
+    m_ElevatorSubsystem.runPID(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -8,7 +8,7 @@ package frc.robot.subsystems.bogey;
  Holds all important values from the subsystem **/
 
 public final class BogeyPolicy {
-    public static final int BOGEY_ID_PORT = 0;
+    public static final int BOGEY_ID_PORT = 0;/**CAN ID for the bogey motor */
     public static double bogeyPower; /**Power set to Bogey Motor */
     public static double encoderVelocity; /**How fast Motors are running */
     public static double encoderPosition; /** Position of Motor */
