@@ -56,7 +56,10 @@ public class BogeySubsystem extends SubsystemBase
     bogeyMotor.set(BogeyPolicy.bogeyPower);
   }
 
-  public void runPID(double targetPosition) /** Moves the bogey using a PID control loop */
+  /** 
+   * Moves the bogey using a PID control loop 
+   * */
+  public void runPID(double targetPosition)
   {
     BogeyPolicy.setPosition = targetPosition;
     PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
