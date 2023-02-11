@@ -26,7 +26,7 @@ public class WristSubsystem extends SubsystemBase
     wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT, MotorType.kBrushless);
     encoder = wristMotor.getEncoder();
     PIDController = wristMotor.getPIDController();
-    setPIDF(0, 0, 0, 0, 0);
+    setPIDF(0.01, 0, 0, 0, 0);
   }
 
   public void setPIDF(double P, double I, double D, double F, double integralZone)

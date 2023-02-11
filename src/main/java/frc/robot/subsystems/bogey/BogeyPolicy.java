@@ -4,42 +4,28 @@
 
 package frc.robot.subsystems.bogey;
 
-/**
- * Add your docs here.
- */
-public final class BogeyPolicy
-{
+/** This is the Bogey policy, holding all algorithmic functions for the Bogey Subsystem and Commands. 
+ Holds all important values from the subsystem **/
 
-  public static final int    BOGEY_ID_PORT = 0;
-  public static       double bogeyPower;
-  public static       double encoderVelocity;
-  public static       double encoderPosition;
-  public static       double ratioPosition;
-  public static       double setPosition;
+public final class BogeyPolicy {
+    public static final int BOGEY_ID_PORT = 0;
+    public static double bogeyPower; /**Power set to Bogey Motor */
+    public static double encoderVelocity; /**How fast Motors are running */
+    public static double encoderPosition; /** Position of Motor */
+    public static double ratioPosition; /**Used linearize the Elevator Bogey */
+    public static double setPosition; /**target position */
 
-  // public static final double low = 50;
-  // public static final double mid = 100;
-  // public static final double high = 150;
+    /**Constants Proportion, Integral, Derivative, FeedForward, and IntegralZone (PIDF) for Bogey */
+    public static final double FEEDFORWARD = 0.05; 
+    public static final double PROPORTION = 0.01; 
+    public static final double INTEGRAL = 0.0; 
+    public static final double DERIVATIVE = 0.0; 
+    public static final double INTEGRAL_ZONE = 0.0; 
 
-  // public static boolean setPointDefault(){
 
-  //     if(encoderPosition >= 0)
-  //     {
-  //         return true;
-  //     }
 
-  //     return false;
-  //  }
 
-  // public static boolean isHigh(){
-  //     return encoderPosition<high;
-  // }
 
-  // public static boolean isMid(){
-  //     return encoderPosition<mid;
-  // }
 
-  // public static boolean isLow(){
-  //     return encoderPosition<low;
-  // }
+
 }

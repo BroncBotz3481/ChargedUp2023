@@ -26,12 +26,11 @@ public class BogeySubsystem extends SubsystemBase
     bogeyMotor = new CANSparkMax(BogeyPolicy.BOGEY_ID_PORT, MotorType.kBrushless);
     PIDController = bogeyMotor.getPIDController();
     bogeyEncoder = bogeyMotor.getEncoder();
-    set(0, 0, 0, 0, 0);
+    
+    set(BogeyPolicy.PROPORTION,BogeyPolicy.INTEGRAL,BogeyPolicy.DERIVATIVE,BogeyPolicy.FEEDFORWARD,BogeyPolicy.INTEGRAL_ZONE);
   }
 
-  ///
-  public void set(double p, double i, double d, double f, double iz)
-  {
+  public void set(double p, double i, double d, double f, double iz) {
     PIDController.setP(p);
     PIDController.setI(i);
     PIDController.setD(d);
