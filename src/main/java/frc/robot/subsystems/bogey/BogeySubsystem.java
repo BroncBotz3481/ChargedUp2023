@@ -11,34 +11,44 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.bogey.BogeyPolicy.PIDF;
 
-public class BogeySubsystem extends SubsystemBase
-{
-
+public class BogeySubsystem extends SubsystemBase {
   /**
-   * Creates a new BogeySubsystem.
+   * SparkMax for the bogey motor
    */
   private final CANSparkMax bogeyMotor;
+  /**
+   * SparxMaxPIDController from SparkMax
+   */
   private final SparkMaxPIDController PIDController;
+  /**
+   * Relative encoder from the bogey motor
+   */
   private final RelativeEncoder bogeyEncoder;
 
-
-  /** 
-   * The Constructor initializes the motor, pidcontroller and encoder
-  */
-  public BogeySubsystem()
-  {
+  /**
+   * The constructor initializes the motor, pidcontroller, encoder, and the PIDF constants
+   */
+  public BogeySubsystem() {
     bogeyMotor = new CANSparkMax(BogeyPolicy.BOGEY_ID_PORT, MotorType.kBrushless);
     bogeyMotor.restoreFactoryDefaults();
     PIDController = bogeyMotor.getPIDController();
     bogeyEncoder = bogeyMotor.getEncoder();
     bogeyMotor.setIdleMode(IdleMode.kBrake);
-    
-    set(BogeyPolicy.PROPORTION,BogeyPolicy.INTEGRAL,BogeyPolicy.DERIVATIVE,BogeyPolicy.FEEDFORWARD,BogeyPolicy.INTEGRAL_ZONE);
+
+    set(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
   }
+
   /**
-    Initializes all PIDF constants for the PIDController 
-  */
+   * Sets the spark max closed loop PIDF values
+   *
+   * @param p  Proportional gain constant
+   * @param i  Integral gain constant
+   * @param d  Derivative constant
+   * @param f  Feedforward constant
+   * @param iz Integral Zone
+   */
   public void set(double p, double i, double d, double f, double iz) {
     PIDController.setP(p);
     PIDController.setI(i);
@@ -47,35 +57,36 @@ public class BogeySubsystem extends SubsystemBase
     PIDController.setIZone(iz);
   }
 
-  /** 
-   * Moves the arm with power as the parameter 
-   * */
-  public void moveArm(double power)
-  {
+  /**
+   * Moves the arm with voltage
+   *
+   * @param power The power used to move the bogey motor
+   */
+  public void moveArm(double power) {
     BogeyPolicy.bogeyPower = power;
     bogeyMotor.set(BogeyPolicy.bogeyPower);
   }
 
-  /** 
-   * Moves the bogey using a PID control loop 
-   * */
-  public void runPID(double targetPosition)
-  {
+  /**
+   * @param targetPosition The set position for the PIDF Loop
+   */
+  public void runPID(double targetPosition) {
     BogeyPolicy.setPosition = targetPosition;
     PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
   }
-  /** 
-   * Stops the arm by passing in 0 power
-  */
 
-  public void stopArm()
-  {
+  /**
+   * Stops the arm with voltage
+   */
+  public void stopArm() {
     moveArm(0);
   }
 
+  /**
+   * Periodically gets the encoder velocity and position and puts it inside the policy class
+   */
   @Override
-  public void periodic()
-  {
+  public void periodic() {
     BogeyPolicy.encoderVelocity = bogeyEncoder.getVelocity();
     BogeyPolicy.encoderPosition = bogeyEncoder.getPosition();
   }
