@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.wrist.WristPolicy.PIDF;
 
@@ -17,35 +18,41 @@ import frc.robot.subsystems.wrist.WristPolicy.PIDF;
  */
 public class WristSubsystem extends SubsystemBase
 {
-
-  /**
-   * Creates a new WristSubsystem.
-   * SPARKMax for Wrist Motor
-   * Relative Encoder for encoder
-   * PIDController declared
-   */
   /**
    * SparkMax for the wrist motor
    */
-  private final CANSparkMax           wristMotor;
+  private final CANSparkMax wristMotor;
   /**
-   * Relative encoder for the SparkMax
+   * Relative encoder from the SparkMax
    */
-  private final RelativeEncoder       encoder;
+  private final RelativeEncoder encoder;
   /**
    * SparkMaxPIDController from the SparkMax
    */
   private final SparkMaxPIDController PIDController;
+  /**
+   * Prevents wrist from extending past upper limit
+   */
+  private final DigitalInput upperLimitSwitch;
+  /**
+   * Prevents wrist from extending past lower limit
+   */
+  private final DigitalInput lowerLimitSwitch;
 
   /**
    * The constructor motor initializes the wristMotor, encoder, and PIDController.
    */
-  public WristSubsystem()
-  {
+
+  public WristSubsystem() {
     wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT, MotorType.kBrushless);
+    wristMotor.restoreFactoryDefaults();
     encoder = wristMotor.getEncoder();
+    encoder.setPositionConversionFactor(1 / WristPolicy.wristGearRatio);
     PIDController = wristMotor.getPIDController();
+    PIDController.setFeedbackDevice(encoder);
     setPIDF(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
+    upperLimitSwitch = new DigitalInput(WristPolicy.UPPER_LIMIT_CHANNEL);
+    lowerLimitSwitch = new DigitalInput(WristPolicy.LOWER_LIMIT_CHANNEL);
   }
   /**
    * Sets the spark max closed loop PIDF values
@@ -66,25 +73,25 @@ public class WristSubsystem extends SubsystemBase
   }
 
   /**
-   * moves the Wrist with power
+   * Moves the arm with voltage
+   * @param power The power used to move the wrist motor
    */
-  public void runMotor(double power)
-  {
-    WristPolicy.power = power;
+  public void runMotor(double power) {
+    WristPolicy.power = WristPolicy.getWristPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
     wristMotor.set(WristPolicy.power);
   }
 
   /**
-   * Sets a specific position to the Wrist
+   * Runs PID control loop
+   * @param targetPosition The set position for the PIDF loop
    */
-  public void setMotor(double targetPosition)
-  {
-    WristPolicy.setPosition = targetPosition;
+  public void setMotor(double targetPosition) {
+    WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition, upperLimitSwitch.get(), lowerLimitSwitch.get());
     PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
   }
 
   /**
-   * Sets the motor power to be 0
+   * Stops the wrist with voltage
    */
   public void stopMotor()
   {
@@ -97,7 +104,6 @@ public class WristSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    // This method will be called once per scheduler run
     WristPolicy.encoderVelocity = encoder.getVelocity();
     WristPolicy.encoderPosition = encoder.getPosition();
   }
