@@ -16,7 +16,7 @@ public class SpinCommand extends CommandBase
   private final IntakeSubsystem m_IntakeSubsystem;
 
   /**
-   * Initializes the intakeSubsystem and addsRequirements
+   * Initializes the intakeSubsystem
    * @param subsystem creates a new SpinCommand
    */
   public SpinCommand(IntakeSubsystem subsystem)

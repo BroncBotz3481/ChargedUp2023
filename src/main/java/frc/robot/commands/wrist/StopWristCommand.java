@@ -9,7 +9,9 @@ import frc.robot.subsystems.wrist.WristSubsystem;
 
 public class StopWristCommand extends CommandBase
 {
-
+  /**
+   * Uses WristSubsystem
+   */
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final WristSubsystem m_WristSubsystem;
 
@@ -24,6 +26,9 @@ public class StopWristCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+  /**
+   * stops the wrist at the beginning of the command running. Power is set to 0
+   */
   @Override
   public void initialize()
   {
@@ -31,6 +36,9 @@ public class StopWristCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Stops the wrist when executed. Power is set to 0.
+   */
   @Override
   public void execute()
   {
@@ -38,6 +46,9 @@ public class StopWristCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Wrist is stopped at the end. Power is set to 0.
+   */
   @Override
   public void end(boolean interrupted)
   {
@@ -45,6 +56,7 @@ public class StopWristCommand extends CommandBase
   }
 
   // Returns true when the command should end.
+
   @Override
   public boolean isFinished()
   {

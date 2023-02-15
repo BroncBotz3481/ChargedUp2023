@@ -12,7 +12,8 @@ public class ResetWristCommand extends CommandBase
 {
 
   /**
-   * Creates a new ResetWristCommand.
+   * Initializes the WristSubsystem
+   * @param subsystem creates a new ResetWristCommand
    */
   private final WristSubsystem m_WristSubsystem;
 
@@ -24,6 +25,9 @@ public class ResetWristCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+  /**
+   * stops the wrist at the beginning of the command running
+   */
   @Override
   public void initialize()
   {
@@ -37,13 +41,18 @@ public class ResetWristCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * stops the intake at the end of the command running
+   */
   @Override
   public void end(boolean interrupted)
   {
     m_WristSubsystem.stopMotor();
   }
 
-  // Returns true when the command should end.
+  /**
+   *  Returns true when the command should end reaching the proper position
+   */
   @Override
   public boolean isFinished()
   {

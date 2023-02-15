@@ -16,7 +16,7 @@ public class StopIntakeCommand extends CommandBase
   private final IntakeSubsystem m_IntakeSubsystem;
 
   /**
-   * Initializes the intakeSubsystem and addsRequirements
+   * Initializes the intakeSubsystem
    * @param subsystem Creates a new StopIntakeCommand.
    */
   public StopIntakeCommand(IntakeSubsystem subsystem)
