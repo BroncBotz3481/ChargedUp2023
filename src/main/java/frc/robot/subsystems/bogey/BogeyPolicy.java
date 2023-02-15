@@ -21,7 +21,6 @@ public final class BogeyPolicy {
      * Pin channel for lower limit on roborio
      */
     public static final int LOWER_LIMIT_CHANNEL = 2;
-
     /**
      * The power set to Bogey Motor
      */

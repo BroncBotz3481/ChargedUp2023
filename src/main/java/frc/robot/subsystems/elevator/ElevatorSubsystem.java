@@ -10,7 +10,9 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.elevator.ElevatorPolicy.PIDF;
 
 public class ElevatorSubsystem extends SubsystemBase
@@ -18,7 +20,7 @@ public class ElevatorSubsystem extends SubsystemBase
   /**
    * SparkMax for the left elevator motor
    */
-  private final CANSparkMax           leftElevatorMotor;
+  private final CANSparkMax          leftElevatorMotor;
   /**
    * SparkMax for the right elevator motor
    */
@@ -35,6 +37,14 @@ public class ElevatorSubsystem extends SubsystemBase
    * Left relative encoder from the SparkMax
    */
   private final RelativeEncoder       leftEncoder;
+  /**
+   * Prevents elevator from extending past upper limit
+   */
+  private final DigitalInput upperLimitSwitch;
+  /**
+   * Prevents elevator from extending past lower limit
+   */
+  private final DigitalInput lowerLimitSwitch;
 
   /**
    * The constructor initializes the elevator motors and the encoders, as well as the
@@ -55,6 +65,8 @@ public class ElevatorSubsystem extends SubsystemBase
     leftEncoder = leftElevatorMotor.getEncoder();
     rightEncoder.setPositionConversionFactor(1 / ElevatorPolicy.elevatorGearRatio);
     PIDController.setFeedbackDevice(rightEncoder);
+    upperLimitSwitch = new DigitalInput(ElevatorPolicy.UPPER_LIMIT_CHANNEL);
+    lowerLimitSwitch = new DigitalInput(ElevatorPolicy.LOWER_LIMIT_CHANNEL);
 
     set(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE,
             PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
@@ -84,7 +96,7 @@ public class ElevatorSubsystem extends SubsystemBase
    */
   public void moveElevator(double power)
   {
-    ElevatorPolicy.elevatorPower = power;
+    ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,upperLimitSwitch.get(),lowerLimitSwitch.get());
     rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
   }
 
@@ -94,7 +106,7 @@ public class ElevatorSubsystem extends SubsystemBase
    */
   public void runPID(double targetPosition)
   {
-    ElevatorPolicy.setPosition = targetPosition;
+    ElevatorPolicy.setPosition = ElevatorPolicy.getElevatorPosition(targetPosition, upperLimitSwitch.get(), lowerLimitSwitch.get());
     PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
   }
 

@@ -22,6 +22,14 @@ public final class ElevatorPolicy {
      */
     public static final int RIGHT_ELEV_ID_PORT = 1;
     /**
+     * Pin channel for upper limit on roborio
+     */
+    public static final int UPPER_LIMIT_CHANNEL = 3;
+    /**
+     * Pin channel for lower limit on roborio
+     */
+    public static final int LOWER_LIMIT_CHANNEL = 4;
+    /**
      * The left elevator motor is inversed
      */
     public static final boolean INV_LEFT = true;
@@ -82,6 +90,40 @@ public final class ElevatorPolicy {
          * Integral zone constant for PID loop
          */
         public static final double INTEGRAL_ZONE = 0.0;
+    }
+
+    /**
+     * Returns the power depending on the state of the limits
+     *
+     * @param desiredPower The desired power of the elevator motors
+     * @param upperLimit   The upper limit
+     * @param lowerLimit   The lower limit
+     * @return returns the power depending on the state of the limits
+     */
+    public static double getElevatorPower(double desiredPower, boolean upperLimit, boolean lowerLimit) {
+        if (upperLimit) {
+            return 0;
+        } else if (lowerLimit) {
+            return 0;
+        }
+        return desiredPower;
+    }
+
+    /**
+     * Returns the position depending on the state of the limits
+     *
+     * @param desiredPosition The desired position of the elevator
+     * @param upperLimit      The upper limit position
+     * @param lowerLimit      The lower limit position
+     * @return returns the position depending on the state of the limits
+     */
+    public static double getElevatorPosition(double desiredPosition, boolean upperLimit, boolean lowerLimit) {
+        if (upperLimit && desiredPosition > setPosition) {
+            return setPosition - 1;
+        } else if (lowerLimit && desiredPosition < setPosition) {
+            return setPosition + 1;
+        }
+        return desiredPosition;
     }
 }
 
