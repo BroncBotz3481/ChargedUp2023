@@ -17,6 +17,7 @@ public class SetBogeyCommand extends CommandBase
 
   /**
    * @param subsystem Creates a new BogeyHighCommand.
+   * 
    */
   public SetBogeyCommand(BogeySubsystem subsystem, double target)
   {
