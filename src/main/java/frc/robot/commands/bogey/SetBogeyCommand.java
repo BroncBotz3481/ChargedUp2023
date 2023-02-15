@@ -12,12 +12,19 @@ public class SetBogeyCommand extends CommandBase
 {
 
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  /**
+   * Uses a new bogey subsystem
+   */
   private final BogeySubsystem m_BogeySubsystem;
+  /**
+   * The target position for the bogey depending on the setpoint
+   */
   private       double         targetPosition;
 
   /**
+   * Initializes a new SetBogeyCommand
    * @param subsystem Creates a new BogeyHighCommand.
-   * 
+   * @param target sets the target position depending on the setpoint
    */
   public SetBogeyCommand(BogeySubsystem subsystem, double target)
   {
@@ -27,6 +34,10 @@ public class SetBogeyCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
+  /**
+   * Stops the arm, then runs PID for the arm to reach target position upon initialization
+   */
   @Override
   public void initialize()
   {
@@ -41,6 +52,11 @@ public class SetBogeyCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
+  /**
+   * Stops the arm when target position is reached
+   * @param interrupted whether the command was interrupted/canceled
+   */
   @Override
   public void end(boolean interrupted)
   {
@@ -48,6 +64,10 @@ public class SetBogeyCommand extends CommandBase
   }
 
   // Returns true when the command should end.
+
+  /**
+   * @return true or false depending on whether the bogey has reached its set position
+   */
   @Override
   public boolean isFinished()
   {

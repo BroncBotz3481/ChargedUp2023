@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.bogey.BogeyPolicy.PIDF;
 
+/**
+ * The Bogey subsystem on the robot
+ */
 public class BogeySubsystem extends SubsystemBase {
     /**
      * SparkMax for the bogey motor

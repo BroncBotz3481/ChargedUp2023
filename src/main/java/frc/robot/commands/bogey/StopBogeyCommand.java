@@ -11,6 +11,9 @@ public class StopBogeyCommand extends CommandBase
 {
 
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  /**
+   * Creates a new bogey subsystem
+   */
   private final BogeySubsystem m_BogeySubsystem;
 
   /**
@@ -24,6 +27,10 @@ public class StopBogeyCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
+  /**
+   * Stops the arm among initialization
+   */
   @Override
   public void initialize()
   {
@@ -31,6 +38,10 @@ public class StopBogeyCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+
+  /**
+   * Stops the arm while the command is run
+   */
   @Override
   public void execute()
   {
@@ -38,6 +49,11 @@ public class StopBogeyCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
+  /**
+   * Stops the arm when the command ends
+   * @param interrupted whether the command was interrupted/canceled
+   */
   @Override
   public void end(boolean interrupted)
   {

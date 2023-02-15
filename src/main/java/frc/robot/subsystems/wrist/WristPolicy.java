@@ -31,4 +31,29 @@ public final class WristPolicy
    * Position set to encoder
    */
   public static       double encoderPosition;
+  /**
+   * Holds all PIDF constants for WristSubsystem
+   */
+  public static class PIDF {
+    /**
+     * Feedforward constant for PID Loop
+     */
+    public static final double FEEDFORWARD = 0.0;
+    /**
+     * Proportion constant for PID Loop
+     */
+    public static final double PROPORTION = 0.01;
+    /**
+     * Integral constant for PID Loop
+     */
+    public static final double INTEGRAL = 0.0;
+    /**
+     * Derivative constant for PID Loop
+     */
+    public static final double DERIVATIVE = 0.0;
+    /**
+     * Integral zone constant for PID loop
+     */
+    public static final double INTEGRAL_ZONE = 0.0;
+  }
 }

@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.elevator.ElevatorPolicy.PIDF;
 
+/**
+ * The Elevator subsystem on the robot
+ */
 public class ElevatorSubsystem extends SubsystemBase
 {
   /**

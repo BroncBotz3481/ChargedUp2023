@@ -10,7 +10,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.wrist.WristPolicy.PIDF;
 
+/**
+ * The wrist subsystem on the robot
+ */
 public class WristSubsystem extends SubsystemBase
 {
 
@@ -20,8 +24,17 @@ public class WristSubsystem extends SubsystemBase
    * Relative Encoder for encoder
    * PIDController declared
    */
+  /**
+   * SparkMax for the wrist motor
+   */
   private final CANSparkMax           wristMotor;
+  /**
+   * Relative encoder for the SparkMax
+   */
   private final RelativeEncoder       encoder;
+  /**
+   * SparkMaxPIDController from the SparkMax
+   */
   private final SparkMaxPIDController PIDController;
 
   /**
@@ -32,7 +45,7 @@ public class WristSubsystem extends SubsystemBase
     wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT, MotorType.kBrushless);
     encoder = wristMotor.getEncoder();
     PIDController = wristMotor.getPIDController();
-    setPIDF(0.01, 0, 0, 0, 0);
+    setPIDF(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
   }
   /**
    * Sets the spark max closed loop PIDF values

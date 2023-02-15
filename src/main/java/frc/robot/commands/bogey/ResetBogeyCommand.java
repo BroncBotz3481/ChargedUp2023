@@ -10,11 +10,14 @@ import frc.robot.subsystems.bogey.BogeySubsystem;
 
 public class ResetBogeyCommand extends CommandBase
 {
-
+  /**
+   * Uses bogey subsystem
+   */
   private final BogeySubsystem m_BogeySubsystem;
 
   /**
-   * Creates a new ResetBogeyCommand.
+   * Creates a new ResetBogeyCommand
+   * @param subsystem initializes the Bogey subsystem
    */
   public ResetBogeyCommand(BogeySubsystem subsystem)
   {
@@ -24,6 +27,10 @@ public class ResetBogeyCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
+  /**
+   * Sets the target position of the bogey to zero
+   */
   @Override
   public void initialize()
   {
@@ -38,6 +45,11 @@ public class ResetBogeyCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
+  /**
+   * Ends the bogey command when the arm reaches the target position
+   * @param interrupted whether the command was interrupted/canceled
+   */
   @Override
   public void end(boolean interrupted)
   {
@@ -45,6 +57,10 @@ public class ResetBogeyCommand extends CommandBase
   }
 
   // Returns true when the command should end.
+
+  /**
+   * @return true if the bogey has reached position 0 and false if not
+   */
   @Override
   public boolean isFinished()
   {
