@@ -9,12 +9,16 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
 public class StopElevatorCommand extends CommandBase
 {
-
+ 
   /**
-   * Creates a new StopElevatorCommand.
+   * Uses ElevatorSubsystem
    */
   private final ElevatorSubsystem m_ElevatorSubsystem;
 
+  /**
+   * Initializes the elevator subsystem
+   * @param subsystem initializes the elevator subsystem
+   */
   public StopElevatorCommand(ElevatorSubsystem subsystem)
   {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -23,6 +27,10 @@ public class StopElevatorCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
+  /**
+   * Stops elevator at the beginning of the command
+   */
   @Override
   public void initialize()
   {
@@ -30,6 +38,10 @@ public class StopElevatorCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+
+  /**
+   * Stops Elevator
+   */
   @Override
   public void execute()
   {
@@ -37,6 +49,10 @@ public class StopElevatorCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
+  /**
+   * Stops Elevator
+   */
   @Override
   public void end(boolean interrupted)
   {

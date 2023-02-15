@@ -10,11 +10,14 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
 public class ResetElevatorCommand extends CommandBase
 {
-
+  /**
+   * Uses ElevatorSubsystem
+   */
   private final ElevatorSubsystem m_ElevatorSubsystem;
 
   /**
-   * Creates a new ResetElevatorCommand.
+   * Initializes the elevator subsystem
+   * @param subsystem initializes the elevator subsystem
    */
   public ResetElevatorCommand(ElevatorSubsystem subsystem)
   {
@@ -24,6 +27,10 @@ public class ResetElevatorCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+  
+  /**
+   * Uses PID to set targetPosition to 0 at beginning of command
+   */
   @Override
   public void initialize()
   {
@@ -38,6 +45,11 @@ public class ResetElevatorCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+  
+   /**
+   * stops the elevator at the end of the command
+   * @param interrupted whether the command was interrupted/canceled
+   */
   @Override
   public void end(boolean interrupted)
   {

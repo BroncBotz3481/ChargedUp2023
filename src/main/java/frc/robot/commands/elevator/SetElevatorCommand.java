@@ -12,11 +12,21 @@ public class SetElevatorCommand extends CommandBase
 {
 
   /**
-   * Creates a new ElevatorCommand.
+   * Uses ElevatorSubsystem
    */
   private final ElevatorSubsystem m_ElevatorSubsystem;
+
+  /**
+   * Target Position for Elevator
+   */
   private       double            targetPosition;
 
+
+  /**
+   * Initializes the elevator subsystem
+   * @param subsystem initializes the elevator subsystem
+   * @param target target position in meters
+   */
   public SetElevatorCommand(ElevatorSubsystem subsystem, double target)
   {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,6 +36,11 @@ public class SetElevatorCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
+  /**
+   * stops elevator at start of command
+   * runs PID to targetPosition at the start of command
+   */
   @Override
   public void initialize()
   {
@@ -34,6 +49,7 @@ public class SetElevatorCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  
   @Override
   public void execute()
   {
@@ -41,6 +57,11 @@ public class SetElevatorCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
+  /**
+   * stops Elevator at the end of the command
+   * @param interrupted whether the command was interrupted/canceled
+   */
   @Override
   public void end(boolean interrupted)
   {
