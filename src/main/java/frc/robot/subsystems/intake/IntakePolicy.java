@@ -10,7 +10,6 @@ package frc.robot.subsystems.intake;
  **/
 public final class IntakePolicy
 {
-
   public static final int    INTAKE_ID_PORT = 3; //CAN ID for intakeMotor
   public static       double power; //Power set to intakeMotor
 }
