@@ -10,13 +10,20 @@ import java.util.function.DoubleSupplier;
 
 public class ManualBogeyCommand extends CommandBase
 {
-
   /**
-   * Creates a new ManualElevatorCommand.
+   * Uses bogey subsystem
    */
   private final BogeySubsystem m_bogeySubsystem;
+  /**
+   * Uses a power supplier
+   */
   private final DoubleSupplier powSupplier;
 
+  /**
+   * Initializes the bogey subsystem and power supplier
+   * @param subsystem initializes the bogey subsystem
+   * @param powDoubleSupplier initializes the power supplier
+   */
   public ManualBogeyCommand(BogeySubsystem subsystem, DoubleSupplier powDoubleSupplier)
   {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,6 +33,10 @@ public class ManualBogeyCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
+  /**
+   * stops the arm at the beginning of the command running
+   */
   @Override
   public void initialize()
   {
@@ -33,6 +44,10 @@ public class ManualBogeyCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+
+  /**
+   * moves the arm
+   */
   @Override
   public void execute()
   {
@@ -40,6 +55,11 @@ public class ManualBogeyCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
+  /**
+   * stops the arm at the end of the command
+   * @param interrupted whether the command was interrupted/canceled
+   */
   @Override
   public void end(boolean interrupted)
   {
