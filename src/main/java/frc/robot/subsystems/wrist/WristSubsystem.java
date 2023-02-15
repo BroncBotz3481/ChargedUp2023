@@ -16,11 +16,17 @@ public class WristSubsystem extends SubsystemBase
 
   /**
    * Creates a new WristSubsystem.
+   * SPARKMax for Wrist Motor
+   * Relative Encoder for encoder
+   * PIDController declared
    */
   private final CANSparkMax           wristMotor;
   private final RelativeEncoder       encoder;
   private final SparkMaxPIDController PIDController;
 
+  /**
+   * The constructor motor initializes the wristMotor, encoder, and PIDController.
+   */
   public WristSubsystem()
   {
     wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT, MotorType.kBrushless);
@@ -28,33 +34,53 @@ public class WristSubsystem extends SubsystemBase
     PIDController = wristMotor.getPIDController();
     setPIDF(0.01, 0, 0, 0, 0);
   }
-
-  public void setPIDF(double P, double I, double D, double F, double integralZone)
+  /**
+   * Sets the spark max closed loop PIDF values
+   *
+   * @param p  Proportional gain constant
+   * @param i  Integral gain constant
+   * @param d  Derivative constant
+   * @param f  Feedforward constant
+   * @param iz Integral Zone
+   */
+  public void setPIDF(double p, double i, double d, double f, double iz)
   {
-    PIDController.setP(P);
-    PIDController.setI(I);
-    PIDController.setD(D);
-    PIDController.setFF(F);
-    PIDController.setIZone(integralZone);
+    PIDController.setP(p);
+    PIDController.setI(i);
+    PIDController.setD(d);
+    PIDController.setFF(f);
+    PIDController.setIZone(iz);
   }
 
+  /**
+   * moves the Wrist with power
+   */
   public void runMotor(double power)
   {
     WristPolicy.power = power;
     wristMotor.set(WristPolicy.power);
   }
 
+  /**
+   * Sets a specific position to the Wrist
+   */
   public void setMotor(double targetPosition)
   {
     WristPolicy.setPosition = targetPosition;
     PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
   }
 
+  /**
+   * Sets the motor power to be 0
+   */
   public void stopMotor()
   {
     runMotor(0);
   }
 
+  /**
+   * Periodically gets the encoder velocity and position and puts it inside the policy class
+   */
   @Override
   public void periodic()
   {

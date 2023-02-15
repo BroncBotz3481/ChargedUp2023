@@ -10,19 +10,36 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.elevator.ElevatorPolicy.PIDF;
 
 public class ElevatorSubsystem extends SubsystemBase
 {
 
   /**
-   * Creates a new ElevatorSubsystem.
+   * SparkMax for the left elevator motor
    */
   private final CANSparkMax           leftElevatorMotor;
+  /**
+   * SparkMax for the right elevator motor
+   */
   private final CANSparkMax           rightElevatorMotor;
+  /**
+   * SparkMaxPIDController from the SparkMax
+   */
   private final SparkMaxPIDController PIDController;
+  /**
+   * Right relative encoder from the SparkMax
+   */
   private final RelativeEncoder       rightEncoder;
+  /**
+   * Left relative encoder from the SparkMax
+   */
   private final RelativeEncoder       leftEncoder;
 
+  /**
+   * The constructor initializes the elevator motors and the encoders, as well as the
+   * PID Controller, and it sets the right motor and encoder as inverted, and sets the PID constants
+   */
   public ElevatorSubsystem()
   {
     leftElevatorMotor = new CANSparkMax(ElevatorPolicy.LEFT_ELEV_ID_PORT, MotorType.kBrushless);
@@ -33,9 +50,18 @@ public class ElevatorSubsystem extends SubsystemBase
     leftElevatorMotor.follow(rightElevatorMotor);
     rightEncoder = rightElevatorMotor.getEncoder();
     leftEncoder = leftElevatorMotor.getEncoder();
-    set(0.01,0,0,0,0);
+    set(PIDF.PROPORTION,PIDF.INTEGRAL,PIDF.DERIVATIVE,
+            PIDF.FEEDFORWARD,PIDF.INTEGRAL_ZONE);
   }
 
+  /**
+   * sets the spark max closed loop PID values
+   * @param p proportional gain constant
+   * @param i integral gain constant
+   * @param d derivative constant
+   * @param f feedforward constant
+   * @param iz integral zone constant
+   */
   public void set(double p, double i, double d, double f, double iz)
   {
     PIDController.setP(p);
@@ -45,23 +71,38 @@ public class ElevatorSubsystem extends SubsystemBase
     PIDController.setIZone(iz);
   }
 
+  /**
+   * moves the elevator with voltage
+   * @param power the power used to move the elevator
+   */
   public void moveElevator(double power)
   {
     ElevatorPolicy.elevatorPower = power;
     rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
   }
 
+  /**
+   * runs PID to move the elevator
+   * @param targetPosition the target position for the PIDF loop, depending on the setpoint
+   */
   public void runPID(double targetPosition)
   {
     ElevatorPolicy.setPosition = targetPosition;
     PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
   }
 
+  /**
+   * stops the elevator with voltage
+   */
   public void stopEle()
   {
     moveElevator(0);
   }
 
+  /**
+   * Periodically fetches the right and left encoder velocities and positions and puts them
+   * inside the policy class
+   */
   @Override
   public void periodic()
   {
