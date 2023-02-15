@@ -6,15 +6,50 @@ package frc.robot.subsystems.elevator;
 
 /** Add your docs here. */
 public final class ElevatorPolicy {
+    /**
+     * CAN ID for left elevator motor
+     */
     public static final int LEFT_ELEV_ID_PORT = 0;
+    /**
+     * CAN ID for right elevator motor
+     */
     public static final int RIGHT_ELEV_ID_PORT = 1;
+    /**
+     * The left elevator motor is inversed
+     */
     public static final boolean INV_LEFT = true;
+    /**
+     * The right elevator motor is not inversed
+     */
     public static final boolean INV_RIGHT = false;
+    /**
+     * The power set to the elevator
+     */
     public static double elevatorPower;
-    public static double rightEncoderVelocity, leftEncoderVelocity;
-    public static double rightEncoderPosition, leftEncoderPosition;
+    /**
+     * How fast the right elevator motor is spinning
+     */
+    public static double rightEncoderVelocity;
+    /**
+     * How fast the left elevator is spinning
+     */
+    public static double leftEncoderVelocity;
+    /**
+     * The position of the right elevator motor
+     */
+    public static double rightEncoderPosition;
+    /**
+     * The position of the left elevator motor
+     */
+    public static double leftEncoderPosition;
+    /**
+     * Target position for PID control loop
+     */
     public static double setPosition;
-    /**Constants Proportion, Integral, Derivative, FeedForward, and IntegralZone (PIDF) for Elevator */
+
+    /**
+     * Holds all PIDF constants for ElevatorSubsystem
+     */
     public static class PIDF {
         /**
          * Feedforward constant for PID loop

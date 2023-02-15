@@ -35,7 +35,7 @@ public final class BogeyPolicy {
     public static double setPosition;
 
     /**
-     * Holds all PIDF constants for Bogey
+     * Holds all PIDF constants for BogeySubsystem
      */
     public static class PIDF {
         /**
