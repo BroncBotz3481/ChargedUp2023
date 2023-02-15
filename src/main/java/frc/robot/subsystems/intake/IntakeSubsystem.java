@@ -10,41 +10,36 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 ;
 
-public class IntakeSubsystem extends SubsystemBase
-{
-  /**
-   * SparkMax for the intake motor
-   */
-  private final CANSparkMax motorIntake;
+public class IntakeSubsystem extends SubsystemBase {
+    /**
+     * SparkMax for the intake motor
+     */
+    private final CANSparkMax motorIntake;
 
-  /**
-   * The constructor initializes the intake motor
-   */
-  public IntakeSubsystem()
-  {
-    motorIntake = new CANSparkMax(IntakePolicy.INTAKE_ID_PORT, MotorType.kBrushless);
-  }
+    /**
+     * The constructor initializes the intake motor
+     */
+    public IntakeSubsystem() {
+        motorIntake = new CANSparkMax(IntakePolicy.INTAKE_ID_PORT, MotorType.kBrushless);
+    }
 
-  /**
-   * Runs the intake with voltage
-   */
-  public void runIntake(double power)
-  {
-    motorIntake.restoreFactoryDefaults();
-    IntakePolicy.power = power;
-    motorIntake.set(IntakePolicy.power);
-  }
+    /**
+     * Runs the intake with voltage
+     */
+    public void runIntake(double power) {
+        motorIntake.restoreFactoryDefaults();
+        IntakePolicy.power = power;
+        motorIntake.set(IntakePolicy.power);
+    }
 
-  /**
-   * Sets 0 voltage to the intake
-   */
-  public void stopIntake()
-  {
-    runIntake(0.0);
-  }
+    /**
+     * Sets 0 voltage to the intake
+     */
+    public void stopIntake() {
+        runIntake(0.0);
+    }
 
-  @Override
-  public void periodic()
-  {
-  }
+    @Override
+    public void periodic() {
+    }
 }

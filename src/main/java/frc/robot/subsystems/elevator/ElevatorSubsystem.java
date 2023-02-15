@@ -14,7 +14,6 @@ import frc.robot.subsystems.elevator.ElevatorPolicy.PIDF;
 
 public class ElevatorSubsystem extends SubsystemBase
 {
-
   /**
    * SparkMax for the left elevator motor
    */
@@ -44,6 +43,8 @@ public class ElevatorSubsystem extends SubsystemBase
   {
     leftElevatorMotor = new CANSparkMax(ElevatorPolicy.LEFT_ELEV_ID_PORT, MotorType.kBrushless);
     rightElevatorMotor = new CANSparkMax(ElevatorPolicy.RIGHT_ELEV_ID_PORT, MotorType.kBrushless);
+    leftElevatorMotor.restoreFactoryDefaults();
+    rightElevatorMotor.restoreFactoryDefaults();
     PIDController = rightElevatorMotor.getPIDController();
     leftElevatorMotor.setInverted(ElevatorPolicy.INV_LEFT);//True
     rightElevatorMotor.setInverted(ElevatorPolicy.INV_RIGHT);//False

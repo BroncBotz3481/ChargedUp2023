@@ -8,14 +8,13 @@ package frc.robot.subsystems.intake;
  * This is the Intake policy, holding all algorithmic functions for the Intake Subsystem and Commands.
  * Holds all important values from the subsystem
  **/
-public final class IntakePolicy
-{
-  /**
-   * CAN ID for the intake motor
-   */
-  public static final int    INTAKE_ID_PORT = 3;
-  /**
-   * The power set to the Bogey
-   */
-  public static double power;
+public final class IntakePolicy {
+    /**
+     * CAN ID for the intake motor
+     */
+    public static final int INTAKE_ID_PORT = 3;
+    /**
+     * The power set to the Bogey
+     */
+    public static double power;
 }
