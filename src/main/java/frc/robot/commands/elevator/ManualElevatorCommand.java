@@ -10,13 +10,20 @@ import java.util.function.DoubleSupplier;
 
 public class ManualElevatorCommand extends CommandBase
 {
-
   /**
-   * Creates a new ManualElevatorCommand.
+   * Uses ElevatorSubsystem
    */
   private final ElevatorSubsystem m_elevatorSubsystem;
+  /**
+   * Uses DoubleSupplier
+   */
   private final DoubleSupplier    powSupplier;
 
+  /**
+   * Initializes the elevator subsystem and power supplier
+   * @param subsystem initializes the elevator subsystem
+   * @param powDoubleSupplier initializes the power supplier
+   */
   public ManualElevatorCommand(ElevatorSubsystem subsystem, DoubleSupplier powDoubleSupplier)
   {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,6 +33,10 @@ public class ManualElevatorCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
+  /**
+   * stops the elevator at the beginning of the command running
+   */
   @Override
   public void initialize()
   {
@@ -33,6 +44,10 @@ public class ManualElevatorCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+
+  /**
+   * moves the arm
+   */
   @Override
   public void execute()
   {
@@ -40,6 +55,11 @@ public class ManualElevatorCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+  
+   /**
+   * stops the elevator at the end of the command
+   * @param interrupted whether the command was interrupted/canceled
+   */
   @Override
   public void end(boolean interrupted)
   {
