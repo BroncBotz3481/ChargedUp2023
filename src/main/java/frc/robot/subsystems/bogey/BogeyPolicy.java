@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems.bogey;
+
 /**
  * This is the Bogey policy, holding all algorithmic functions for the Bogey Subsystem and Commands.
  * Holds all important values from the subsystem

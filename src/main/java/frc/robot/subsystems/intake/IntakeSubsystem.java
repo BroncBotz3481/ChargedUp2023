@@ -12,23 +12,33 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase
 {
-
   /**
-   * Creates a new IntakeSubsystem.
+   * SparkMax for the intake motor
    */
   private final CANSparkMax motorIntake;
 
+  /**
+   * The constructor initializes the intake motor
+   */
   public IntakeSubsystem()
   {
+
     motorIntake = new CANSparkMax(IntakePolicy.INTAKE_ID_PORT, MotorType.kBrushless);
   }
 
+  /**
+   * Sets power to the intake
+   */
   public void runIntake(double power)
   {
+    motorIntake.restoreFactoryDefaults();
     IntakePolicy.power = power;
     motorIntake.set(IntakePolicy.power);
   }
 
+  /**
+   * Sets 0 power to the intake
+   */
   public void stopIntake()
   {
     runIntake(0.0);
