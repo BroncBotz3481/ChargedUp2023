@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.bogey.BogeyPolicy.PIDF;
 
@@ -26,6 +27,14 @@ public class BogeySubsystem extends SubsystemBase {
      * Relative encoder from the bogey motor
      */
     private final RelativeEncoder bogeyEncoder;
+    /**
+     * Prevents bogey from extending past upper limit
+     */
+    private final DigitalInput upperLimitSwitch;
+    /**
+     * Prevents bogey from extending past lower limit
+     */
+    private final DigitalInput lowerLimitSwitch;
 
     /**
      * The constructor initializes the motor, pidcontroller, encoder, and the PIDF constants
@@ -38,6 +47,9 @@ public class BogeySubsystem extends SubsystemBase {
         bogeyMotor.setIdleMode(IdleMode.kBrake);
         PIDController.setFeedbackDevice(bogeyEncoder);
         bogeyEncoder.setPositionConversionFactor(1 / BogeyPolicy.bogeyGearRatio);
+        upperLimitSwitch = new DigitalInput(BogeyPolicy.UPPER_LIMIT_CHANNEL);
+        lowerLimitSwitch = new DigitalInput(BogeyPolicy.LOWER_LIMIT_CHANNEL);
+
 
         set(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
     }
@@ -64,7 +76,8 @@ public class BogeySubsystem extends SubsystemBase {
      * @param power The power used to move the bogey motor
      */
     public void moveArm(double power) {
-        BogeyPolicy.bogeyPower = power;
+
+        BogeyPolicy.bogeyPower = BogeyPolicy.getBogeyPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
         bogeyMotor.set(BogeyPolicy.bogeyPower);
     }
 
@@ -74,7 +87,7 @@ public class BogeySubsystem extends SubsystemBase {
      * @param targetPosition The set position for the PIDF Loop
      */
     public void runPID(double targetPosition) {
-        BogeyPolicy.setPosition = targetPosition;
+        BogeyPolicy.setPosition = BogeyPolicy.getBogeyPosition(targetPosition, upperLimitSwitch.get(), lowerLimitSwitch.get());
         PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
     }
 

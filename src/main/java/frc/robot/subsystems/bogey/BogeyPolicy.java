@@ -14,6 +14,15 @@ public final class BogeyPolicy {
      */
     public static final int BOGEY_ID_PORT = 0;
     /**
+     * Pin channel for upper limit on roborio
+     */
+    public static final int UPPER_LIMIT_CHANNEL = 1;
+    /**
+     * Pin channel for lower limit on roborio
+     */
+    public static final int LOWER_LIMIT_CHANNEL = 2;
+
+    /**
      * The power set to Bogey Motor
      */
     public static double bogeyPower;
@@ -63,5 +72,40 @@ public final class BogeyPolicy {
          */
         public static final double INTEGRAL_ZONE = 0.0;
     }
+
+    /**
+     * Returns the power depending on the state of the limits
+     *
+     * @param desiredPower The desired power of the bogey motor
+     * @param upperLimit   The upper limit
+     * @param lowerLimit   The lower limit
+     * @return returns the power depending on the state of the limits
+     */
+    public static double getBogeyPower(double desiredPower, boolean upperLimit, boolean lowerLimit) {
+        if (upperLimit) {
+            return 0;
+        } else if (lowerLimit) {
+            return 0;
+        }
+        return desiredPower;
+    }
+
+    /**
+     * Returns the position depending on the state of the limits
+     *
+     * @param desiredPosition The desired position of the bogey
+     * @param upperLimit      The upper limit position
+     * @param lowerLimit      The lower limit position
+     * @return returns the position depending on the state of the limits
+     */
+    public static double getBogeyPosition(double desiredPosition, boolean upperLimit, boolean lowerLimit) {
+        if (upperLimit && desiredPosition > setPosition) {
+            return setPosition - 1;
+        } else if (lowerLimit && desiredPosition < setPosition) {
+            return setPosition + 1;
+        }
+        return desiredPosition;
+    }
+
 
 }
