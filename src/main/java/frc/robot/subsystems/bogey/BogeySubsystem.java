@@ -36,6 +36,8 @@ public class BogeySubsystem extends SubsystemBase {
         PIDController = bogeyMotor.getPIDController();
         bogeyEncoder = bogeyMotor.getEncoder();
         bogeyMotor.setIdleMode(IdleMode.kBrake);
+        PIDController.setFeedbackDevice(bogeyEncoder);
+        bogeyEncoder.setPositionConversionFactor(1 / BogeyPolicy.bogeyGearRatio);
 
         set(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
     }
@@ -59,7 +61,6 @@ public class BogeySubsystem extends SubsystemBase {
 
     /**
      * Moves the arm with voltage
-     *
      * @param power The power used to move the bogey motor
      */
     public void moveArm(double power) {
@@ -68,6 +69,8 @@ public class BogeySubsystem extends SubsystemBase {
     }
 
     /**
+     * Runs PID control loop
+     *
      * @param targetPosition The set position for the PIDF Loop
      */
     public void runPID(double targetPosition) {
