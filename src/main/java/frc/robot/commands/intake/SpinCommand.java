@@ -9,12 +9,15 @@ import frc.robot.subsystems.intake.IntakeSubsystem;
 
 public class SpinCommand extends CommandBase
 {
-
+  /**
+   * Uses IntakeSubsystem
+   */
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem m_IntakeSubsystem;
 
   /**
-   * @param subsystem Creates a new SpinCommand.
+   * Initializes the intakeSubsystem and addsRequirements
+   * @param subsystem creates a new SpinCommand
    */
   public SpinCommand(IntakeSubsystem subsystem)
   {
@@ -24,6 +27,9 @@ public class SpinCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+  /**
+   * stops the intake at the beginning of the command running
+   */
   @Override
   public void initialize()
   {
@@ -31,6 +37,9 @@ public class SpinCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * moves the intake in the direction toward the robot
+   */
   @Override
   public void execute()
   {
@@ -38,6 +47,10 @@ public class SpinCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * stops the intake at the end of the command
+   * @param interrupted whether the command was interrupted/canceled
+   */
   @Override
   public void end(boolean interrupted)
   {

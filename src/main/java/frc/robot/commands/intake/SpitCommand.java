@@ -10,11 +10,14 @@ import frc.robot.subsystems.intake.IntakeSubsystem;
 
 public class SpitCommand extends CommandBase
 {
-
+  /**
+   * Uses IntakeSubsystem
+   */
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem m_IntakeSubsystem;
 
   /**
+   * Initializes the intakeSubsystem and addsRequirements
    * @param subsystem Creates a new SpitCommand.
    */
 
@@ -26,6 +29,9 @@ public class SpitCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+  /**
+   * stops the intake at the beginning of the command running
+   */
   @Override
   public void initialize()
   {
@@ -33,6 +39,9 @@ public class SpitCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * moves the intake in the direction opposite of the robot
+   */
   @Override
   public void execute()
   {
@@ -40,6 +49,10 @@ public class SpitCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * stops the intake at the end of the command
+   * @param interrupted whether the command was interrupted/canceled
+   */
   @Override
   public void end(boolean interrupted)
   {
