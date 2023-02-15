@@ -33,6 +33,10 @@ public final class BogeyPolicy {
      * Target position for PID Control loop
      */
     public static double setPosition;
+    /**
+     * This is the gear ratio for the number of times the motor has spin for the bogey to rotate once
+     */
+    public static final double bogeyGearRatio = 1;
 
     /**
      * Holds all PIDF constants for BogeySubsystem

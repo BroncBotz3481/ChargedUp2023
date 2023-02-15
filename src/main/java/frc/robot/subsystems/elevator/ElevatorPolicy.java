@@ -4,7 +4,14 @@
 
 package frc.robot.subsystems.elevator;
 
-/** Add your docs here. */
+/**
+ * This is the Elevator policy, holding all algorithmic functions for the Bogey Subsystem and Commands.
+ * Holds all important values from the subsystem
+ **/
+
+/**
+ * Add your docs here.
+ */
 public final class ElevatorPolicy {
     /**
      * CAN ID for left elevator motor
@@ -46,6 +53,10 @@ public final class ElevatorPolicy {
      * Target position for PID control loop
      */
     public static double setPosition;
+    /**
+     * This is the gear ratio for the number of times the motor has spin for the elevator to rotate once
+     */
+    public static final double elevatorGearRatio = 1;
 
     /**
      * Holds all PIDF constants for ElevatorSubsystem

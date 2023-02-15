@@ -6,6 +6,7 @@ package frc.robot.subsystems.elevator;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -39,28 +40,33 @@ public class ElevatorSubsystem extends SubsystemBase
    * The constructor initializes the elevator motors and the encoders, as well as the
    * PID Controller, and it sets the right motor and encoder as inverted, and sets the PID constants
    */
-  public ElevatorSubsystem()
-  {
+  public ElevatorSubsystem() {
     leftElevatorMotor = new CANSparkMax(ElevatorPolicy.LEFT_ELEV_ID_PORT, MotorType.kBrushless);
     rightElevatorMotor = new CANSparkMax(ElevatorPolicy.RIGHT_ELEV_ID_PORT, MotorType.kBrushless);
     leftElevatorMotor.restoreFactoryDefaults();
     rightElevatorMotor.restoreFactoryDefaults();
     PIDController = rightElevatorMotor.getPIDController();
-    leftElevatorMotor.setInverted(ElevatorPolicy.INV_LEFT);//True
-    rightElevatorMotor.setInverted(ElevatorPolicy.INV_RIGHT);//False
+    leftElevatorMotor.setInverted(ElevatorPolicy.INV_LEFT);
+    rightElevatorMotor.setInverted(ElevatorPolicy.INV_RIGHT);
     leftElevatorMotor.follow(rightElevatorMotor);
+    leftElevatorMotor.setIdleMode(IdleMode.kBrake);
+    rightElevatorMotor.setIdleMode(IdleMode.kBrake);
     rightEncoder = rightElevatorMotor.getEncoder();
     leftEncoder = leftElevatorMotor.getEncoder();
-    set(PIDF.PROPORTION,PIDF.INTEGRAL,PIDF.DERIVATIVE,
-            PIDF.FEEDFORWARD,PIDF.INTEGRAL_ZONE);
+    rightEncoder.setPositionConversionFactor(1 / ElevatorPolicy.elevatorGearRatio);
+    PIDController.setFeedbackDevice(rightEncoder);
+
+    set(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE,
+            PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
   }
 
   /**
-   * sets the spark max closed loop PID values
-   * @param p proportional gain constant
-   * @param i integral gain constant
-   * @param d derivative constant
-   * @param f feedforward constant
+   * Sets the spark max closed loop PID values
+   *
+   * @param p  proportional gain constant
+   * @param i  integral gain constant
+   * @param d  derivative constant
+   * @param f  feedforward constant
    * @param iz integral zone constant
    */
   public void set(double p, double i, double d, double f, double iz)
@@ -73,7 +79,7 @@ public class ElevatorSubsystem extends SubsystemBase
   }
 
   /**
-   * moves the elevator with voltage
+   * Moves the elevator with voltage
    * @param power the power used to move the elevator
    */
   public void moveElevator(double power)
@@ -83,7 +89,7 @@ public class ElevatorSubsystem extends SubsystemBase
   }
 
   /**
-   * runs PID to move the elevator
+   * Runs PID to move the elevator
    * @param targetPosition the target position for the PIDF loop, depending on the setpoint
    */
   public void runPID(double targetPosition)
@@ -93,7 +99,7 @@ public class ElevatorSubsystem extends SubsystemBase
   }
 
   /**
-   * stops the elevator with voltage
+   * Stops the elevator with voltage
    */
   public void stopEle()
   {

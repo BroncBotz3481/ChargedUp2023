@@ -5,11 +5,13 @@
 package frc.robot.subsystems.intake;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-;
-
+/**
+ * The intake subsystem on the robot
+ */
 public class IntakeSubsystem extends SubsystemBase {
     /**
      * SparkMax for the intake motor
@@ -21,10 +23,14 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public IntakeSubsystem() {
         motorIntake = new CANSparkMax(IntakePolicy.INTAKE_ID_PORT, MotorType.kBrushless);
+        motorIntake.restoreFactoryDefaults();
+        motorIntake.setIdleMode(IdleMode.kCoast);
     }
 
     /**
-     * Runs the intake with voltage
+     * Moves the intake based on voltage passed in
+     *
+     * @param power the voltage passed in to move the intake motor
      */
     public void runIntake(double power) {
         motorIntake.restoreFactoryDefaults();
