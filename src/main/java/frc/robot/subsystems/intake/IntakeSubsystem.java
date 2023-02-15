@@ -22,12 +22,11 @@ public class IntakeSubsystem extends SubsystemBase
    */
   public IntakeSubsystem()
   {
-
     motorIntake = new CANSparkMax(IntakePolicy.INTAKE_ID_PORT, MotorType.kBrushless);
   }
 
   /**
-   * Sets power to the intake
+   * Runs the intake with voltage
    */
   public void runIntake(double power)
   {
@@ -37,7 +36,7 @@ public class IntakeSubsystem extends SubsystemBase
   }
 
   /**
-   * Sets 0 power to the intake
+   * Sets 0 voltage to the intake
    */
   public void stopIntake()
   {
@@ -47,7 +46,5 @@ public class IntakeSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    // This method will be called once per scheduler run
-
   }
 }
