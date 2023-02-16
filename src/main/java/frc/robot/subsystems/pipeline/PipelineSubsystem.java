@@ -6,20 +6,36 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+/**
+ * The Psuedo Pipeline subsystem on the robot
+ */
 public class PipelineSubsystem extends SubsystemBase
 {
-
+  /**
+   * The camera the robot uses
+   */
   private PhotonCamera camera;
-
+  /**
+   * The result of the pipeline
+   */
   private PhotonPipelineResult result;
-
+  /**
+   * The AprilTag target
+   */
   private PhotonTrackedTarget target;
 
-  public PipelineSubsystem()
+  /**
+   * Initializes the camera the robot uses
+   */
+  private PipelineSubsystem()
   {
     camera = new PhotonCamera("Integrated_Webcam");
   }
 
+  /**
+   * Periodically gets the pipeline result and pipeline target, then sends a boolean to the pipeline policy if the camera sees a AprilTag, then sends the position of the target
+   * , then sends the translation of the camera, then sends the corners of the AprilTag all to the policy class
+   */
   @Override
   public void periodic()
   {

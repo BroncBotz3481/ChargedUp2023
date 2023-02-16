@@ -64,7 +64,7 @@ public class ResetBogeyCommand extends CommandBase
   @Override
   public boolean isFinished()
   {
-    if (BogeyPolicy.encoderPosition <= 0)
+    if (BogeyPolicy.upLimit || BogeyPolicy.lowerLiimit)
     {
       return true;
     }

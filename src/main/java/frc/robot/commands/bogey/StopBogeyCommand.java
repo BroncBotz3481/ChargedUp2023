@@ -64,6 +64,7 @@ public class StopBogeyCommand extends CommandBase
   @Override
   public boolean isFinished()
   {
+    
     return false;
   }
 }
