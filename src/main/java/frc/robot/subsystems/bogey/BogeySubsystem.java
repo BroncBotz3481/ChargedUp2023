@@ -109,7 +109,7 @@ public class BogeySubsystem extends SubsystemBase {
         BogeyPolicy.encoderVelocity = bogeyEncoder.getVelocity();
         BogeyPolicy.encoderPosition = bogeyEncoder.getPosition();
         BogeyPolicy.upLimit = upperLimitSwitch.get();
-        BogeyPolicy.lowerLiimit = lowerLimitSwitch.get();
+        BogeyPolicy.lowLimit = lowerLimitSwitch.get();
     }
 }
 

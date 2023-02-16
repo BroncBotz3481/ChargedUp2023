@@ -19,7 +19,7 @@ public class SetBogeyCommand extends CommandBase
   /**
    * The target position for the bogey depending on the setpoint
    */
-  private       double         targetPosition;
+  private final double         targetPosition;
 
   /**
    * Initializes a new SetBogeyCommand
@@ -71,10 +71,6 @@ public class SetBogeyCommand extends CommandBase
   @Override
   public boolean isFinished()
   {
-    if (BogeyPolicy.encoderPosition >= BogeyPolicy.setPosition)
-    {
-      return true;
-    }
-    return false;
+    return BogeyPolicy.encoderPosition >= BogeyPolicy.setPosition || BogeyPolicy.lowLimit || BogeyPolicy.upLimit;
   }
 }

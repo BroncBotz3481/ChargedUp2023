@@ -52,7 +52,7 @@ public final class BogeyPolicy {
     /**
      * This tell us whether the lowerLimit switch has been hit or not
      */
-    public static boolean lowerLiimit;
+    public static boolean lowLimit;
 
     /**
      * Holds all PIDF constants for BogeySubsystem

@@ -5,7 +5,9 @@
 package frc.robot.commands.bogey;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.bogey.BogeySubsystem;
+
 import java.util.function.DoubleSupplier;
 
 public class ManualBogeyCommand extends CommandBase
@@ -68,8 +70,7 @@ public class ManualBogeyCommand extends CommandBase
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished()
-  {
-    return false;
+  public boolean isFinished() {
+    return BogeyPolicy.upLimit && BogeyPolicy.lowLimit;
   }
 }
