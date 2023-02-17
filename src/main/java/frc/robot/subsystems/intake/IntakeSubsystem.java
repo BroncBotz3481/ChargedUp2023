@@ -33,7 +33,6 @@ public class IntakeSubsystem extends SubsystemBase {
      * @param power the voltage passed in to move the intake motor
      */
     public void runIntake(double power) {
-        motorIntake.restoreFactoryDefaults();
         IntakePolicy.power = power;
         motorIntake.set(IntakePolicy.power);
     }

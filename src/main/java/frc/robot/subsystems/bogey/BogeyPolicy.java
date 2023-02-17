@@ -114,5 +114,4 @@ public final class BogeyPolicy {
         return desiredPosition;
     }
 
-
 }

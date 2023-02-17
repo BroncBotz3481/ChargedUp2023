@@ -76,6 +76,7 @@ public class BogeySubsystem extends SubsystemBase {
 
     /**
      * Moves the arm with voltage
+     *
      * @param power The power used to move the bogey motor
      */
     public void moveArm(double power) {
