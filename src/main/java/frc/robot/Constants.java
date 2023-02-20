@@ -51,4 +51,71 @@ public final class Constants
     public static final double SLIDE_HEIGHT = 75;
   }
 
+  public static class IDS
+  {
+
+    public static class Elevator
+    {
+
+      public static class CAN
+      {
+
+        public static final int left  = 0;
+        public static final int right = 1;
+      }
+
+      public static class DIO
+      {
+
+        public static int upper = 0;
+        public static int lower = 1;
+      }
+    }
+
+    public static class Bogey
+    {
+
+      public static class CAN
+      {
+
+        public static final int main = 2;
+      }
+
+      public static class DIO
+      {
+
+        public static int upper = 2;
+        public static int lower = 3;
+      }
+    }
+
+    public static class Intake
+    {
+
+      public static class CAN
+      {
+
+        public static final int main = 3;
+      }
+
+    }
+
+    public static class Wrist
+    {
+
+      public static class CAN
+      {
+
+        public static final int main = 4;
+      }
+
+      public static class DIO
+      {
+
+        public static int upper = 4;
+        public static int lower = 5;
+      }
+    }
+  }
+
 }

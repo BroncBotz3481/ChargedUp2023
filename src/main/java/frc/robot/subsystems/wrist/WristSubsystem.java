@@ -16,95 +16,105 @@ import frc.robot.subsystems.wrist.WristPolicy.PIDF;
 /**
  * The wrist subsystem on the robot
  */
-public class WristSubsystem extends SubsystemBase {
-    /**
-     * SparkMax for the wrist motor
-     */
-    private final CANSparkMax wristMotor;
-    /**
-     * Relative encoder from the SparkMax
-     */
-    private final RelativeEncoder encoder;
-    /**
-     * SparkMaxPIDController from the SparkMax
-     */
-    private final SparkMaxPIDController PIDController;
-    /**
-     * Prevents wrist from extending past upper limit
-     */
-    private final DigitalInput upperLimitSwitch;
-    /**
-     * Prevents wrist from extending past lower limit
-     */
-    private final DigitalInput lowerLimitSwitch;
+public class WristSubsystem extends SubsystemBase
+{
 
-    /**
-     * The constructor motor initializes the wristMotor, encoder, and PIDController.
-     */
+  /**
+   * SparkMax for the wrist motor
+   */
+  private final CANSparkMax           wristMotor;
+  /**
+   * Relative encoder from the SparkMax
+   */
+  private final RelativeEncoder       encoder;
+  /**
+   * SparkMaxPIDController from the SparkMax
+   */
+  private final SparkMaxPIDController PIDController;
+  /**
+   * Prevents wrist from extending past upper limit
+   */
+  private final DigitalInput          upperLimitSwitch;
+  /**
+   * Prevents wrist from extending past lower limit
+   */
+  private final DigitalInput          lowerLimitSwitch;
 
-    public WristSubsystem() {
-        wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT, MotorType.kBrushless);
-        wristMotor.restoreFactoryDefaults();
-        encoder = wristMotor.getEncoder();
-        encoder.setPositionConversionFactor(1 / WristPolicy.wristGearRatio);
-        PIDController = wristMotor.getPIDController();
-        PIDController.setFeedbackDevice(encoder);
-        setPIDF(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
-        upperLimitSwitch = new DigitalInput(WristPolicy.UPPER_LIMIT_CHANNEL);
-        lowerLimitSwitch = new DigitalInput(WristPolicy.LOWER_LIMIT_CHANNEL);
-    }
+  /**
+   * The constructor motor initializes the wristMotor, encoder, and PIDController.
+   */
 
-    /**
-     * Sets the spark max closed loop PIDF values
-     *
-     * @param p  Proportional gain constant
-     * @param i  Integral gain constant
-     * @param d  Derivative constant
-     * @param f  Feedforward constant
-     * @param iz Integral Zone
-     */
-    public void setPIDF(double p, double i, double d, double f, double iz) {
-        PIDController.setP(p);
-        PIDController.setI(i);
-        PIDController.setD(d);
-        PIDController.setFF(f);
-        PIDController.setIZone(iz);
-    }
+  public WristSubsystem()
+  {
+    wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT, MotorType.kBrushless);
+    wristMotor.restoreFactoryDefaults();
+    encoder = wristMotor.getEncoder();
+    encoder.setPositionConversionFactor(1 / WristPolicy.wristGearRatio);
+    PIDController = wristMotor.getPIDController();
+    PIDController.setFeedbackDevice(encoder);
+    setPIDF(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
+    upperLimitSwitch = new DigitalInput(WristPolicy.UPPER_LIMIT_CHANNEL);
+    lowerLimitSwitch = new DigitalInput(WristPolicy.LOWER_LIMIT_CHANNEL);
+  }
 
-    /**
-     * Moves the arm with voltage
-     *
-     * @param power The power used to move the wrist motor
-     */
-    public void runMotor(double power) {
-        WristPolicy.power = WristPolicy.getWristPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
-        wristMotor.set(WristPolicy.power);
-    }
+  /**
+   * Sets the spark max closed loop PIDF values
+   *
+   * @param p  Proportional gain constant
+   * @param i  Integral gain constant
+   * @param d  Derivative constant
+   * @param f  Feedforward constant
+   * @param iz Integral Zone
+   */
+  public void setPIDF(double p, double i, double d, double f, double iz)
+  {
+    PIDController.setP(p);
+    PIDController.setI(i);
+    PIDController.setD(d);
+    PIDController.setFF(f);
+    PIDController.setIZone(iz);
+  }
 
-    /**
-     * Runs PID control loop
-     *
-     * @param targetPosition The set position for the PIDF loop
-     */
-    public void setMotor(double targetPosition) {
-        WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition, upperLimitSwitch.get(), lowerLimitSwitch.get());
-        PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
-    }
+  /**
+   * Moves the arm with voltage
+   *
+   * @param power The power used to move the wrist motor
+   */
+  public void runMotor(double power)
+  {
+    WristPolicy.power = WristPolicy.getWristPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
+    wristMotor.set(WristPolicy.power);
+  }
 
-    /**
-     * Stops the wrist with voltage
-     */
-    public void stopMotor() {
-        runMotor(0);
-    }
+  /**
+   * Runs PID control loop
+   *
+   * @param targetPosition The set position for the PIDF loop
+   */
+  public void setMotor(double targetPosition)
+  {
+    WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition,
+                                                           upperLimitSwitch.get(),
+                                                           lowerLimitSwitch.get());
+    PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
+  }
 
-    /**
-     * Periodically gets the encoder velocity and position and puts it inside the policy class
-     */
-    @Override
-    public void periodic() {
-        WristPolicy.encoderVelocity = encoder.getVelocity();
-        WristPolicy.encoderPosition = encoder.getPosition();
-    }
+  /**
+   * Stops the wrist with voltage
+   */
+  public void stopMotor()
+  {
+    runMotor(0);
+  }
+
+  /**
+   * Periodically gets the encoder velocity and position and puts it inside the policy class
+   */
+  @Override
+  public void periodic()
+  {
+    WristPolicy.encoderVelocity = encoder.getVelocity();
+    WristPolicy.encoderPosition = encoder.getPosition();
+  }
 
 }

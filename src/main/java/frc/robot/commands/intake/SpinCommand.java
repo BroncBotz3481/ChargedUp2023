@@ -9,6 +9,7 @@ import frc.robot.subsystems.intake.IntakeSubsystem;
 
 public class SpinCommand extends CommandBase
 {
+
   /**
    * Uses IntakeSubsystem
    */
@@ -17,6 +18,7 @@ public class SpinCommand extends CommandBase
 
   /**
    * Initializes the intakeSubsystem
+   *
    * @param subsystem creates a new SpinCommand
    */
   public SpinCommand(IntakeSubsystem subsystem)
@@ -27,6 +29,7 @@ public class SpinCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
   /**
    * stops the intake at the beginning of the command running
    */
@@ -37,6 +40,7 @@ public class SpinCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+
   /**
    * moves the intake in the direction toward the robot
    */
@@ -47,8 +51,10 @@ public class SpinCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
   /**
    * stops the intake at the end of the command
+   *
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override

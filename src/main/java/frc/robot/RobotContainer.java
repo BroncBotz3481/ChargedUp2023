@@ -4,12 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.Constants.BogeyPresets;
-import frc.robot.Constants.ElevatorPresets;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.WristPresets;
-import frc.robot.commands.auto.AutonomousCommand;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -119,15 +113,11 @@ public class RobotContainer
                                               BogeyPresets.HIGH))); //When the up dpad is pressed the elevator and
     // bogey will go to a preset position to score high
 
-    new Trigger(() -> {
-      return m_operatorController.getRightY() > 0.05;
-    }).whileTrue(new ManualBogeyCommand(m_bogeySubsystem,
-                                        m_operatorController::getRightY));//Manually control bogey using right
+    new Trigger(() -> m_operatorController.getRightY() > 0.05).whileTrue(new ManualBogeyCommand(m_bogeySubsystem,
+                                                                                                m_operatorController::getRightY));//Manually control bogey using right
     // joysticks x-axis
-    new Trigger(() -> {
-      return m_operatorController.getLeftY() > 0.05;
-    }).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
-                                           m_operatorController::getLeftY));//Manually control elevator using left
+    new Trigger(() -> m_operatorController.getLeftY() > 0.05).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
+                                                                                                  m_operatorController::getLeftY));//Manually control elevator using left
     // joysticks y-axis
   }
 

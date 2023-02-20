@@ -23,8 +23,9 @@ public class SetBogeyCommand extends CommandBase
 
   /**
    * Initializes a new SetBogeyCommand
+   *
    * @param subsystem Creates a new BogeyHighCommand.
-   * @param target sets the target position depending on the setpoint
+   * @param target    sets the target position depending on the setpoint
    */
   public SetBogeyCommand(BogeySubsystem subsystem, double target)
   {
@@ -55,6 +56,7 @@ public class SetBogeyCommand extends CommandBase
 
   /**
    * Stops the arm when target position is reached
+   *
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override

@@ -7,70 +7,76 @@ package frc.robot.commands.bogey;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.bogey.BogeySubsystem;
-
 import java.util.function.DoubleSupplier;
 
 /**
  * Command to manually control the bogey
  */
-public class ManualBogeyCommand extends CommandBase {
-    /**
-     * Uses bogey subsystem
-     */
-    private final BogeySubsystem m_bogeySubsystem;
-    /**
-     * Uses a power supplier
-     */
-    private final DoubleSupplier powSupplier;
+public class ManualBogeyCommand extends CommandBase
+{
 
-    /**
-     * Initializes the bogey subsystem and power supplier
-     *
-     * @param subsystem         initializes the bogey subsystem
-     * @param powDoubleSupplier initializes the power supplier
-     */
-    public ManualBogeyCommand(BogeySubsystem subsystem, DoubleSupplier powDoubleSupplier) {
-        // Use addRequirements() here to declare subsystem dependencies.
-        m_bogeySubsystem = subsystem;
-        powSupplier = powDoubleSupplier;
-        addRequirements(m_bogeySubsystem);
-    }
+  /**
+   * Uses bogey subsystem
+   */
+  private final BogeySubsystem m_bogeySubsystem;
+  /**
+   * Uses a power supplier
+   */
+  private final DoubleSupplier powSupplier;
 
-    // Called when the command is initially scheduled.
+  /**
+   * Initializes the bogey subsystem and power supplier
+   *
+   * @param subsystem         initializes the bogey subsystem
+   * @param powDoubleSupplier initializes the power supplier
+   */
+  public ManualBogeyCommand(BogeySubsystem subsystem, DoubleSupplier powDoubleSupplier)
+  {
+    // Use addRequirements() here to declare subsystem dependencies.
+    m_bogeySubsystem = subsystem;
+    powSupplier = powDoubleSupplier;
+    addRequirements(m_bogeySubsystem);
+  }
 
-    /**
-     * stops the arm at the beginning of the command running
-     */
-    @Override
-    public void initialize() {
-        m_bogeySubsystem.stopArm();
-    }
+  // Called when the command is initially scheduled.
 
-    // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * stops the arm at the beginning of the command running
+   */
+  @Override
+  public void initialize()
+  {
+    m_bogeySubsystem.stopArm();
+  }
 
-    /**
-     * moves the arm
-     */
-    @Override
-    public void execute() {
-        m_bogeySubsystem.moveArm(powSupplier.getAsDouble());
-    }
+  // Called every time the scheduler runs while the command is scheduled.
 
-    // Called once the command ends or is interrupted.
+  /**
+   * moves the arm
+   */
+  @Override
+  public void execute()
+  {
+    m_bogeySubsystem.moveArm(powSupplier.getAsDouble());
+  }
 
-    /**
-     * stops the arm at the end of the command
-     *
-     * @param interrupted whether the command was interrupted/canceled
-     */
-    @Override
-    public void end(boolean interrupted) {
-        m_bogeySubsystem.stopArm();
-    }
+  // Called once the command ends or is interrupted.
 
-    // Returns true when the command should end.
-    @Override
-    public boolean isFinished() {
-        return BogeyPolicy.upLimit && BogeyPolicy.lowLimit;
-    }
+  /**
+   * stops the arm at the end of the command
+   *
+   * @param interrupted whether the command was interrupted/canceled
+   */
+  @Override
+  public void end(boolean interrupted)
+  {
+    m_bogeySubsystem.stopArm();
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished()
+  {
+    return BogeyPolicy.upLimit && BogeyPolicy.lowLimit;
+  }
 }

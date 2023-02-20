@@ -9,6 +9,7 @@ import frc.robot.subsystems.intake.IntakeSubsystem;
 
 public class StopIntakeCommand extends CommandBase
 {
+
   /**
    * Uses IntakeSubsystem
    */
@@ -17,6 +18,7 @@ public class StopIntakeCommand extends CommandBase
 
   /**
    * Initializes the intakeSubsystem
+   *
    * @param subsystem Creates a new StopIntakeCommand.
    */
   public StopIntakeCommand(IntakeSubsystem subsystem)
@@ -27,6 +29,7 @@ public class StopIntakeCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
   /**
    * stops the intake at the beginning of the command running. Power is set to 0
    */
@@ -37,6 +40,7 @@ public class StopIntakeCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+
   /**
    * Stops the intake when executed. Power is set to 0.
    */
@@ -47,6 +51,7 @@ public class StopIntakeCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
   /**
    * intake is stopped at the end. Power is set to 0.
    */

@@ -2,7 +2,7 @@
 [![Open in Github Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=594465053)
 
 ## Subsystems
-- Swevre Drive
+- Swerve Drive
 - Elevator
     - 2 motors, one on each side
 - Bogey

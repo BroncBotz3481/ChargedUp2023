@@ -9,6 +9,7 @@ import frc.robot.subsystems.wrist.WristSubsystem;
 
 public class StopWristCommand extends CommandBase
 {
+
   /**
    * Uses WristSubsystem
    */
@@ -26,6 +27,7 @@ public class StopWristCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
   /**
    * stops the wrist at the beginning of the command running. Power is set to 0
    */
@@ -36,6 +38,7 @@ public class StopWristCommand extends CommandBase
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+
   /**
    * Stops the wrist when executed. Power is set to 0.
    */
@@ -46,6 +49,7 @@ public class StopWristCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
   /**
    * Wrist is stopped at the end. Power is set to 0.
    */

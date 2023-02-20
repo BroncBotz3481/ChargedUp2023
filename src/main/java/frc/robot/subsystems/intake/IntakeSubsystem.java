@@ -12,39 +12,45 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 /**
  * The intake subsystem on the robot
  */
-public class IntakeSubsystem extends SubsystemBase {
-    /**
-     * SparkMax for the intake motor
-     */
-    private final CANSparkMax motorIntake;
+public class IntakeSubsystem extends SubsystemBase
+{
 
-    /**
-     * The constructor initializes the intake motor
-     */
-    public IntakeSubsystem() {
-        motorIntake = new CANSparkMax(IntakePolicy.INTAKE_ID_PORT, MotorType.kBrushless);
-        motorIntake.restoreFactoryDefaults();
-        motorIntake.setIdleMode(IdleMode.kCoast);
-    }
+  /**
+   * SparkMax for the intake motor
+   */
+  private final CANSparkMax motorIntake;
 
-    /**
-     * Moves the intake based on voltage passed in
-     *
-     * @param power the voltage passed in to move the intake motor
-     */
-    public void runIntake(double power) {
-        IntakePolicy.power = power;
-        motorIntake.set(IntakePolicy.power);
-    }
+  /**
+   * The constructor initializes the intake motor
+   */
+  public IntakeSubsystem()
+  {
+    motorIntake = new CANSparkMax(IntakePolicy.INTAKE_ID_PORT, MotorType.kBrushless);
+    motorIntake.restoreFactoryDefaults();
+    motorIntake.setIdleMode(IdleMode.kCoast);
+  }
 
-    /**
-     * Sets 0 voltage to the intake
-     */
-    public void stopIntake() {
-        runIntake(0.0);
-    }
+  /**
+   * Moves the intake based on voltage passed in
+   *
+   * @param power the voltage passed in to move the intake motor
+   */
+  public void runIntake(double power)
+  {
+    IntakePolicy.power = power;
+    motorIntake.set(IntakePolicy.power);
+  }
 
-    @Override
-    public void periodic() {
-    }
+  /**
+   * Sets 0 voltage to the intake
+   */
+  public void stopIntake()
+  {
+    runIntake(0.0);
+  }
+
+  @Override
+  public void periodic()
+  {
+  }
 }

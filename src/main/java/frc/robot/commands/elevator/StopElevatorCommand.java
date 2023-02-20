@@ -9,7 +9,7 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
 public class StopElevatorCommand extends CommandBase
 {
- 
+
   /**
    * Uses ElevatorSubsystem
    */
@@ -17,6 +17,7 @@ public class StopElevatorCommand extends CommandBase
 
   /**
    * Initializes the elevator subsystem
+   *
    * @param subsystem initializes the elevator subsystem
    */
   public StopElevatorCommand(ElevatorSubsystem subsystem)

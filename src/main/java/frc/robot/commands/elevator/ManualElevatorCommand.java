@@ -10,6 +10,7 @@ import java.util.function.DoubleSupplier;
 
 public class ManualElevatorCommand extends CommandBase
 {
+
   /**
    * Uses ElevatorSubsystem
    */
@@ -21,7 +22,8 @@ public class ManualElevatorCommand extends CommandBase
 
   /**
    * Initializes the elevator subsystem and power supplier
-   * @param subsystem initializes the elevator subsystem
+   *
+   * @param subsystem         initializes the elevator subsystem
    * @param powDoubleSupplier initializes the power supplier
    */
   public ManualElevatorCommand(ElevatorSubsystem subsystem, DoubleSupplier powDoubleSupplier)
@@ -55,9 +57,10 @@ public class ManualElevatorCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
-  
-   /**
+
+  /**
    * stops the elevator at the end of the command
+   *
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override

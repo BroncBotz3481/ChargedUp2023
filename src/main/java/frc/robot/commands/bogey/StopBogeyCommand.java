@@ -53,6 +53,7 @@ public class StopBogeyCommand extends CommandBase
 
   /**
    * Stops the arm when the command ends
+   *
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override
@@ -63,7 +64,8 @@ public class StopBogeyCommand extends CommandBase
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return BogeyPolicy.upLimit && BogeyPolicy.lowLimit;
   }
 }

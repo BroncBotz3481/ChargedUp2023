@@ -12,7 +12,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.elevator.ElevatorPolicy.PIDF;
 
 /**
@@ -20,10 +19,11 @@ import frc.robot.subsystems.elevator.ElevatorPolicy.PIDF;
  */
 public class ElevatorSubsystem extends SubsystemBase
 {
+
   /**
    * SparkMax for the left elevator motor
    */
-  private final CANSparkMax          leftElevatorMotor;
+  private final CANSparkMax           leftElevatorMotor;
   /**
    * SparkMax for the right elevator motor
    */
@@ -43,17 +43,18 @@ public class ElevatorSubsystem extends SubsystemBase
   /**
    * Prevents elevator from extending past upper limit
    */
-  private final DigitalInput upperLimitSwitch;
+  private final DigitalInput          upperLimitSwitch;
   /**
    * Prevents elevator from extending past lower limit
    */
-  private final DigitalInput lowerLimitSwitch;
+  private final DigitalInput          lowerLimitSwitch;
 
   /**
-   * The constructor initializes the elevator motors and the encoders, as well as the
-   * PID Controller, and it sets the right motor and encoder as inverted, and sets the PID constants
+   * The constructor initializes the elevator motors and the encoders, as well as the PID Controller, and it sets the
+   * right motor and encoder as inverted, and sets the PID constants
    */
-  public ElevatorSubsystem() {
+  public ElevatorSubsystem()
+  {
     leftElevatorMotor = new CANSparkMax(ElevatorPolicy.LEFT_ELEV_ID_PORT, MotorType.kBrushless);
     rightElevatorMotor = new CANSparkMax(ElevatorPolicy.RIGHT_ELEV_ID_PORT, MotorType.kBrushless);
     leftElevatorMotor.restoreFactoryDefaults();
@@ -72,7 +73,7 @@ public class ElevatorSubsystem extends SubsystemBase
     lowerLimitSwitch = new DigitalInput(ElevatorPolicy.LOWER_LIMIT_CHANNEL);
 
     set(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE,
-            PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
+        PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
   }
 
   /**
@@ -95,21 +96,27 @@ public class ElevatorSubsystem extends SubsystemBase
 
   /**
    * Moves the elevator with voltage
+   *
    * @param power the power used to move the elevator
    */
   public void moveElevator(double power)
   {
-    ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,upperLimitSwitch.get(),lowerLimitSwitch.get());
+    ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,
+                                                                   upperLimitSwitch.get(),
+                                                                   lowerLimitSwitch.get());
     rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
   }
 
   /**
    * Runs PID to move the elevator
+   *
    * @param targetPosition the target position for the PIDF loop, depending on the setpoint
    */
   public void runPID(double targetPosition)
   {
-    ElevatorPolicy.setPosition = ElevatorPolicy.getElevatorPosition(targetPosition, upperLimitSwitch.get(), lowerLimitSwitch.get());
+    ElevatorPolicy.setPosition = ElevatorPolicy.getElevatorPosition(targetPosition,
+                                                                    upperLimitSwitch.get(),
+                                                                    lowerLimitSwitch.get());
     PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
   }
 
@@ -122,8 +129,7 @@ public class ElevatorSubsystem extends SubsystemBase
   }
 
   /**
-   * Periodically fetches the right and left encoder velocities and positions and puts them
-   * inside the policy class
+   * Periodically fetches the right and left encoder velocities and positions and puts them inside the policy class
    */
   @Override
   public void periodic()

@@ -13,10 +13,11 @@ public class SetWristCommand extends CommandBase
 
   /**
    * Initializes the WristSubsystem
+   *
    * @param subsystem creates a new SetWristCommand
    */
   private final WristSubsystem m_WristSubsystem; //creates new object of class WristSubsystem
-  private       double         targetPosition;
+  private final double         targetPosition;
 
   public SetWristCommand(WristSubsystem subsystem, double target)
   { //constructor for RaiseWristCommand class; WristSubsystem object as parameter
@@ -27,6 +28,7 @@ public class SetWristCommand extends CommandBase
   }
 
   // Called when the command is initially scheduled.
+
   /**
    * stops the wrist at the beginning of the command running, and it sets the motor to the target position
    */
@@ -45,6 +47,7 @@ public class SetWristCommand extends CommandBase
   }
 
   // Called once the command ends or is interrupted.
+
   /**
    * stops the intake at the end of the command running
    */
@@ -55,16 +58,13 @@ public class SetWristCommand extends CommandBase
   }
 
   // Returns true when the command should end.
+
   /**
-   *  Returns true when the command should end reaching the proper position
+   * Returns true when the command should end reaching the proper position
    */
   @Override
   public boolean isFinished()
   {
-    if (WristPolicy.encoderPosition >= WristPolicy.setPosition)
-    {
-      return true;
-    }
-    return false;
+    return WristPolicy.encoderPosition >= WristPolicy.setPosition;
   }
 }
