@@ -81,33 +81,33 @@ public class RobotContainer
     m_operatorController.rightTrigger().whileTrue(
         new SetWristCommand(m_wristSubsystem, WristPresets.DOWN)); //Drops wrist when right Trigger is pressed
 
-    m_operatorController.b().onTrue(
+    m_operatorController.b().whileTrue(
         Commands.parallel(new ResetWristCommand(m_wristSubsystem), new ResetElevatorCommand(m_elevatorSubsystem),
                           new ResetBogeyCommand(
                               m_bogeySubsystem))); //Brings in all fragile subsystems when B is pressed
-    m_operatorController.y().onTrue(
+    m_operatorController.y().whileTrue(
         Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.TRAY_HEIGHT),
                           new SpinCommand(m_intakeSubsystem)));
-    m_operatorController.x().onTrue(
+    m_operatorController.x().whileTrue(
         Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.SLIDE_HEIGHT),
                           new SetWristCommand(m_wristSubsystem, WristPresets.SLIDE_HEIGHT)));
 
-    m_operatorController.rightStick().onTrue(
+    m_operatorController.rightStick().whileTrue(
         new ResetBogeyCommand(m_bogeySubsystem)); //When right stick is pressed the bogey is brought in
-    m_operatorController.leftStick().onTrue(new ResetElevatorCommand(
+    m_operatorController.leftStick().whileTrue(new ResetElevatorCommand(
         m_elevatorSubsystem)); //When left stick is pressed the elevator is goes all the way down
 
-    m_operatorController.povDown().onTrue(
+    m_operatorController.povDown().whileTrue(
         Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.LOW),
                           new SetBogeyCommand(m_bogeySubsystem,
                                               BogeyPresets.LOW))); //When the down dpad is pressed the elevator and
     // bogey will go to a preset position to score low
-    m_operatorController.povLeft().onTrue(
+    m_operatorController.povLeft().whileTrue(
         Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.MID),
                           new SetBogeyCommand(m_bogeySubsystem,
                                               BogeyPresets.MID))); //When the left dpad is pressed the elevator and
     // bogey will go to a preset position to score mid
-    m_operatorController.povUp().onTrue(
+    m_operatorController.povUp().whileTrue(
         Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.HIGH),
                           new SetBogeyCommand(m_bogeySubsystem,
                                               BogeyPresets.HIGH))); //When the up dpad is pressed the elevator and
@@ -122,7 +122,7 @@ public class RobotContainer
   }
 
   //  new Trigger(m_exampleSubsystem::exampleCondition)
-  //     .onTrue(new ExampleCommand(m_exampleSubsystem));
+  //     .whileTrue(new ExampleCommand(m_exampleSubsystem));
 
   // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
   // cancelling on release.

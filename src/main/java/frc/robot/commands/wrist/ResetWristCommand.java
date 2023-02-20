@@ -5,7 +5,6 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
 public class ResetWristCommand extends CommandBase
@@ -59,6 +58,6 @@ public class ResetWristCommand extends CommandBase
   @Override
   public boolean isFinished()
   {
-    return WristPolicy.encoderPosition <= 0;
+    return false;
   }
 }

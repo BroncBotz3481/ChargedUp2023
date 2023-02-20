@@ -8,9 +8,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.elevator.ElevatorPolicy.PIDF;
 
@@ -74,6 +76,13 @@ public class ElevatorSubsystem extends SubsystemBase
 
     set(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE,
         PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
+
+    if (RobotBase.isSimulation())
+    {
+      REVPhysicsSim.getInstance().addSparkMax(rightElevatorMotor, 2.6f, 5676);
+      REVPhysicsSim.getInstance().addSparkMax(leftElevatorMotor, 2.6f, 5676);
+
+    }
   }
 
   /**
