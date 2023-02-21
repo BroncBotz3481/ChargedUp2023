@@ -5,6 +5,7 @@
 package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
 public class StopElevatorCommand extends CommandBase
@@ -64,6 +65,6 @@ public class StopElevatorCommand extends CommandBase
   @Override
   public boolean isFinished()
   {
-    return false;
+    return ElevatorPolicy.lowLimit || ElevatorPolicy.upLimit;
   }
 }

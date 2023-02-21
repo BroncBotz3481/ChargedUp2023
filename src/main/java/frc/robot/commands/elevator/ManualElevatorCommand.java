@@ -5,7 +5,9 @@
 package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
+
 import java.util.function.DoubleSupplier;
 
 public class ManualElevatorCommand extends CommandBase
@@ -73,6 +75,6 @@ public class ManualElevatorCommand extends CommandBase
   @Override
   public boolean isFinished()
   {
-    return false;
+    return ElevatorPolicy.lowLimit || ElevatorPolicy.upLimit;
   }
 }
