@@ -2,6 +2,7 @@ package frc.robot.subsystems.pipeline;
 
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.PhotonCamera;
@@ -56,6 +57,7 @@ public class PipelineSubsystem extends SubsystemBase
     PipelinePolicy.pipeline = new double[]{target.getYaw(), target.getPitch(), target.getArea(), target.getSkew()};
     PipelinePolicy.transformation = target.getBestCameraToTarget();
     PipelinePolicy.corners = target.getDetectedCorners();
+    PipelinePolicy.updateLocation(target.getBestCameraToTarget(), target.getFiducialId());
   }
 }
 
