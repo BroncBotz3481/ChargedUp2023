@@ -12,6 +12,7 @@
 
 package frc.robot.subsystems.pipeline;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.Transform3d;
 import java.util.List;
 
@@ -22,6 +23,10 @@ import java.util.List;
 public final class PipelinePolicy
 {
 
+  /**
+   * The april tag locations on the field.
+   */
+  public static AprilTagFieldLayout aprilTagFieldLayout;
   /**
    * Is true if Apriltag is in camera's sight, false if not
    */
