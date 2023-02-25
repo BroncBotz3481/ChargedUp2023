@@ -8,58 +8,62 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 
-public class StopBogeyCommand extends CommandBase {
+/**
+ * Bogey Command that stops the Bogey
+ */
+
+public class StopBogeyCommand extends CommandBase
+{
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     /**
-     * Creates a new bogey subsystem
+     * A BogeySubsystem object
      */
     private final BogeySubsystem m_BogeySubsystem;
 
     /**
-     * @param subsystem Creates a new StopBogeyCommand.
+     * Initializes the BogeySubsystem and adds requirements
+     *
+     * @param subsystem used to initialize the BogeySubsystem
      */
     public StopBogeyCommand(BogeySubsystem subsystem) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_BogeySubsystem = subsystem;
         addRequirements(subsystem);
     }
 
-    // Called when the command is initially scheduled.
-
     /**
-     * Stops the arm among initialization
+     * Stops the Bogey when the command is scheduled
      */
     @Override
     public void initialize() {
         m_BogeySubsystem.stopArm();
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
-
     /**
-     * Stops the arm while the command is run
+     * Stops the Bogey every 20 ms while the command is scheduled
      */
     @Override
     public void execute() {
         m_BogeySubsystem.stopArm();
     }
 
-    // Called once the command ends or is interrupted.
-
     /**
-     * Stops the arm when the command ends
+     * Stops the Bogey when the command is removed from the command scheduler
      *
      * @param interrupted whether the command was interrupted/canceled
      */
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted)
+    {
         m_BogeySubsystem.stopArm();
     }
 
-    // Returns true when the command should end.
+    /**
+     * returns true if either limit switch is pressed, removing the command from the command scheduler
+     */
     @Override
-    public boolean isFinished() {
+    public boolean isFinished()
+    {
         return BogeyPolicy.upLimit || BogeyPolicy.lowLimit;
     }
 }

@@ -11,36 +11,34 @@ import frc.robot.subsystems.bogey.BogeySubsystem;
 import java.util.function.DoubleSupplier;
 
 /**
- * Command to manually control the bogey
+ * Bogey Command to manually control the Bogey using the operator's controller's y-axis
  */
 public class ManualBogeyCommand extends CommandBase {
 
     /**
-     * Uses bogey subsystem
+     * A BogeySubsystem object
      */
     private final BogeySubsystem m_bogeySubsystem;
     /**
-     * Uses a power supplier
+     * A DoubleSupplier object
      */
     private final DoubleSupplier powSupplier;
 
     /**
-     * Initializes the bogey subsystem and power supplier
+     * Initializes the bogey subsystem, power supplier, and adds requirements
      *
-     * @param subsystem         initializes the bogey subsystem
-     * @param powDoubleSupplier initializes the power supplier
+     * @param subsystem         used to initialize the bogey subsystem
+     * @param powDoubleSupplier used to initialize the power supplier
      */
     public ManualBogeyCommand(BogeySubsystem subsystem, DoubleSupplier powDoubleSupplier) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_bogeySubsystem = subsystem;
         powSupplier = powDoubleSupplier;
         addRequirements(m_bogeySubsystem);
     }
 
-    // Called when the command is initially scheduled.
 
     /**
-     * stops the arm at the beginning of the command running
+     * Stops the bogey when the command is scheduled
      */
     @Override
     public void initialize() {
@@ -50,7 +48,7 @@ public class ManualBogeyCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
 
     /**
-     * moves the arm
+     * Moves the bogey every 20 ms using the operator's y-axis as a voltage while the command is scheduled
      */
     @Override
     public void execute() {
@@ -60,18 +58,22 @@ public class ManualBogeyCommand extends CommandBase {
     // Called once the command ends or is interrupted.
 
     /**
-     * stops the arm at the end of the command
+     * Stops the bogey when the command is removed from the command scheduler
      *
      * @param interrupted whether the command was interrupted/canceled
      */
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted)
+    {
         m_bogeySubsystem.stopArm();
     }
 
-    // Returns true when the command should end.
+    /**
+     * returns true when either limit switch is pressed, removing the command from the command scheduler
+     */
     @Override
-    public boolean isFinished() {
+    public boolean isFinished()
+    {
         return BogeyPolicy.upLimit || BogeyPolicy.lowLimit;
     }
 }

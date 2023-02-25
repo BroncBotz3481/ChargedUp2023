@@ -8,34 +8,35 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 
+/**
+ * Bogey Command that uses a PID Control Loop to bring the Bogey to a target position
+ */
 public class SetBogeyCommand extends CommandBase {
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     /**
-     * Uses a new bogey subsystem
+     * A BogeySubsystem object
      */
     private final BogeySubsystem m_BogeySubsystem;
     /**
-     * The target position for the bogey depending on the setpoint
+     * Is used as the set position for the PID Control Loop
      */
-    private final double targetPosition;
+    private final double         targetPosition;
 
     /**
-     * Initializes a new SetBogeyCommand
+     * Initializes the BogeySubsystem, targetPosition, and adds requirements
      *
-     * @param subsystem Creates a new BogeyHighCommand.
-     * @param target    sets the target position depending on the setpoint
+     * @param subsystem used to initialize the BogeySubsystem
+     * @param target    used to initialize the targetPosition
      */
     public SetBogeyCommand(BogeySubsystem subsystem, double target) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_BogeySubsystem = subsystem;
         targetPosition = target;
     }
 
-    // Called when the command is initially scheduled.
-
     /**
-     * Stops the arm, then runs PID for the arm to reach target position upon initialization
+     * Stops the arm, then runs PID for the arm to reach target position upon initialization when the command is
+     * scheduled
      */
     @Override
     public void initialize() {
@@ -43,15 +44,12 @@ public class SetBogeyCommand extends CommandBase {
         m_BogeySubsystem.runPID(targetPosition);
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
     }
 
-    // Called once the command ends or is interrupted.
-
     /**
-     * Stops the arm when target position is reached
+     * Stops the bogey when the command is removed from the command scheduler
      *
      * @param interrupted whether the command was interrupted/canceled
      */
@@ -60,13 +58,12 @@ public class SetBogeyCommand extends CommandBase {
         m_BogeySubsystem.stopArm();
     }
 
-    // Returns true when the command should end.
-
     /**
-     * @return true or false depending on whether the bogey has reached its set position
+     * returns true if either limit switch is pressed or the encoder position is greater than target position,
+     * removing the command from the command scheduler
      */
     @Override
     public boolean isFinished() {
-        return BogeyPolicy.setPosition >= targetPosition || BogeyPolicy.lowLimit || BogeyPolicy.upLimit;
+        return BogeyPolicy.encoderPosition >= targetPosition || BogeyPolicy.lowLimit || BogeyPolicy.upLimit;
     }
 }

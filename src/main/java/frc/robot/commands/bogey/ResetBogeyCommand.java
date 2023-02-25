@@ -8,17 +8,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 
+/**
+ * Bogey Command that brings the bogey to home position
+ */
 public class ResetBogeyCommand extends CommandBase {
 
     /**
-     * Uses bogey subsystem
+     * A BogeySubsystem object
      */
     private final BogeySubsystem m_BogeySubsystem;
 
     /**
-     * Creates a new ResetBogeyCommand
+     * Initializes the BogeySubsystem and adds requirements
      *
-     * @param subsystem initializes the Bogey subsystem
+     * @param subsystem used to initialize the BogeySubsystem
      */
     public ResetBogeyCommand(BogeySubsystem subsystem) {
         // Use addRequirements() here to declare subsystem dependencies.
@@ -26,26 +29,21 @@ public class ResetBogeyCommand extends CommandBase {
         addRequirements(subsystem);
     }
 
-    // Called when the command is initially scheduled.
-
     /**
-     * Sets the target position of the bogey to zero
+     * Runs the PID Control Loop with the target position being 0 when the command is scheduled
      */
     @Override
     public void initialize() {
         m_BogeySubsystem.runPID(0);
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-
+    public void execute()
+    {
     }
 
-    // Called once the command ends or is interrupted.
-
     /**
-     * Ends the bogey command when the arm reaches the target position
+     * Stops the Bogey when the command is removed from the command scheduler
      *
      * @param interrupted whether the command was interrupted/canceled
      */
@@ -54,10 +52,8 @@ public class ResetBogeyCommand extends CommandBase {
         m_BogeySubsystem.stopArm();
     }
 
-    // Returns true when the command should end.
-
     /**
-     * @return true if the bogey has reached position 0 and false if not
+     * returns true if either limit switch is pressed, removing the command from the command scheduler
      */
     @Override
     public boolean isFinished() {
