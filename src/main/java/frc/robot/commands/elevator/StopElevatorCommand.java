@@ -10,28 +10,23 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
 public class StopElevatorCommand extends CommandBase
 {
-
   /**
-   * Uses ElevatorSubsystem
+   * An ElevatorSubsystem object
    */
   private final ElevatorSubsystem m_ElevatorSubsystem;
 
   /**
-   * Initializes the elevator subsystem
-   *
-   * @param subsystem initializes the elevator subsystem
+   * Initializes the elevator subsystem and adds requirements
+   * @param subsystem used to initialize the elevator subsystem
    */
   public StopElevatorCommand(ElevatorSubsystem subsystem)
   {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_ElevatorSubsystem = subsystem;
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
-
   /**
-   * Stops elevator at the beginning of the command
+   * Stops the elevator when the command is scheduled
    */
   @Override
   public void initialize()
@@ -39,10 +34,8 @@ public class StopElevatorCommand extends CommandBase
     m_ElevatorSubsystem.stopEle();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-
   /**
-   * Stops Elevator
+   * Stops the elevator every 20 ms while the command is scheduled
    */
   @Override
   public void execute()
@@ -50,10 +43,8 @@ public class StopElevatorCommand extends CommandBase
     m_ElevatorSubsystem.stopEle();
   }
 
-  // Called once the command ends or is interrupted.
-
   /**
-   * Stops Elevator
+   * Stops the elevator when the command is removed from the command scheduled
    */
   @Override
   public void end(boolean interrupted)
@@ -61,7 +52,9 @@ public class StopElevatorCommand extends CommandBase
     m_ElevatorSubsystem.stopEle();
   }
 
-  // Returns true when the command should end.
+  /**
+   *returns true when either limit switch is pressed, removing the command from the command scheduler
+   */
   @Override
   public boolean isFinished()
   {

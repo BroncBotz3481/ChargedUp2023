@@ -12,26 +12,21 @@ public class ResetElevatorCommand extends CommandBase
 {
 
   /**
-   * Uses ElevatorSubsystem
+   * A ElevatorSubsystem object
    */
   private final ElevatorSubsystem m_ElevatorSubsystem;
-
   /**
-   * Initializes the elevator subsystem
-   *
-   * @param subsystem initializes the elevator subsystem
+   * Initializes the ElevatorSubsystem and adds requirements
+   * @param subsystem used to initialize the elevator subsystem
    */
   public ResetElevatorCommand(ElevatorSubsystem subsystem)
   {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_ElevatorSubsystem = subsystem;
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
-
   /**
-   * Uses PID to set targetPosition to 0 at beginning of command
+   * Runs PID Control Loop with the set position being 0 (home) when the command is scheduled
    */
   @Override
   public void initialize()
@@ -39,18 +34,11 @@ public class ResetElevatorCommand extends CommandBase
     m_ElevatorSubsystem.runPID(0);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute()
-  {
-
-  }
-
-  // Called once the command ends or is interrupted.
+  public void execute() {}
 
   /**
-   * stops the elevator at the end of the command
-   *
+   * Stops the elevator when the command is removed from the command scheduled
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override
@@ -59,7 +47,9 @@ public class ResetElevatorCommand extends CommandBase
     m_ElevatorSubsystem.stopEle();
   }
 
-  // Returns true when the command should end.
+  /**
+   *returns true when either limit switch is pressed, removing the command from the command scheduler
+   */
   @Override
   public boolean isFinished()
   {

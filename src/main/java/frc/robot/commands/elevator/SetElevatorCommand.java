@@ -11,33 +11,29 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 public class SetElevatorCommand extends CommandBase {
 
     /**
-     * Uses ElevatorSubsystem
+     * An ElevatorSubsystem object
      */
     private final ElevatorSubsystem m_ElevatorSubsystem;
 
     /**
-     * Target Position for Elevator
+     * Is used as the set position for the PID Control Loop
      */
     private final double targetPosition;
 
-
     /**
-     * Initializes the elevator subsystem
+     * Initializes the elevator subsystem, initializes targetPosition, and adds reqiurements
      *
      * @param subsystem initializes the elevator subsystem
      * @param target    target position in meters
      */
     public SetElevatorCommand(ElevatorSubsystem subsystem, double target) {
-        // Use addRequirements() here to declare subsystem dependencies.
         m_ElevatorSubsystem = subsystem;
         targetPosition = target;
         addRequirements(subsystem);
     }
 
-    // Called when the command is initially scheduled.
-
     /**
-     * stops elevator at start of command runs PID to targetPosition at the start of command
+     * Stops the elevator and starts PID Control Loop when the command is scheduled
      */
     @Override
     public void initialize() {
@@ -45,17 +41,13 @@ public class SetElevatorCommand extends CommandBase {
         m_ElevatorSubsystem.runPID(targetPosition);
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
-
     @Override
     public void execute() {
 
     }
 
-    // Called once the command ends or is interrupted.
-
     /**
-     * stops Elevator at the end of the command
+     *Stops the
      *
      * @param interrupted whether the command was interrupted/canceled
      */

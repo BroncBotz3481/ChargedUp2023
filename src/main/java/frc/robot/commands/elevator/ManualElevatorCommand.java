@@ -14,32 +14,27 @@ public class ManualElevatorCommand extends CommandBase
 {
 
   /**
-   * Uses ElevatorSubsystem
+   * A ElevatorSubsystem object
    */
   private final ElevatorSubsystem m_elevatorSubsystem;
   /**
-   * Uses DoubleSupplier
+   * A DoubleSupplier object
    */
   private final DoubleSupplier    powSupplier;
-
   /**
    * Initializes the elevator subsystem and power supplier
-   *
-   * @param subsystem         initializes the elevator subsystem
-   * @param powDoubleSupplier initializes the power supplier
+   * @param subsystem used to initialize the elevator subsystem
+   * @param powDoubleSupplier used to initialize the power supplier
    */
   public ManualElevatorCommand(ElevatorSubsystem subsystem, DoubleSupplier powDoubleSupplier)
   {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_elevatorSubsystem = subsystem;
     powSupplier = powDoubleSupplier;
     addRequirements(m_elevatorSubsystem);
   }
 
-  // Called when the command is initially scheduled.
-
   /**
-   * stops the elevator at the beginning of the command running
+   * Stops the elevator when the command is scheduled
    */
   @Override
   public void initialize()
@@ -47,10 +42,8 @@ public class ManualElevatorCommand extends CommandBase
     m_elevatorSubsystem.stopEle();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-
   /**
-   * moves the arm
+   * Moves elevator based off the axis of the XBox controller
    */
   @Override
   public void execute()
@@ -58,11 +51,8 @@ public class ManualElevatorCommand extends CommandBase
     m_elevatorSubsystem.moveElevator(powSupplier.getAsDouble());
   }
 
-  // Called once the command ends or is interrupted.
-
   /**
-   * stops the elevator at the end of the command
-   *
+   * Stops the elevator when the command is removed from the command scheduler
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override
@@ -71,7 +61,9 @@ public class ManualElevatorCommand extends CommandBase
     m_elevatorSubsystem.stopEle();
   }
 
-  // Returns true when the command should end.
+  /**
+   * returns true when either limit switch is pressed, removing the command from the command scheduler
+   */
   @Override
   public boolean isFinished()
   {

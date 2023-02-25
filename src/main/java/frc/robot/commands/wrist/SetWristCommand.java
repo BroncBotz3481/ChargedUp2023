@@ -35,9 +35,7 @@ public class SetWristCommand extends CommandBase
     }
 
     /**
-     * Stops the wrist at when the command is scheduled, and it starts the PID Control Loop with the targetPosition
-     * as the
-     * setPosition
+     * Stops the wrist at when the command is scheduled, and it starts the PID Control Loop with the targetPosition as the setPosition
      */
     @Override
     public void initialize()

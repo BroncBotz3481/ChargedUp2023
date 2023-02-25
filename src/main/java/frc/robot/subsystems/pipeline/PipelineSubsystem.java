@@ -2,6 +2,7 @@ package frc.robot.subsystems.pipeline;
 
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -36,8 +37,7 @@ public class PipelineSubsystem extends SubsystemBase
     camera = new PhotonCamera("Integrated_Webcam");
     try
     {
-      PipelinePolicy.aprilTagFieldLayout = new AprilTagFieldLayout(
-          Filesystem.getDeployDirectory() + "/apriltags/2023-chargedup.json");
+      PipelinePolicy.aprilTagFieldLayout = AprilTagFields.kDefaultField.loadAprilTagLayoutField();
     } catch (Exception ignored)
     {
     }
