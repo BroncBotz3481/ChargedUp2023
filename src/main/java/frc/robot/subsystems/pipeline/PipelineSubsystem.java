@@ -40,6 +40,7 @@ public class PipelineSubsystem extends SubsystemBase
       PipelinePolicy.aprilTagFieldLayout = AprilTagFields.kDefaultField.loadAprilTagLayoutField();
     } catch (Exception ignored)
     {
+
     }
   }
 

@@ -9,6 +9,9 @@ import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
+/**
+ * Wrist command that uses a PID Control Loop to bring the wrist to a target position
+ */
 public class SetWristCommand extends CommandBase
 {
 

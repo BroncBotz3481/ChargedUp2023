@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
+/**
+ * Elevator Commands that brings Elevator back to home position
+ */
 public class ResetElevatorCommand extends CommandBase
 {
 
@@ -15,6 +18,7 @@ public class ResetElevatorCommand extends CommandBase
    * A ElevatorSubsystem object
    */
   private final ElevatorSubsystem m_ElevatorSubsystem;
+
   /**
    * Initializes the ElevatorSubsystem and adds requirements
    * @param subsystem used to initialize the elevator subsystem

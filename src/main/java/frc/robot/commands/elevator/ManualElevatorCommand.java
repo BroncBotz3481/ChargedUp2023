@@ -10,6 +10,9 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
 import java.util.function.DoubleSupplier;
 
+/**
+ * Elevator command that allows the operator to manually control the elevator using the controllers y-axis
+ */
 public class ManualElevatorCommand extends CommandBase
 {
 
@@ -21,6 +24,7 @@ public class ManualElevatorCommand extends CommandBase
    * A DoubleSupplier object
    */
   private final DoubleSupplier    powSupplier;
+
   /**
    * Initializes the elevator subsystem and power supplier
    * @param subsystem used to initialize the elevator subsystem

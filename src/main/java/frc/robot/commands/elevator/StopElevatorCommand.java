@@ -8,8 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
+/**
+ * Elevator Command that stops the ElevatorSubsystem
+ */
 public class StopElevatorCommand extends CommandBase
 {
+
   /**
    * An ElevatorSubsystem object
    */

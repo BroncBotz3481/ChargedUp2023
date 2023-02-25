@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
+/**
+ * Elevator command that uses a PID Control Loop to bring the Elevator to a target position
+ */
 public class SetElevatorCommand extends CommandBase {
 
     /**
@@ -42,23 +45,30 @@ public class SetElevatorCommand extends CommandBase {
     }
 
     @Override
-    public void execute() {
-
+    public void execute()
+    {
     }
 
     /**
-     *Stops the
+     * Stops the elevator when the command is removed from the command scheduler
      *
      * @param interrupted whether the command was interrupted/canceled
      */
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted)
+    {
         m_ElevatorSubsystem.stopEle();
     }
 
-    // Returns true when the command should end.
+    /**
+     * returns true if either limit switch is pressed or if encoder position is greater than targetPosition, removing
+     * the
+     * command from the command scheduler
+     */
     @Override
-    public boolean isFinished() {
-        return ElevatorPolicy.setPosition >= targetPosition || ElevatorPolicy.lowLimit || ElevatorPolicy.upLimit;
+    public boolean isFinished()
+    {
+        return ElevatorPolicy.rightEncoderPosition >= targetPosition || ElevatorPolicy.lowLimit ||
+               ElevatorPolicy.upLimit;
     }
 }

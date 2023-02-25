@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
+/**
+ * Wrist Command that brings the Wrist back to home position
+ */
 public class ResetWristCommand extends CommandBase
 {
 

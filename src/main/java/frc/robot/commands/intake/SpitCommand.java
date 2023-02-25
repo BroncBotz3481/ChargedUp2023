@@ -7,7 +7,9 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 
-
+/**
+ * Intake Command to outtake elements
+ */
 public class SpitCommand extends CommandBase
 {
 
