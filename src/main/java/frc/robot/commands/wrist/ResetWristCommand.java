@@ -8,40 +8,42 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
-public class ResetWristCommand extends CommandBase {
+public class ResetWristCommand extends CommandBase
+{
 
     /**
-     * Initializes the WristSubsystem
-     *
-     * @param subsystem creates a new ResetWristCommand
+     * An object of the WristSubsystem
      */
     private final WristSubsystem m_WristSubsystem;
 
-    public ResetWristCommand(WristSubsystem subsystem) {
-        // Use addRequirements() here to declare subsystem dependencies.
+    /**
+     * Initializes the WristSubsystem and adds requirements
+     *
+     * @param subsystem A WristSubsystem object used to initialize the instance WristSubsystem
+     */
+    public ResetWristCommand(WristSubsystem subsystem)
+    {
         m_WristSubsystem = subsystem;
         addRequirements(subsystem);
     }
 
-    // Called when the command is initially scheduled.
-
     /**
-     * stops the wrist at the beginning of the command running
+     * Returns the WristSubsystem to position 0 (home) when the command is scheduled
      */
     @Override
-    public void initialize() {
+    public void initialize()
+    {
         m_WristSubsystem.setMotor(0);
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
+    public void execute()
+    {
     }
 
-    // Called once the command ends or is interrupted.
-
     /**
-     * stops the intake at the end of the command running
+     * Stops the wrist when the command is removed from the command scheduler
+     * @param interrupted whether the command was interrupted/canceled
      */
     @Override
     public void end(boolean interrupted) {
@@ -49,7 +51,7 @@ public class ResetWristCommand extends CommandBase {
     }
 
     /**
-     * Returns true when the command should end reaching the proper position
+     * Returns true if either limit switch is pressed, removing the command from the command scheduler
      */
     @Override
     public boolean isFinished() {

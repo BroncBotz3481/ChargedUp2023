@@ -12,28 +12,23 @@ public class SpitCommand extends CommandBase
 {
 
   /**
-   * Uses IntakeSubsystem
+   * An object of the IntakeSubsystem
    */
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem m_IntakeSubsystem;
 
   /**
-   * Initializes the intakeSubsystem
+   * Initializes the IntakeSubsystem and adds requirements
    *
-   * @param subsystem Creates a new SpitCommand.
+   * @param subsystem A IntakeSubsystem used to initialize the instance IntakeSubsystem
    */
-
   public SpitCommand(IntakeSubsystem subsystem)
   {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_IntakeSubsystem = subsystem;
     addRequirements(m_IntakeSubsystem);
   }
 
-  // Called when the command is initially scheduled.
-
   /**
-   * stops the intake at the beginning of the command running
+   * Stops the intake when command is scheduled
    */
   @Override
   public void initialize()
@@ -41,10 +36,8 @@ public class SpitCommand extends CommandBase
     m_IntakeSubsystem.stopIntake();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-
   /**
-   * moves the intake in the direction opposite of the robot
+   * Runs the intake at 100% power every 20 ms while the command is scheduled
    */
   @Override
   public void execute()
@@ -52,10 +45,8 @@ public class SpitCommand extends CommandBase
     m_IntakeSubsystem.runIntake(1);
   }
 
-  // Called once the command ends or is interrupted.
-
   /**
-   * stops the intake at the end of the command
+   * Stops the intake when the command is removed from the command scheduler
    *
    * @param interrupted whether the command was interrupted/canceled
    */
@@ -65,7 +56,6 @@ public class SpitCommand extends CommandBase
     m_IntakeSubsystem.stopIntake();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished()
   {

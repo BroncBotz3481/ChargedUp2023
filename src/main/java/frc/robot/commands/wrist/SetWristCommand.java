@@ -9,54 +9,60 @@ import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
-public class SetWristCommand extends CommandBase {
+public class SetWristCommand extends CommandBase
+{
 
     /**
-     * Initializes the WristSubsystem
-     *
-     * @param subsystem creates a new SetWristCommand
+     * An object of WristSubsystem
      */
     private final WristSubsystem m_WristSubsystem; //creates new object of class WristSubsystem
-    private final double targetPosition;
-
-    public SetWristCommand(WristSubsystem subsystem, double target) { //constructor for RaiseWristCommand class; WristSubsystem object as parameter
-        m_WristSubsystem = subsystem; //sets command object to parameter, so it can be used throughout this class
-        targetPosition = target;
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(m_WristSubsystem); //ensures subsystem can only be used by one command at a time
-    }
-
-    // Called when the command is initially scheduled.
+    /**
+     * Is used as the set position for the PID Control Loop
+     */
+    private final double         targetPosition;
 
     /**
-     * stops the wrist at the beginning of the command running, and it sets the motor to the target position
+     * Initializes the WristSubsystem, targetPosition, and adds requirements
+     *
+     * @param subsystem A WristSubsystem object used to initialize the instance WristSubsystem
+     * @param target    Holds the value of the targetPosition of this specific command instance
+     */
+    public SetWristCommand(WristSubsystem subsystem, double target)
+    {
+        m_WristSubsystem = subsystem;
+        targetPosition = target;
+        addRequirements(m_WristSubsystem);
+    }
+
+    /**
+     * Stops the wrist at when the command is scheduled, and it starts the PID Control Loop with the targetPosition
+     * as the
+     * setPosition
      */
     @Override
-    public void initialize() {
-        m_WristSubsystem.stopMotor(); //stops the wrist motor when robot initialized
+    public void initialize()
+    {
+        m_WristSubsystem.stopMotor();
         m_WristSubsystem.setMotor(targetPosition);
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-        //when RaiseWristCommand is executed, wrist motor set to 5000. (+) so wrist raises
+    public void execute()
+    {
     }
 
-    // Called once the command ends or is interrupted.
-
     /**
-     * stops the intake at the end of the command running
+     * Stops the wrist when the command is removed from the command
+     * @param interrupted whether the command was interrupted/canceled
      */
     @Override
     public void end(boolean interrupted) {
-        m_WristSubsystem.stopMotor();  //stops motor; when boolean parameter is true, motor stops.
+        m_WristSubsystem.stopMotor();
     }
 
-    // Returns true when the command should end.
-
     /**
-     * Returns true when the command should end reaching the proper position
+     * Returns true if either limit switch is pressed or if the encoderPosition exceeds the setPosition, removing the
+     * command from the command scheduler
      */
     @Override
     public boolean isFinished() {

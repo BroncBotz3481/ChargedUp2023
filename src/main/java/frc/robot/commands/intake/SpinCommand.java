@@ -11,27 +11,24 @@ public class SpinCommand extends CommandBase
 {
 
   /**
-   * Uses IntakeSubsystem
+   * An object of IntakeSubsystem
    */
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem m_IntakeSubsystem;
 
   /**
-   * Initializes the intakeSubsystem
+   * Initializes the IntakeSubsystem and adds requirments
    *
-   * @param subsystem creates a new SpinCommand
+   * @param subsystem A IntakeSubsystem used to initialize the instance IntakeSubsystem
    */
   public SpinCommand(IntakeSubsystem subsystem)
   {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_IntakeSubsystem = subsystem;
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
-
   /**
-   * stops the intake at the beginning of the command running
+   * Stops the intake when the command is scheduled
    */
   @Override
   public void initialize()
@@ -39,10 +36,8 @@ public class SpinCommand extends CommandBase
     m_IntakeSubsystem.stopIntake();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-
   /**
-   * moves the intake in the direction toward the robot
+   * Runs the intake at -100% power every 20 ms while the command is scheduled
    */
   @Override
   public void execute()
@@ -50,11 +45,8 @@ public class SpinCommand extends CommandBase
     m_IntakeSubsystem.runIntake(-1);
   }
 
-  // Called once the command ends or is interrupted.
-
   /**
-   * stops the intake at the end of the command
-   *
+   * Stops the intake when the command is removed from the command scheduler
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override
@@ -63,7 +55,6 @@ public class SpinCommand extends CommandBase
     m_IntakeSubsystem.stopIntake();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished()
   {

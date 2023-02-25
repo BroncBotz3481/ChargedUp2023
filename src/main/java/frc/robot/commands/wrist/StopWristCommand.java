@@ -11,54 +11,53 @@ import frc.robot.subsystems.wrist.WristSubsystem;
 public class StopWristCommand extends CommandBase {
 
     /**
-     * Uses WristSubsystem
+     * An object of WristSubsystem
      */
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final WristSubsystem m_WristSubsystem;
 
     /**
-     * @param subsystem Creates a new StopWristCommand.
+     * Initializes the WristSubsystem and adds requirements
+     * @param subsystem A WristSubsystem object used to initialize the instance WristSubsystem
      */
-    public StopWristCommand(WristSubsystem subsystem) {                //constructor method
-        // Use addRequirements() here to declare subsystem dependencies.
-        m_WristSubsystem = subsystem;         //allows private variable to be used in other methods in the class
+    public StopWristCommand(WristSubsystem subsystem)
+    {
+        m_WristSubsystem = subsystem;
         addRequirements(subsystem);
     }
 
-    // Called when the command is initially scheduled.
-
     /**
-     * stops the wrist at the beginning of the command running. Power is set to 0
+     * Stops the wrist when the command is scheduled
      */
     @Override
     public void initialize() {
-        m_WristSubsystem.stopMotor();          //calls stop motor when command is initialized
+        m_WristSubsystem.stopMotor();
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
-
     /**
-     * Stops the wrist when executed. Power is set to 0.
+     * Stops the wrist every 20 ms while command is scheduled
      */
     @Override
     public void execute() {
-        m_WristSubsystem.stopMotor();              //calls stops motor when command is executed
+        m_WristSubsystem.stopMotor();
     }
-
-    // Called once the command ends or is interrupted.
 
     /**
-     * Wrist is stopped at the end. Power is set to 0.
+     * Stops the wrist when the command is removed from the command scheduler
+     *
+     * @param interrupted whether the command was interrupted/canceled
      */
     @Override
-    public void end(boolean interrupted) {
-        m_WristSubsystem.stopMotor();               //stops wrist motor
+    public void end(boolean interrupted)
+    {
+        m_WristSubsystem.stopMotor();
     }
 
-    // Returns true when the command should end.
-
+    /**
+     * Returns true if either limit switch is pressed, removing the command from the command scheduler
+     */
     @Override
-    public boolean isFinished() {
+    public boolean isFinished()
+    {
         return BogeyPolicy.lowLimit || BogeyPolicy.upLimit;
     }
 }

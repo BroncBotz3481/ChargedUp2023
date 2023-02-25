@@ -11,27 +11,23 @@ public class StopIntakeCommand extends CommandBase
 {
 
   /**
-   * Uses IntakeSubsystem
+   * An object of the IntakeSubsystem
    */
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem m_IntakeSubsystem;
 
   /**
-   * Initializes the intakeSubsystem
+   * Initializes the IntakeSubsystem and adds requirements
    *
-   * @param subsystem Creates a new StopIntakeCommand.
+   * @param subsystem A IntakeSubsystem subsystem used to initialize the instance IntakeSubsystem
    */
   public StopIntakeCommand(IntakeSubsystem subsystem)
   {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_IntakeSubsystem = subsystem;
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
-
   /**
-   * stops the intake at the beginning of the command running. Power is set to 0
+   * Stops the intake when the command is scheduled
    */
   @Override
   public void initialize()
@@ -39,10 +35,8 @@ public class StopIntakeCommand extends CommandBase
     m_IntakeSubsystem.stopIntake();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-
   /**
-   * Stops the intake when executed. Power is set to 0.
+   * Stops the intake every 20 ms while the command is scheduled
    */
   @Override
   public void execute()
@@ -50,10 +44,9 @@ public class StopIntakeCommand extends CommandBase
     m_IntakeSubsystem.stopIntake();
   }
 
-  // Called once the command ends or is interrupted.
-
   /**
-   * intake is stopped at the end. Power is set to 0.
+   * Stops the intake when the command is removed from the command scheduler
+   * @param interrupted whether the command was interrupted/canceled
    */
   @Override
   public void end(boolean interrupted)
@@ -61,7 +54,7 @@ public class StopIntakeCommand extends CommandBase
     m_IntakeSubsystem.stopIntake();
   }
 
-  // Returns true when the command should end.
+
   @Override
   public boolean isFinished()
   {

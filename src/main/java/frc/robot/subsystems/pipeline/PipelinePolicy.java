@@ -66,4 +66,5 @@ public final class PipelinePolicy
   {
     //magic ensues...
   }
+
 }
