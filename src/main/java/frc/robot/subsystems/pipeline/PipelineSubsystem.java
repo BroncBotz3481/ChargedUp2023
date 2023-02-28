@@ -7,8 +7,17 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.PhotonUtils;
+
+import org.photonvision.targeting.PhotonTrackedTarget;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Transform3d;
 
 /**
  * The Psuedo Pipeline subsystem on the robot
@@ -42,6 +51,8 @@ public class PipelineSubsystem extends SubsystemBase
     {
 
     }
+    
+
   }
 
   /**
@@ -58,7 +69,7 @@ public class PipelineSubsystem extends SubsystemBase
     PipelinePolicy.pipeline = new double[]{target.getYaw(), target.getPitch(), target.getArea(), target.getSkew()};
     PipelinePolicy.transformation = target.getBestCameraToTarget();
     PipelinePolicy.corners = target.getDetectedCorners();
-    PipelinePolicy.updateLocation(target.getBestCameraToTarget(), target.getFiducialId());
+    //PipelinePolicy.updateLocation(target.getBestCameraToTarget(), target.getFiducialId());
   }
 }
 
