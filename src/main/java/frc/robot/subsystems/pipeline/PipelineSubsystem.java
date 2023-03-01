@@ -51,7 +51,6 @@ public class PipelineSubsystem extends SubsystemBase
     {
 
     }
-    
 
   }
 
@@ -67,7 +66,7 @@ public class PipelineSubsystem extends SubsystemBase
     PipelinePolicy.targetExists = result.hasTargets();
     target = result.getBestTarget();
     PipelinePolicy.pipeline = new double[]{target.getYaw(), target.getPitch(), target.getArea(), target.getSkew()};
-    PipelinePolicy.transformation = target.getBestCameraToTarget();
+    PipelinePolicy.cameraToTargetTransformation = target.getBestCameraToTarget();
     PipelinePolicy.corners = target.getDetectedCorners();
     //PipelinePolicy.updateLocation(target.getBestCameraToTarget(), target.getFiducialId());
   }

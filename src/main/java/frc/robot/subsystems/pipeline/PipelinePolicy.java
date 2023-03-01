@@ -56,12 +56,9 @@ public final class PipelinePolicy
 
   public static PhotonPoseEstimator altPhotonPoseEstimator;
 
-  
-  public static PhotonCamera cam;
+  public static Pose2d pEST;
 
   public static boolean isConnected;
-
-  public static Pose2d pEST;
 
   public static AprilTagFieldLayout aprilTagFieldLayout;
   /**
@@ -75,7 +72,7 @@ public final class PipelinePolicy
   /**
    * A Transform3d object that represents a transformation for a Pose3D
    */
-  public static Transform3d         transformation;
+  public static Transform3d         cameraToTargetTransformation;
 
 
   public static final Transform3d robotToCam =
@@ -95,12 +92,16 @@ public final class PipelinePolicy
    * @param bestCameraToTarget relative location of the robot to the AprilTag target
    * @param fiducialId         AprilTag ID
    */
-  public static void updateLocation(Transform3d bestCameraToTarget, PhotonPoseEstimator ppe, int fiducialId)
+  public static void updateLocation(Transform3d bestCameraToTarget, PhotonPoseEstimator ppe, int fiducialId, PhotonCamera cam)
   {
-    Pose3d aprilTag = aprilTagFieldLayout.getTagPose(fiducialId).get();
-    currentPosition = aprilTag.getTranslation().minus(bestCameraToTarget.getTranslation());
-    bestPhotonPoseEstimator = new PhotonPoseEstimator(PipelinePolicy.aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, cam, robotToCam);
-    altPhotonPoseEstimator = new PhotonPoseEstimator(PipelinePolicy.aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, cam, robotToCam);
+    Pose3d aprilTag = null; //FIX THIS LATER
+    if (aprilTagFieldLayout.getTagPose(fiducialId).isPresent()) {
+      aprilTag = aprilTagFieldLayout.getTagPose(fiducialId).get();
+    }
+    currentPosition = aprilTag.getTranslation().minus(cameraToTargetTransformation.getTranslation());
+    bestPhotonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, cam, robotToCam);
+    altPhotonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, cam, robotToCam);
+
 
     /**TODO:
      * I need to pass in pEST into bestPhotonPoseEstimator

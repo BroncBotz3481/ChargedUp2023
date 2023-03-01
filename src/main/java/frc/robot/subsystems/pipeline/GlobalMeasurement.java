@@ -12,4 +12,5 @@ public class GlobalMeasurement {
     this.timestampSeconds = timestampSeconds;
     this.ambiguity = ambiguity;
   }
+
 }
