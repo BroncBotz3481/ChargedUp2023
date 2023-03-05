@@ -4,15 +4,22 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.BogeyPresets;
 import frc.robot.Constants.ElevatorPresets;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.WristPresets;
 import frc.robot.commands.auto.AutonomousCommand;
+import frc.robot.commands.auto.Autos;
 import frc.robot.commands.bogey.ManualBogeyCommand;
 import frc.robot.commands.bogey.ResetBogeyCommand;
 import frc.robot.commands.bogey.SetBogeyCommand;
@@ -27,7 +34,15 @@ import frc.robot.commands.wrist.SetWristCommand;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.wrist.WristSubsystem;
+
+import java.io.File;
+
+import frc.robot.commands.auto.Autos;
+import frc.robot.commands.drivebase.AbsoluteDrive;
+import frc.robot.commands.drivebase.TeleopDrive;
+import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -49,6 +64,15 @@ public class RobotContainer
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
+  // The robot's subsystems and commands are defined here...
+  private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
+  // CommandJoystick rotationController = new CommandJoystick(1);
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  CommandJoystick driverController = new CommandJoystick(1);
+
+  // CommandJoystick driverController   = new CommandJoystick(3);//(OperatorConstants.DRIVER_CONTROLLER_PORT);
+  XboxController driverXbox = new XboxController(0);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -56,6 +80,27 @@ public class RobotContainer
   {
     // Configure the trigger bindings
     configureBindings();
+
+    AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
+            // Applies deadbands and inverts controls because joysticks
+            // are back-right positive while robot
+            // controls are front-left positive
+            () -> (Math.abs(driverXbox.getLeftY()) >
+                    OperatorConstants.LEFT_Y_DEADBAND)
+                    ? -driverXbox.getLeftY() : 0,
+            () -> (Math.abs(driverXbox.getLeftX()) >
+                    OperatorConstants.LEFT_X_DEADBAND)
+                    ? -driverXbox.getLeftX() : 0,
+            () -> -driverXbox.getRightX(),
+            () -> -driverXbox.getRightY(),
+            false);
+    TeleopDrive closedFieldRel = new TeleopDrive(
+            drivebase,
+            () -> (Math.abs(driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND) ? driverController.getRawAxis(1) : 0,
+            () -> (Math.abs(driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND) ? driverController.getRawAxis(0) : 0,
+            () -> (Math.abs(driverController.getRawAxis(4)) > .12 ) ? -driverController.getRawAxis(4) : 0, () -> true, false);
+
+    drivebase.setDefaultCommand(closedFieldRel);
   }
 
   /**
@@ -119,6 +164,12 @@ public class RobotContainer
     new Trigger(() -> m_operatorController.getLeftY() > 0.05).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
                                                                                                   m_operatorController::getLeftY));//Manually control elevator using left
     // joysticks y-axis
+
+
+    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+
+    new JoystickButton(driverXbox, 1).onTrue((new InstantCommand(drivebase::zeroGyro)));
+    new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
   }
 
   //  new Trigger(m_exampleSubsystem::exampleCondition)
@@ -137,7 +188,16 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return new AutonomousCommand();
+    return Autos.exampleAuto(drivebase);
+  }
 
+  public void setDriveMode()
+  {
+    //drivebase.setDefaultCommand();
+  }
+
+  public void setMotorBrake(boolean brake)
+  {
+    drivebase.setMotorBrake(brake);
   }
 }

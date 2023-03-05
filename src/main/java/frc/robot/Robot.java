@@ -5,9 +5,17 @@
 package frc.robot;
 
 import com.revrobotics.REVPhysicsSim;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import swervelib.parser.SwerveParser;
+
+import java.io.File;
+import java.io.IOException;
+
+import com.pathplanner.lib.server.PathPlannerServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
@@ -17,9 +25,23 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot
 {
 
+  private static Robot   instance;
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  private Timer disabledTimer;
+
+  public Robot()
+  {
+    instance = this;
+  }
+
+  public static Robot getInstance()
+  {
+    return instance;
+  }
 
   /**
    * This function is run when the robot is first started up and should be used for any initialization code.
@@ -27,9 +49,14 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit()
   {
+    PathPlannerServer.startServer(5811);
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
+    // immediately when disabled, but then also let it be pushed more
+    disabledTimer = new Timer();
   }
 
   /**
@@ -55,11 +82,19 @@ public class Robot extends TimedRobot
   @Override
   public void disabledInit()
   {
+    m_robotContainer.setMotorBrake(true);
+    disabledTimer.reset();
+    disabledTimer.start();
   }
 
   @Override
   public void disabledPeriodic()
   {
+    if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME))
+    {
+      m_robotContainer.setMotorBrake(false);
+      disabledTimer.stop();
+    }
   }
 
   /**
@@ -68,7 +103,7 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousInit()
   {
-//    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null)
@@ -96,6 +131,8 @@ public class Robot extends TimedRobot
     {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.setDriveMode();
+    m_robotContainer.setMotorBrake(true);
   }
 
   /**
@@ -111,6 +148,13 @@ public class Robot extends TimedRobot
   {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    try
+    {
+      new SwerveParser(new File(Filesystem.getDeployDirectory(), "swerve"));
+    } catch (IOException e)
+    {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
