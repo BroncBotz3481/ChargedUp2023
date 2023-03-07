@@ -61,23 +61,23 @@ public final class ElevatorPolicy
   /**
    * The position of the right elevator motor
    */
-  public static double rightEncoderPosition;
+  public static       double  rightEncoderPosition;
   /**
    * The position of the left elevator motor
    */
-  public static double leftEncoderPosition;
+  public static       double  leftEncoderPosition;
   /**
    * Target position for PID control loop
    */
-  public static double setPosition;
+  public static       double  setPosition;
   /**
    * This tells us whether the upperLimit switch has been hit or not
    */
-  public static boolean upLimit;
+  public static       boolean upLimit;
   /**
    * This tell us whether the lowerLimit switch has been hit or not
    */
-  public static boolean lowLimit;
+  public static       boolean lowLimit;
 
   /**
    * Returns the power depending on the state of the limits

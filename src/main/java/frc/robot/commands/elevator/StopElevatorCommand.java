@@ -21,6 +21,7 @@ public class StopElevatorCommand extends CommandBase
 
   /**
    * Initializes the elevator subsystem and adds requirements
+   *
    * @param subsystem used to initialize the elevator subsystem
    */
   public StopElevatorCommand(ElevatorSubsystem subsystem)
@@ -57,7 +58,7 @@ public class StopElevatorCommand extends CommandBase
   }
 
   /**
-   *returns true when either limit switch is pressed, removing the command from the command scheduler
+   * returns true when either limit switch is pressed, removing the command from the command scheduler
    */
   @Override
   public boolean isFinished()

@@ -8,10 +8,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import swervelib.SwerveController;
-
+import frc.robot.subsystems.swerve.SwerveSubsystem;
 import java.util.function.DoubleSupplier;
+import swervelib.SwerveController;
 
 /**
  * An example command that uses an example subsystem.
