@@ -45,7 +45,7 @@ public final class ElevatorPolicy
   /**
    * This is the gear ratio for the number of times the motor has spin for the elevator to rotate once
    */
-  public static final double  elevatorGearRatio   = 1;
+  public static final double  elevatorGearRatio   = 7;
   /**
    * The power set to the elevator
    */
