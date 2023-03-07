@@ -29,7 +29,7 @@ public final class WristPolicy {
     /**
      * This is the gear ratio for the number of times the motor has spin for the wrist to rotate once
      */
-    public static final double wristGearRatio = 1;
+    public static final double wristGearRatio = 81;
     /**
      * Power set to Wrist Motor
      */
