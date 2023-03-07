@@ -28,7 +28,7 @@ public final class BogeyPolicy {
     /**
      * This is the gear ratio for the number of times the motor has spin for the bogey to rotate once
      */
-    public static final double bogeyGearRatio = 1;
+    public static final double bogeyGearRatio = 9;
     /**
      * The power set to Bogey Motor
      */
