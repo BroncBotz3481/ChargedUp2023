@@ -38,6 +38,7 @@ public class IntakeSubsystem extends SubsystemBase
   public void runIntake(double power)
   {
     IntakePolicy.power = power;
+    System.out.println(IntakePolicy.power);
     motorIntake.set(IntakePolicy.power);
   }
 

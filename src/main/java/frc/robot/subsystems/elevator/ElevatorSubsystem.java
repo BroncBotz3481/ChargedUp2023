@@ -117,9 +117,11 @@ public class ElevatorSubsystem extends SubsystemBase {
      * @param targetPosition the target position for the PIDF loop, depending on the setpoint
      */
     public void runPID(double targetPosition) {
+        System.out.println(targetPosition);
         ElevatorPolicy.setPosition = ElevatorPolicy.getElevatorPosition(targetPosition,
                 upperLimitSwitch.get(),
                 lowerLimitSwitch.get());
+        System.out.println(ElevatorPolicy.setPosition);
         PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
     }
 
