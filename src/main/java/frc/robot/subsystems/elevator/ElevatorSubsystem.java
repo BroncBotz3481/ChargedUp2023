@@ -105,9 +105,11 @@ public class ElevatorSubsystem extends SubsystemBase {
      * @param power the power used to move the elevator
      */
     public void moveElevator(double power) {
+        System.out.println(power);
         ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,
                 upperLimitSwitch.get(),
                 lowerLimitSwitch.get());
+        System.out.println(ElevatorPolicy.elevatorPower);
         rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
     }
 

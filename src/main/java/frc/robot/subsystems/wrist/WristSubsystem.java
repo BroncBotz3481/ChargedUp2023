@@ -78,6 +78,7 @@ public class WristSubsystem extends SubsystemBase {
      * @param power The power used to move the wrist motor
      */
     public void runMotor(double power) {
+        System.out.println(power);
         WristPolicy.power = WristPolicy.getWristPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
         wristMotor.set(WristPolicy.power);
     }
