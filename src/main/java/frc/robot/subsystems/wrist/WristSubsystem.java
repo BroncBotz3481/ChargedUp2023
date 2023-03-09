@@ -82,7 +82,9 @@ public class WristSubsystem extends SubsystemBase
    */
   public void runMotor(double power)
   {
+    System.out.println("This is the power of the Wrist before algorithms: " + power);
     WristPolicy.power = WristPolicy.getWristPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
+    System.out.println("This is the power of the Wrist after algorithms: " + WristPolicy.power);
     wristMotor.set(WristPolicy.power);
   }
 
@@ -93,9 +95,12 @@ public class WristSubsystem extends SubsystemBase
    */
   public void setMotor(double targetPosition)
   {
+    System.out.println("This is the set position of the PID Control Loop before algorithms: " + targetPosition);
+    WristPolicy.setPosition = targetPosition;
     WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition,
                                                            upperLimitSwitch.get(),
                                                            lowerLimitSwitch.get());
+    System.out.println("This is the set position of the PID Control Loop after algorithms: " + WristPolicy.setPosition);
     PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
   }
 

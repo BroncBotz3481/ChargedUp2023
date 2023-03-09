@@ -12,6 +12,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IDS.Bogey;
 import frc.robot.subsystems.bogey.BogeyPolicy.PIDF;
 
 /**
@@ -86,8 +87,9 @@ public class BogeySubsystem extends SubsystemBase
    */
   public void moveArm(double power)
   {
-
+    System.out.println("This is the power of the Bogey before algorithms: " + power);
     BogeyPolicy.bogeyPower = BogeyPolicy.getBogeyPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
+    System.out.println("This is the power of the Bogey after algorithms: " + BogeyPolicy.bogeyPower);
     bogeyMotor.set(BogeyPolicy.bogeyPower);
   }
 
@@ -98,9 +100,12 @@ public class BogeySubsystem extends SubsystemBase
    */
   public void runPID(double targetPosition)
   {
+    System.out.println("This is the set position of the PID Control Loop before algorithms: " + targetPosition);
+    BogeyPolicy.setPosition = targetPosition;
     BogeyPolicy.setPosition = BogeyPolicy.getBogeyPosition(targetPosition,
                                                            upperLimitSwitch.get(),
                                                            lowerLimitSwitch.get());
+    System.out.println("This is the set position of the PID Control Loop after algorithms: " + BogeyPolicy.setPosition);
     PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
   }
 

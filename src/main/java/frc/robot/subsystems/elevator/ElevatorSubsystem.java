@@ -110,9 +110,11 @@ public class ElevatorSubsystem extends SubsystemBase
      */
     public void moveElevator(double power)
     {
+        System.out.println("This is the power of the Elevator before algorithms: " + power);
         ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,
                                                                        upperLimitSwitch.get(),
                                                                        lowerLimitSwitch.get());
+        System.out.println("This is the power of the Elevator after algorithms: " + ElevatorPolicy.elevatorPower);
         rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
     }
 
@@ -123,9 +125,12 @@ public class ElevatorSubsystem extends SubsystemBase
      */
     public void runPID(double targetPosition)
     {
+        System.out.println("This is the set position of the PID Control Loop before algorithms: " + targetPosition);
+        ElevatorPolicy.setPosition = targetPosition;
         ElevatorPolicy.setPosition = ElevatorPolicy.getElevatorPosition(targetPosition,
                                                                         upperLimitSwitch.get(),
                                                                         lowerLimitSwitch.get());
+        System.out.println("This is the set position of the PID Control Loop after algorithms: " + ElevatorPolicy.setPosition);
         PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
     }
 
