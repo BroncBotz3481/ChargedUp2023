@@ -7,7 +7,6 @@ package frc.robot.commands.elevator;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
-
 import java.util.function.DoubleSupplier;
 
 /**
@@ -27,7 +26,8 @@ public class ManualElevatorCommand extends CommandBase
 
   /**
    * Initializes the elevator subsystem and power supplier
-   * @param subsystem used to initialize the elevator subsystem
+   *
+   * @param subsystem         used to initialize the elevator subsystem
    * @param powDoubleSupplier used to initialize the power supplier
    */
   public ManualElevatorCommand(ElevatorSubsystem subsystem, DoubleSupplier powDoubleSupplier)
@@ -57,6 +57,7 @@ public class ManualElevatorCommand extends CommandBase
 
   /**
    * Stops the elevator when the command is removed from the command scheduler
+   *
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override

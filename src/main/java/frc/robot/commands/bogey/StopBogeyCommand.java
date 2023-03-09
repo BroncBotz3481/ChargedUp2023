@@ -15,55 +15,58 @@ import frc.robot.subsystems.bogey.BogeySubsystem;
 public class StopBogeyCommand extends CommandBase
 {
 
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    /**
-     * A BogeySubsystem object
-     */
-    private final BogeySubsystem m_BogeySubsystem;
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  /**
+   * A BogeySubsystem object
+   */
+  private final BogeySubsystem m_BogeySubsystem;
 
-    /**
-     * Initializes the BogeySubsystem and adds requirements
-     *
-     * @param subsystem used to initialize the BogeySubsystem
-     */
-    public StopBogeyCommand(BogeySubsystem subsystem) {
-        m_BogeySubsystem = subsystem;
-        addRequirements(subsystem);
-    }
+  /**
+   * Initializes the BogeySubsystem and adds requirements
+   *
+   * @param subsystem used to initialize the BogeySubsystem
+   */
+  public StopBogeyCommand(BogeySubsystem subsystem)
+  {
+    m_BogeySubsystem = subsystem;
+    addRequirements(subsystem);
+  }
 
-    /**
-     * Stops the Bogey when the command is scheduled
-     */
-    @Override
-    public void initialize() {
-        m_BogeySubsystem.stopArm();
-    }
+  /**
+   * Stops the Bogey when the command is scheduled
+   */
+  @Override
+  public void initialize()
+  {
+    m_BogeySubsystem.stopArm();
+  }
 
-    /**
-     * Stops the Bogey every 20 ms while the command is scheduled
-     */
-    @Override
-    public void execute() {
-        m_BogeySubsystem.stopArm();
-    }
+  /**
+   * Stops the Bogey every 20 ms while the command is scheduled
+   */
+  @Override
+  public void execute()
+  {
+    m_BogeySubsystem.stopArm();
+  }
 
-    /**
-     * Stops the Bogey when the command is removed from the command scheduler
-     *
-     * @param interrupted whether the command was interrupted/canceled
-     */
-    @Override
-    public void end(boolean interrupted)
-    {
-        m_BogeySubsystem.stopArm();
-    }
+  /**
+   * Stops the Bogey when the command is removed from the command scheduler
+   *
+   * @param interrupted whether the command was interrupted/canceled
+   */
+  @Override
+  public void end(boolean interrupted)
+  {
+    m_BogeySubsystem.stopArm();
+  }
 
-    /**
-     * returns true if either limit switch is pressed, removing the command from the command scheduler
-     */
-    @Override
-    public boolean isFinished()
-    {
-        return BogeyPolicy.upLimit || BogeyPolicy.lowLimit;
-    }
+  /**
+   * returns true if either limit switch is pressed, removing the command from the command scheduler
+   */
+  @Override
+  public boolean isFinished()
+  {
+    return BogeyPolicy.upLimit || BogeyPolicy.lowLimit;
+  }
 }

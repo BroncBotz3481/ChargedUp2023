@@ -37,23 +37,27 @@ public final class ElevatorPolicy
   /**
    * The left elevator motor is inversed
    */
-  public static final boolean INV_LEFT            = true;
+  public static final boolean INV_LEFT = true;
   /**
    * The right elevator motor is not inversed
    */
-  public static final boolean INV_RIGHT           = false;
+  public static final boolean INV_RIGHT = false;
   /**
    * This is the gear ratio for the number of times the motor has spin for the elevator to rotate once
    */
-  public static final double  elevatorGearRatio   = 1;
+  public static final double elevatorGearRatio = 7;
+  /**
+   * The radius of the sprocket on the elevator
+   */
+  public static final double radiusofSprocket = .944;
   /**
    * The power set to the elevator
    */
-  public static       double  elevatorPower;
+  public static double elevatorPower;
   /**
    * How fast the right elevator motor is spinning
    */
-  public static       double  rightEncoderVelocity;
+  public static double rightEncoderVelocity;
   /**
    * How fast the left elevator is spinning
    */
@@ -61,23 +65,23 @@ public final class ElevatorPolicy
   /**
    * The position of the right elevator motor
    */
-  public static double rightEncoderPosition;
+  public static       double  rightEncoderPosition;
   /**
    * The position of the left elevator motor
    */
-  public static double leftEncoderPosition;
+  public static       double  leftEncoderPosition;
   /**
    * Target position for PID control loop
    */
-  public static double setPosition;
+  public static       double  setPosition;
   /**
    * This tells us whether the upperLimit switch has been hit or not
    */
-  public static boolean upLimit;
+  public static       boolean upLimit;
   /**
    * This tell us whether the lowerLimit switch has been hit or not
    */
-  public static boolean lowLimit;
+  public static       boolean lowLimit;
 
   /**
    * Returns the power depending on the state of the limits

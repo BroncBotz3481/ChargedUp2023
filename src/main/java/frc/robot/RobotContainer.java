@@ -18,11 +18,12 @@ import frc.robot.Constants.BogeyPresets;
 import frc.robot.Constants.ElevatorPresets;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.WristPresets;
-import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.auto.Autos;
 import frc.robot.commands.bogey.ManualBogeyCommand;
 import frc.robot.commands.bogey.ResetBogeyCommand;
 import frc.robot.commands.bogey.SetBogeyCommand;
+import frc.robot.commands.drivebase.AbsoluteDrive;
+import frc.robot.commands.drivebase.TeleopDrive;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.ResetElevatorCommand;
 import frc.robot.commands.elevator.SetElevatorCommand;
@@ -36,13 +37,7 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.wrist.WristSubsystem;
-
 import java.io.File;
-
-import frc.robot.commands.auto.Autos;
-import frc.robot.commands.drivebase.AbsoluteDrive;
-import frc.robot.commands.drivebase.TeleopDrive;
-import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -82,23 +77,27 @@ public class RobotContainer
     configureBindings();
 
     AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
-            // Applies deadbands and inverts controls because joysticks
-            // are back-right positive while robot
-            // controls are front-left positive
-            () -> (Math.abs(driverXbox.getLeftY()) >
-                    OperatorConstants.LEFT_Y_DEADBAND)
-                    ? -driverXbox.getLeftY() : 0,
-            () -> (Math.abs(driverXbox.getLeftX()) >
-                    OperatorConstants.LEFT_X_DEADBAND)
-                    ? -driverXbox.getLeftX() : 0,
-            () -> -driverXbox.getRightX(),
-            () -> -driverXbox.getRightY(),
-            false);
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> (Math.abs(driverXbox.getLeftY()) >
+                                                                 OperatorConstants.LEFT_Y_DEADBAND)
+                                                                ? -driverXbox.getLeftY() : 0,
+                                                          () -> (Math.abs(driverXbox.getLeftX()) >
+                                                                 OperatorConstants.LEFT_X_DEADBAND)
+                                                                ? -driverXbox.getLeftX() : 0,
+                                                          () -> -driverXbox.getRightX(),
+                                                          () -> -driverXbox.getRightY(),
+                                                          false);
     TeleopDrive closedFieldRel = new TeleopDrive(
-            drivebase,
-            () -> (Math.abs(driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND) ? driverController.getRawAxis(1) : 0,
-            () -> (Math.abs(driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND) ? driverController.getRawAxis(0) : 0,
-            () -> (Math.abs(driverController.getRawAxis(4)) > .12 ) ? -driverController.getRawAxis(4) : 0, () -> true, false);
+        drivebase,
+        () -> (Math.abs(driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
+              ? driverController.getRawAxis(1) : 0,
+        () -> (Math.abs(driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
+              ? driverController.getRawAxis(0) : 0,
+        () -> (Math.abs(driverController.getRawAxis(4)) > .12) ? -driverController.getRawAxis(4) : 0,
+        () -> true,
+        false);
 
     drivebase.setDefaultCommand(closedFieldRel);
   }
@@ -164,7 +163,6 @@ public class RobotContainer
     new Trigger(() -> m_operatorController.getLeftY() > 0.05).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
                                                                                                   m_operatorController::getLeftY));//Manually control elevator using left
     // joysticks y-axis
-
 
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
