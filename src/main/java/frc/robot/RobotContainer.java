@@ -5,10 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.BogeyPresets;
 import frc.robot.Constants.ElevatorPresets;
@@ -118,17 +120,19 @@ public class RobotContainer
                         //   new SetBogeyCommand(m_bogeySubsystem,
                                         //       BogeyPresets.MID))); //When the left dpad is pressed the elevator and
 //     // bogey will go to a preset position to score mid
-        m_operatorController.povUp().whileTrue(
-        Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.HIGH),
-                          new SetBogeyCommand(m_bogeySubsystem,
-                                              BogeyPresets.HIGH))); //When the up dpad is pressed the elevator and
-//     // bogey will go to a preset position to score high
+//         new POVButton(m_driverController.getHID(), 0).whileTrue(
+//         Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.HIGH),
+//                           new SetBogeyCommand(m_bogeySubsystem,
+//                                               BogeyPresets.HIGH))); //When the up dpad is pressed the elevator and
+// //     // bogey will go to a preset position to score high
 
-//     new Trigger(() -> m_operatorController.getRightY() > 0.05).whileTrue(new ManualBogeyCommand(m_bogeySubsystem,
-//             m_operatorController::getRightY));//Manually control bogey using right
-//     // joysticks x-axis
-//     new Trigger(() -> m_operatorController.getLeftY() > 0.05).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
-//             m_operatorController::getLeftY));//Manually control elevator using left
+        //TODO: Fix bugs with the next two commands
+
+    new Trigger(() -> Math.abs(m_operatorController.getRawAxis(0)) > 0.05).whileTrue(new ManualBogeyCommand(m_bogeySubsystem,
+            () -> m_operatorController.getRawAxis(0)));//Manually control bogey using right
+    // joysticks x-axis
+    new Trigger(() -> Math.abs(m_operatorController.getRawAxis(3)) > 0.05).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
+            () -> m_operatorController.getRawAxis(3)));//Manually control elevator using left
 //     // joysticks y-axis
 // AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
 //             // Applies deadbands and inverts controls because joysticks
