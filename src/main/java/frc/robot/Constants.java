@@ -66,8 +66,8 @@ public final class Constants
       public static class CAN
       {
 
-        public static final int left  = 0;
-        public static final int right = 1;
+        public static final int left  = 1;
+        public static final int right = 8;
       }
 
       public static class DIO
@@ -84,7 +84,7 @@ public final class Constants
       public static class CAN
       {
 
-        public static final int main = 2;
+        public static final int main = 17;
       }
 
       public static class DIO
@@ -101,7 +101,7 @@ public final class Constants
       public static class CAN
       {
 
-        public static final int main = 3;
+        public static final int main = 15;
       }
 
     }
@@ -112,7 +112,7 @@ public final class Constants
       public static class CAN
       {
 
-        public static final int main = 4;
+        public static final int main = 16;
       }
 
       public static class DIO
