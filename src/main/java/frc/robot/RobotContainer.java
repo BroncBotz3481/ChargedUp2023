@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.simulation.JoystickSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.InternalButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.BogeyPresets;
 import frc.robot.Constants.ElevatorPresets;
@@ -47,8 +50,8 @@ public class RobotContainer
   private final CommandXboxController m_driverController   =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_operatorController =
-      new CommandXboxController(OperatorConstants.kOperatorControllerPort);
-
+      new CommandXboxController(OperatorConstants.kOperatorControllerPort);    
+     
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -68,11 +71,11 @@ public class RobotContainer
   private void configureBindings()
   {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    m_bogeySubsystem.setDefaultCommand(new ResetBogeyCommand(m_bogeySubsystem)); //Brings bogey all the way in
-    m_elevatorSubsystem.setDefaultCommand(
-        new ResetElevatorCommand(m_elevatorSubsystem)); //Brings elevator all the way down
-    m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem)); //Stops intake from running
-    m_wristSubsystem.setDefaultCommand(new ResetWristCommand(m_wristSubsystem)); //Brings wrist all the way up
+    // m_bogeySubsystem.setDefaultCommand(new ResetBogeyCommand(m_bogeySubsystem)); //Brings bogey all the way in
+    // m_elevatorSubsystem.setDefaultCommand(
+    //     new ResetElevatorCommand(m_elevatorSubsystem)); //Brings elevator all the way down
+    // m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem)); //Stops intake from running
+    // m_wristSubsystem.setDefaultCommand(new ResetWristCommand(m_wristSubsystem)); //Brings wrist all the way up
 
     m_operatorController.leftTrigger().whileTrue(
         new SpitCommand(m_intakeSubsystem)); //Spits the element when left Trigger is pressed
@@ -81,14 +84,14 @@ public class RobotContainer
     m_operatorController.rightTrigger().whileTrue(
         new SetWristCommand(m_wristSubsystem, WristPresets.DOWN)); //Drops wrist when right Trigger is pressed
 
-    m_operatorController.b().whileTrue(
+    m_operatorController.b().onTrue(
         Commands.parallel(new ResetWristCommand(m_wristSubsystem), new ResetElevatorCommand(m_elevatorSubsystem),
                           new ResetBogeyCommand(
                               m_bogeySubsystem))); //Brings in all fragile subsystems when B is pressed
-    m_operatorController.y().whileTrue(
+    m_operatorController.y().onTrue(
         Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.TRAY_HEIGHT),
                           new SpinCommand(m_intakeSubsystem)));
-    m_operatorController.x().whileTrue(
+    m_operatorController.x().onTrue(
         Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.SLIDE_HEIGHT),
                           new SetWristCommand(m_wristSubsystem, WristPresets.SLIDE_HEIGHT)));
 
@@ -113,10 +116,10 @@ public class RobotContainer
                                               BogeyPresets.HIGH))); //When the up dpad is pressed the elevator and
     // bogey will go to a preset position to score high
 
-    new Trigger(() -> m_operatorController.getRightY() > 0.05).whileTrue(new ManualBogeyCommand(m_bogeySubsystem,
+    new Trigger(() -> m_operatorController.getRightY() > 0.05 || m_operatorController.getRightY() < -0.05).whileTrue(new ManualBogeyCommand(m_bogeySubsystem,
                                                                                                 m_operatorController::getRightY));//Manually control bogey using right
     // joysticks x-axis
-    new Trigger(() -> m_operatorController.getLeftY() > 0.05).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
+    new Trigger(() -> m_operatorController.getLeftY() > 0.05 || m_operatorController.getLeftY() < -0.05).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
                                                                                                   m_operatorController::getLeftY));//Manually control elevator using left
     // joysticks y-axis
   }

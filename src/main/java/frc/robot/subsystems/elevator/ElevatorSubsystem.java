@@ -14,6 +14,7 @@ import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IDS.Elevator;
 import frc.robot.subsystems.elevator.ElevatorPolicy.PIDF;
 
 /**
@@ -105,9 +106,11 @@ public class ElevatorSubsystem extends SubsystemBase {
      * @param power the power used to move the elevator
      */
     public void moveElevator(double power) {
+        System.out.println("This is the power of the Elevator before algorithms: " + power);
         ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,
                 upperLimitSwitch.get(),
                 lowerLimitSwitch.get());
+        System.out.println("This is the power of the Elevator after algorithms: " + ElevatorPolicy.elevatorPower);
         rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
     }
 
@@ -117,11 +120,12 @@ public class ElevatorSubsystem extends SubsystemBase {
      * @param targetPosition the target position for the PIDF loop, depending on the setpoint
      */
     public void runPID(double targetPosition) {
-        System.out.println(targetPosition);
+        System.out.println("This is the Elevator PID set position before algorithms: " + targetPosition);
+        ElevatorPolicy.setPosition = targetPosition;
         ElevatorPolicy.setPosition = ElevatorPolicy.getElevatorPosition(targetPosition,
                 upperLimitSwitch.get(),
                 lowerLimitSwitch.get());
-        System.out.println(ElevatorPolicy.setPosition);
+        System.out.println("This is the Elevator PID set position after alogrithms: "  + ElevatorPolicy.setPosition);
         PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
     }
 

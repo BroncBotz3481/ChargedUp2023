@@ -82,9 +82,9 @@ public class BogeySubsystem extends SubsystemBase {
      * @param power The power used to move the bogey motor
      */
     public void moveArm(double power) {
-        System.out.println(power);
+        System.out.println("This is the power of the Bogey before algorithms: " + power);
         BogeyPolicy.bogeyPower = BogeyPolicy.getBogeyPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
-        System.out.println(BogeyPolicy.bogeyPower);
+        System.out.println("This is the power of the Bogey after algorithms: " + BogeyPolicy.bogeyPower);
         bogeyMotor.set(BogeyPolicy.bogeyPower);
     }
 
@@ -94,11 +94,12 @@ public class BogeySubsystem extends SubsystemBase {
      * @param targetPosition The set position for the PIDF Loop
      */
     public void runPID(double targetPosition) {
-        System.out.println(targetPosition);
+        System.out.println("This is the set position of the PID for Bogey before algorithms: " + targetPosition);
+        BogeyPolicy.setPosition = targetPosition;
         BogeyPolicy.setPosition = BogeyPolicy.getBogeyPosition(targetPosition,
                 upperLimitSwitch.get(),
                 lowerLimitSwitch.get());
-        System.out.println(BogeyPolicy.setPosition);
+        System.out.println("This is the set position of the PID for Bogey after algorithms: " +BogeyPolicy.setPosition);
         PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
     }
 

@@ -78,8 +78,9 @@ public class WristSubsystem extends SubsystemBase {
      * @param power The power used to move the wrist motor
      */
     public void runMotor(double power) {
+        System.out.println("This is the power of the Wrist before algorithms: " + power);
         WristPolicy.power = WristPolicy.getWristPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
-        System.out.println(WristPolicy.power);
+        System.out.println("This is the power of the Wrist after algorithm: " + WristPolicy.power);
         wristMotor.set(WristPolicy.power);
     }
 
@@ -89,11 +90,12 @@ public class WristSubsystem extends SubsystemBase {
      * @param targetPosition The set position for the PIDF loop
      */
     public void setMotor(double targetPosition) {
-        System.out.println(targetPosition);
+        System.out.println("This is the set position of the PID for Wrist before algorithms: " + targetPosition);
+        WristPolicy.setPosition = targetPosition;
         WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition,
                 upperLimitSwitch.get(),
                 lowerLimitSwitch.get());
-        System.out.println(WristPolicy.setPosition);
+        System.out.println("This is the set position of the PID for Wrist after algorithms: " + WristPolicy.setPosition);
         PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
     }
 
