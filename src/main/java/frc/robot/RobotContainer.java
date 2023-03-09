@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.BogeyPresets;
 import frc.robot.Constants.ElevatorPresets;
@@ -66,30 +67,7 @@ public class RobotContainer
     configureBindings();
 
 
-    AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
-            // Applies deadbands and inverts controls because joysticks
-            // are back-right positive while robot
-            // controls are front-left positive
-            () -> (Math.abs(m_driverController.getLeftY()) >
-                    OperatorConstants.LEFT_Y_DEADBAND)
-                    ? -m_driverController.getLeftY() : 0,
-            () -> (Math.abs(m_driverController.getLeftX()) >
-                    OperatorConstants.LEFT_X_DEADBAND)
-                    ? -m_driverController.getLeftX() : 0,
-            () -> -m_driverController.getRightX(),
-            () -> -m_driverController.getRightY(),
-            false);
-    TeleopDrive closedFieldRel = new TeleopDrive(
-            drivebase,
-            () -> (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
-                    ? m_driverController.getRawAxis(1) : 0,
-            () -> (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
-                    ? m_driverController.getRawAxis(0) : 0,
-            () -> (Math.abs(m_driverController.getRawAxis(4)) > .12) ? -m_driverController.getRawAxis(4) : 0,
-            () -> true,
-            false);
-
-    drivebase.setDefaultCommand(closedFieldRel);
+    
   }
 
   /**
@@ -101,57 +79,81 @@ public class RobotContainer
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    m_bogeySubsystem.setDefaultCommand(new ResetBogeyCommand(m_bogeySubsystem)); //Brings bogey all the way in
-    m_elevatorSubsystem.setDefaultCommand(
-            new ResetElevatorCommand(m_elevatorSubsystem)); //Brings elevator all the way down
-    m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem)); //Stops intake from running
-    m_wristSubsystem.setDefaultCommand(new ResetWristCommand(m_wristSubsystem)); //Brings wrist all the way up
+//     m_bogeySubsystem.setDefaultCommand(new ResetBogeyCommand(m_bogeySubsystem)); //Brings bogey all the way in
+//     m_elevatorSubsystem.setDefaultCommand(
+//             new ResetElevatorCommand(m_elevatorSubsystem)); //Brings elevator all the way down
+//     m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem)); //Stops intake from running
+//     m_wristSubsystem.setDefaultCommand(new ResetWristCommand(m_wristSubsystem)); //Brings wrist all the way up
 
-    m_operatorController.leftTrigger().whileTrue(
-            new SpitCommand(m_intakeSubsystem)); //Spits the element when left Trigger is pressed
-    m_operatorController.leftBumper().whileTrue(
-            new SpinCommand(m_intakeSubsystem)); //Spins the element in when left Bumper is pressed
-    m_operatorController.rightTrigger().whileTrue(
-            new SetWristCommand(m_wristSubsystem, WristPresets.DOWN)); //Drops wrist when right Trigger is pressed
+//    new JoystickButton(m_driverController.getHID(), 1).whileTrue(
+//            new SpitCommand(m_intakeSubsystem)); //Spits the element when left Trigger is pressed
+//   new JoystickButton(m_driverController.getHID(), 2).whileTrue(
+//           new SpinCommand(m_intakeSubsystem)); //Spins the element in when left Bumper is pressed
+//     new JoystickButton(m_driverController.getHID(),3).whileTrue(
+//           new SetWristCommand(m_wristSubsystem, WristPresets.DOWN)); //Drops wrist when right Trigger is pressed
 
-    m_operatorController.b().whileTrue(
-            Commands.parallel(new ResetWristCommand(m_wristSubsystem), new ResetElevatorCommand(m_elevatorSubsystem),
-                    new ResetBogeyCommand(
-                            m_bogeySubsystem))); //Brings in all fragile subsystems when B is pressed
-    m_operatorController.y().whileTrue(
-            Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.TRAY_HEIGHT),
-                    new SpinCommand(m_intakeSubsystem)));
-    m_operatorController.x().whileTrue(
-            Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.SLIDE_HEIGHT),
-                    new SetWristCommand(m_wristSubsystem, WristPresets.SLIDE_HEIGHT)));
+//        new JoystickButton(m_driverController.getHID(),4).whileTrue(
+//             Commands.parallel(new ResetWristCommand(m_wristSubsystem), new ResetElevatorCommand(m_elevatorSubsystem),
+//                     new ResetBogeyCommand(
+//                             m_bogeySubsystem))); //Brings in all fragile subsystems when B is pressed
+//        new JoystickButton(m_driverController.getHID(),5).whileTrue(
+//             Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.TRAY_HEIGHT),
+//                     new SpinCommand(m_intakeSubsystem)));
+        // new JoystickButton(m_driverController.getHID(),6).whileTrue(
+        //      Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.SLIDE_HEIGHT),
+        //              new SetWristCommand(m_wristSubsystem, WristPresets.SLIDE_HEIGHT)));
 
-    m_operatorController.rightStick().whileTrue(
-        new ResetBogeyCommand(m_bogeySubsystem)); //When right stick is pressed the bogey is brought in
-    m_operatorController.leftStick().whileTrue(new ResetElevatorCommand(
-        m_elevatorSubsystem)); //When left stick is pressed the elevator is goes all the way down
+        // new JoystickButton(m_driverController.getHID(),7).whileTrue(
+        // new ResetBogeyCommand(m_bogeySubsystem)); //When right stick is pressed the bogey is brought in
+        // new JoystickButton(m_driverController.getHID(),8).whileTrue(new ResetElevatorCommand(
+        // m_elevatorSubsystem)); //When left stick is pressed the elevator is goes all the way down
 
-    m_operatorController.povDown().whileTrue(
-        Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.LOW),
-                          new SetBogeyCommand(m_bogeySubsystem,
-                                              BogeyPresets.LOW))); //When the down dpad is pressed the elevator and
-    // bogey will go to a preset position to score low
-    m_operatorController.povLeft().whileTrue(
-        Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.MID),
-                          new SetBogeyCommand(m_bogeySubsystem,
-                                              BogeyPresets.MID))); //When the left dpad is pressed the elevator and
-    // bogey will go to a preset position to score mid
-    m_operatorController.povUp().whileTrue(
+//     new JoystickButton(m_driverController.getHID(),9).whileTrue(
+        // Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.LOW),
+                        //   new SetBogeyCommand(m_bogeySubsystem,
+                                        //       BogeyPresets.LOW))); //When the down dpad is pressed the elevator and
+//     // bogey will go to a preset position to score low
+//     new JoystickButton(m_driverController.getHID(),10).whileTrue(
+        // Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.MID),
+                        //   new SetBogeyCommand(m_bogeySubsystem,
+                                        //       BogeyPresets.MID))); //When the left dpad is pressed the elevator and
+//     // bogey will go to a preset position to score mid
+        m_operatorController.povUp().whileTrue(
         Commands.parallel(new SetElevatorCommand(m_elevatorSubsystem, ElevatorPresets.HIGH),
                           new SetBogeyCommand(m_bogeySubsystem,
                                               BogeyPresets.HIGH))); //When the up dpad is pressed the elevator and
-    // bogey will go to a preset position to score high
+//     // bogey will go to a preset position to score high
 
-    new Trigger(() -> m_operatorController.getRightY() > 0.05).whileTrue(new ManualBogeyCommand(m_bogeySubsystem,
-            m_operatorController::getRightY));//Manually control bogey using right
-    // joysticks x-axis
-    new Trigger(() -> m_operatorController.getLeftY() > 0.05).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
-            m_operatorController::getLeftY));//Manually control elevator using left
-    // joysticks y-axis
+//     new Trigger(() -> m_operatorController.getRightY() > 0.05).whileTrue(new ManualBogeyCommand(m_bogeySubsystem,
+//             m_operatorController::getRightY));//Manually control bogey using right
+//     // joysticks x-axis
+//     new Trigger(() -> m_operatorController.getLeftY() > 0.05).whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
+//             m_operatorController::getLeftY));//Manually control elevator using left
+//     // joysticks y-axis
+// AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
+//             // Applies deadbands and inverts controls because joysticks
+//             // are back-right positive while robot
+//             // controls are front-left positive
+//             () -> (Math.abs(m_driverController.getLeftY()) >
+//                     OperatorConstants.LEFT_Y_DEADBAND)
+//                     ? -m_driverController.getLeftY() : 0,
+//             () -> (Math.abs(m_driverController.getLeftX()) >
+//                     OperatorConstants.LEFT_X_DEADBAND)
+//                     ? -m_driverController.getLeftX() : 0,
+//             () -> -m_driverController.getRightX(),
+//             () -> -m_driverController.getRightY(),
+//             false);
+//     TeleopDrive closedFieldRel = new TeleopDrive(
+//             drivebase,
+//             () -> (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
+//                     ? m_driverController.getRawAxis(1) : 0,
+//             () -> (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
+//                     ? m_driverController.getRawAxis(0) : 0,
+//             () -> (Math.abs(m_driverController.getRawAxis(4)) > .12) ? -m_driverController.getRawAxis(4) : 0,
+//             () -> true,
+//             false);
+
+//     drivebase.setDefaultCommand(closedFieldRel);
   }
 
   //  new Trigger(m_exampleSubsystem::exampleCondition)
