@@ -50,11 +50,10 @@ public final class Constants
   public static class WristPresets
   {
 
-    public static final double HOME = 0;
-    public static final double FLAT = 50;
-    public static final double DOWN = 100;
-
-    public static final double SLIDE_HEIGHT = 75;
+    public static final double HOME = 90;
+    public static final double FLAT = 0;
+    public static final double MID = 45;
+    public static final double SLIDE_ANGLE = 33.69;
   }
 
   public static class IDS
