@@ -77,36 +77,36 @@ public class RobotContainer
    * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight joysticks}.
    */
   private void configureBindings() {
-    m_bogeySubsystem.setDefaultCommand(new ControlBogeyCommand(m_bogeySubsystem));
-    m_elevatorSubsystem.setDefaultCommand(new ControlElevatorCommand(m_elevatorSubsystem));
-    m_wristSubsystem.setDefaultCommand(new ControlWristCommand(m_wristSubsystem));
-    m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
+//     m_bogeySubsystem.setDefaultCommand(new ControlBogeyCommand(m_bogeySubsystem));
+//     m_elevatorSubsystem.setDefaultCommand(new ControlElevatorCommand(m_elevatorSubsystem));
+//     m_wristSubsystem.setDefaultCommand(new ControlWristCommand(m_wristSubsystem));
+//     m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
 
     new JoystickButton(m_operatorController.getHID(), 0).whileTrue(new RepeatCommand(new SpitCommand(m_intakeSubsystem)));
-    new JoystickButton(m_operatorController.getHID(), 1).whileTrue(new RepeatCommand(new SpinCommand(m_intakeSubsystem)));
+//     new JoystickButton(m_operatorController.getHID(), 1).whileTrue(new RepeatCommand(new SpinCommand(m_intakeSubsystem)));
 
-    new JoystickButton(m_operatorController.getHID(), 2).whileTrue(new RepeatCommand(new SetWristCommand(WristPresets.DOWN)));
-    new JoystickButton(m_operatorController.getHID(),3).whileTrue(new RepeatCommand(Commands.parallel(new SetWristCommand(0), new SetElevatorCommand(0),new SetBogeyCommand(0))));
+//     new JoystickButton(m_operatorController.getHID(), 2).whileTrue(new RepeatCommand(new SetWristCommand(WristPresets.DOWN)));
+//     new JoystickButton(m_operatorController.getHID(),3).whileTrue(new RepeatCommand(Commands.parallel(new SetWristCommand(0), new SetElevatorCommand(0),new SetBogeyCommand(0))));
 
-    new JoystickButton(m_operatorController.getHID(), 4).whileTrue(new RepeatCommand((Commands.parallel(new SetElevatorCommand(ElevatorPresets.TRAY_HEIGHT), new SpinCommand(m_intakeSubsystem)
-    ))));
+//     new JoystickButton(m_operatorController.getHID(), 4).whileTrue(new RepeatCommand((Commands.parallel(new SetElevatorCommand(ElevatorPresets.TRAY_HEIGHT), new SpinCommand(m_intakeSubsystem)
+//     ))));
 
-    new JoystickButton(m_operatorController.getHID(),5).whileTrue(new RepeatCommand(Commands.parallel(new SetElevatorCommand(ElevatorPresets.SLIDE_HEIGHT), new SetWristCommand(WristPresets.SLIDE_HEIGHT))));
+//     new JoystickButton(m_operatorController.getHID(),5).whileTrue(new RepeatCommand(Commands.parallel(new SetElevatorCommand(ElevatorPresets.SLIDE_HEIGHT), new SetWristCommand(WristPresets.SLIDE_HEIGHT))));
 
-    new JoystickButton(m_operatorController.getHID(), 6).whileTrue(new RepeatCommand(new SetBogeyCommand(0)));
+//     new JoystickButton(m_operatorController.getHID(), 6).whileTrue(new RepeatCommand(new SetBogeyCommand(0)));
 
-    new JoystickButton(m_operatorController.getHID(), 7).whileTrue(new RepeatCommand(new SetElevatorCommand(0)));
+//     new JoystickButton(m_operatorController.getHID(), 7).whileTrue(new RepeatCommand(new SetElevatorCommand(0)));
 
     
-    new JoystickButton(m_operatorController.getHID(), 8).whileTrue(new RepeatCommand(Commands.parallel(new SetElevatorCommand(ElevatorPresets.LOW),new SetBogeyCommand(BogeyPresets.LOW))));
+//     new JoystickButton(m_operatorController.getHID(), 8).whileTrue(new RepeatCommand(Commands.parallel(new SetElevatorCommand(ElevatorPresets.LOW),new SetBogeyCommand(BogeyPresets.LOW))));
 
-    new JoystickButton(m_operatorController.getHID(), 9).whileTrue(new RepeatCommand(Commands.parallel(new SetElevatorCommand(ElevatorPresets.MID),new SetBogeyCommand(BogeyPresets.MID))));
+//     new JoystickButton(m_operatorController.getHID(), 9).whileTrue(new RepeatCommand(Commands.parallel(new SetElevatorCommand(ElevatorPresets.MID),new SetBogeyCommand(BogeyPresets.MID))));
 
-    new JoystickButton(m_operatorController.getHID(), 10).whileTrue(new RepeatCommand(Commands.parallel(new SetElevatorCommand(ElevatorPresets.HIGH),new SetBogeyCommand(BogeyPresets.HIGH))));
+//     new JoystickButton(m_operatorController.getHID(), 10).whileTrue(new RepeatCommand(Commands.parallel(new SetElevatorCommand(ElevatorPresets.HIGH),new SetBogeyCommand(BogeyPresets.HIGH))));
     
-    new Trigger(() -> Math.abs(m_operatorController.getRawAxis(0)) > 0.08).whileTrue(new RepeatCommand(new ManualBogeyCommand(m_bogeySubsystem, () -> m_operatorController.getRawAxis(0))));
+//     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(0)) > 0.08).whileTrue(new RepeatCommand(new ManualBogeyCommand(m_bogeySubsystem, () -> m_operatorController.getRawAxis(0))));
 
-    new Trigger(() -> Math.abs(m_operatorController.getRawAxis(1)) > 0.08).whileTrue(new RepeatCommand(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_operatorController.getRawAxis(1))));
+//     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(1)) > 0.08).whileTrue(new RepeatCommand(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_operatorController.getRawAxis(1))));
 
 
     // joysticks x-axis
@@ -138,6 +138,7 @@ public class RobotContainer
 
 //     drivebase.setDefaultCommand(closedFieldRel);
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
