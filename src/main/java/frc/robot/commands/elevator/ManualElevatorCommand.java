@@ -62,7 +62,10 @@ public class ManualElevatorCommand extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    m_elevatorSubsystem.stopEle();
+    if(interrupted)
+        {
+            ElevatorPolicy.setPosition = ElevatorPolicy.rightEncoderPosition;
+        }
   }
 
   /**

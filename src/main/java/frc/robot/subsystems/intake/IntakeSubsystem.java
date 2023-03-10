@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class IntakeSubsystem extends SubsystemBase
 {
-
   /**
    * SparkMax for the intake motor
    */
@@ -28,6 +27,7 @@ public class IntakeSubsystem extends SubsystemBase
     motorIntake = new CANSparkMax(IntakePolicy.INTAKE_ID_PORT, MotorType.kBrushless);
     motorIntake.restoreFactoryDefaults();
     motorIntake.setIdleMode(IdleMode.kCoast);
+    motorIntake.setInverted(true);
   }
 
   /**

@@ -42,7 +42,7 @@ public class ManualBogeyCommand extends CommandBase {
      */
     @Override
     public void initialize() {
-        m_bogeySubsystem.stopArm();
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -65,7 +65,10 @@ public class ManualBogeyCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        m_bogeySubsystem.stopArm();
+        if(interrupted)
+        {
+            BogeyPolicy.setPosition = BogeyPolicy.encoderPosition;
+        }
     }
 
     /**

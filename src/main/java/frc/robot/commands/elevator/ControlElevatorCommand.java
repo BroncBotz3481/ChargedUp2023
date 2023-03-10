@@ -11,7 +11,7 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 /**
  * Elevator Commands that brings Elevator back to home position
  */
-public class ResetElevatorCommand extends CommandBase
+public class ControlElevatorCommand extends CommandBase
 {
 
   /**
@@ -23,7 +23,7 @@ public class ResetElevatorCommand extends CommandBase
    * Initializes the ElevatorSubsystem and adds requirements
    * @param subsystem used to initialize the elevator subsystem
    */
-  public ResetElevatorCommand(ElevatorSubsystem subsystem)
+  public ControlElevatorCommand(ElevatorSubsystem subsystem)
   {
     m_ElevatorSubsystem = subsystem;
     addRequirements(subsystem);
@@ -35,11 +35,13 @@ public class ResetElevatorCommand extends CommandBase
   @Override
   public void initialize()
   {
-    m_ElevatorSubsystem.runPID(0);
+    m_ElevatorSubsystem.stopEle();
   }
 
   @Override
-  public void execute() {}
+  public void execute() {
+    m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);
+  }
 
   /**
    * Stops the elevator when the command is removed from the command scheduled
@@ -57,6 +59,6 @@ public class ResetElevatorCommand extends CommandBase
   @Override
   public boolean isFinished()
   {
-    return ElevatorPolicy.lowLimit || ElevatorPolicy.upLimit;
+    return false;
   }
 }

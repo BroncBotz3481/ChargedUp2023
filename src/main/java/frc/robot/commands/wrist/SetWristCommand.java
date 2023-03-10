@@ -5,6 +5,7 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IDS.Wrist;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
@@ -16,10 +17,6 @@ public class SetWristCommand extends CommandBase
 {
 
     /**
-     * An object of WristSubsystem
-     */
-    private final WristSubsystem m_WristSubsystem; //creates new object of class WristSubsystem
-    /**
      * Is used as the set position for the PID Control Loop
      */
     private final double         targetPosition;
@@ -30,11 +27,9 @@ public class SetWristCommand extends CommandBase
      * @param subsystem A WristSubsystem object used to initialize the instance WristSubsystem
      * @param target    Holds the value of the targetPosition of this specific command instance
      */
-    public SetWristCommand(WristSubsystem subsystem, double target)
+    public SetWristCommand(double target)
     {
-        m_WristSubsystem = subsystem;
         targetPosition = target;
-        addRequirements(m_WristSubsystem);
     }
 
     /**
@@ -43,13 +38,12 @@ public class SetWristCommand extends CommandBase
     @Override
     public void initialize()
     {
-        m_WristSubsystem.stopMotor();
-        m_WristSubsystem.setMotor(targetPosition);
     }
 
     @Override
     public void execute()
     {
+        WristPolicy.setPosition = targetPosition;
     }
 
     /**
@@ -58,7 +52,6 @@ public class SetWristCommand extends CommandBase
      */
     @Override
     public void end(boolean interrupted) {
-        m_WristSubsystem.stopMotor();
     }
 
     /**
@@ -67,6 +60,6 @@ public class SetWristCommand extends CommandBase
      */
     @Override
     public boolean isFinished() {
-        return WristPolicy.encoderPosition >= WristPolicy.setPosition || BogeyPolicy.lowLimit || BogeyPolicy.upLimit;
+        return false;
     }
 }

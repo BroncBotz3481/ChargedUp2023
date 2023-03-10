@@ -52,11 +52,19 @@ public final class BogeyPolicy {
     /**
      * This tells us whether the upperLimit switch has been hit or not
      */
-    public static boolean upLimit;
+    public static boolean upLimit = false;
     /**
      * This tell us whether the lowerLimit switch has been hit or not
      */
-    public static boolean lowLimit;
+    public static boolean lowLimit = false;
+    /**
+     * This is the lowest set point of the bogey
+     */
+    public static final double lowestSetPoint = 0;
+     /**
+     * This is the highest set point of the bogey
+     */
+    public static final double highestSetPoint = 26.75;
 
     /**
      * Returns the power depending on the state of the limits
@@ -85,9 +93,9 @@ public final class BogeyPolicy {
      */
     public static double getBogeyPosition(double desiredPosition, boolean upperLimit, boolean lowerLimit) {
         if (upperLimit && desiredPosition > setPosition) {
-            return setPosition - 1;
+            return lowestSetPoint;
         } else if (lowerLimit && desiredPosition < setPosition) {
-            return setPosition + 1;
+            return highestSetPoint;
         }
         return desiredPosition;
     }

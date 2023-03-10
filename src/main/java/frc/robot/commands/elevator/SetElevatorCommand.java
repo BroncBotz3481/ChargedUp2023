@@ -5,6 +5,7 @@
 package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IDS.Elevator;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
@@ -12,11 +13,6 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
  * Elevator command that uses a PID Control Loop to bring the Elevator to a target position
  */
 public class SetElevatorCommand extends CommandBase {
-
-    /**
-     * An ElevatorSubsystem object
-     */
-    private final ElevatorSubsystem m_ElevatorSubsystem;
 
     /**
      * Is used as the set position for the PID Control Loop
@@ -29,10 +25,8 @@ public class SetElevatorCommand extends CommandBase {
      * @param subsystem initializes the elevator subsystem
      * @param target    target position in meters
      */
-    public SetElevatorCommand(ElevatorSubsystem subsystem, double target) {
-        m_ElevatorSubsystem = subsystem;
+    public SetElevatorCommand(double target) {
         targetPosition = target;
-        addRequirements(subsystem);
     }
 
     /**
@@ -40,13 +34,12 @@ public class SetElevatorCommand extends CommandBase {
      */
     @Override
     public void initialize() {
-        m_ElevatorSubsystem.stopEle();
-        m_ElevatorSubsystem.runPID(targetPosition);
     }
 
     @Override
     public void execute()
     {
+        ElevatorPolicy.setPosition = targetPosition;
     }
 
     /**
@@ -57,7 +50,6 @@ public class SetElevatorCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        m_ElevatorSubsystem.stopEle();
     }
 
     /**
@@ -68,7 +60,6 @@ public class SetElevatorCommand extends CommandBase {
     @Override
     public boolean isFinished()
     {
-        return ElevatorPolicy.rightEncoderPosition >= targetPosition || ElevatorPolicy.lowLimit ||
-               ElevatorPolicy.upLimit;
+        return false;
     }
 }

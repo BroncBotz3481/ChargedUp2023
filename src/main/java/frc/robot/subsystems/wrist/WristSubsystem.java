@@ -46,6 +46,7 @@ public class WristSubsystem extends SubsystemBase {
     public WristSubsystem() {
         wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT, MotorType.kBrushless);
         wristMotor.restoreFactoryDefaults();
+        wristMotor.setInverted(true);
         encoder = wristMotor.getEncoder();
         encoder.setPositionConversionFactor(1 / WristPolicy.wristGearRatio);
         PIDController = wristMotor.getPIDController();

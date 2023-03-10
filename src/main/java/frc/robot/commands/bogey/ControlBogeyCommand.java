@@ -9,13 +9,10 @@ import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 
 /**
- * Bogey Command that stops the Bogey
+ * Bogey Command that brings the bogey to home position
  */
+public class ControlBogeyCommand extends CommandBase {
 
-public class StopBogeyCommand extends CommandBase
-{
-
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     /**
      * A BogeySubsystem object
      */
@@ -26,25 +23,25 @@ public class StopBogeyCommand extends CommandBase
      *
      * @param subsystem used to initialize the BogeySubsystem
      */
-    public StopBogeyCommand(BogeySubsystem subsystem) {
+    public ControlBogeyCommand(BogeySubsystem subsystem) {
+        // Use addRequirements() here to declare subsystem dependencies.
         m_BogeySubsystem = subsystem;
         addRequirements(subsystem);
     }
 
     /**
-     * Stops the Bogey when the command is scheduled
+     * Runs the PID Control Loop with the target position being 0 when the command is scheduled
      */
     @Override
     public void initialize() {
         m_BogeySubsystem.stopArm();
     }
 
-    /**
-     * Stops the Bogey every 20 ms while the command is scheduled
-     */
     @Override
-    public void execute() {
-        m_BogeySubsystem.stopArm();
+    public void execute()
+    {
+        m_BogeySubsystem.runPID(BogeyPolicy.setPosition);
+
     }
 
     /**
@@ -53,8 +50,7 @@ public class StopBogeyCommand extends CommandBase
      * @param interrupted whether the command was interrupted/canceled
      */
     @Override
-    public void end(boolean interrupted)
-    {
+    public void end(boolean interrupted) {
         m_BogeySubsystem.stopArm();
     }
 
@@ -62,8 +58,7 @@ public class StopBogeyCommand extends CommandBase
      * returns true if either limit switch is pressed, removing the command from the command scheduler
      */
     @Override
-    public boolean isFinished()
-    {
-        return BogeyPolicy.upLimit || BogeyPolicy.lowLimit;
+    public boolean isFinished() {
+        return false;
     }
 }

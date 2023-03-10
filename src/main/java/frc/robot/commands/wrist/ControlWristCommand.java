@@ -6,12 +6,13 @@ package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
+import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
 /**
  * Wrist Command that brings the Wrist back to home position
  */
-public class ResetWristCommand extends CommandBase
+public class ControlWristCommand extends CommandBase
 {
 
     /**
@@ -24,7 +25,7 @@ public class ResetWristCommand extends CommandBase
      *
      * @param subsystem A WristSubsystem object used to initialize the instance WristSubsystem
      */
-    public ResetWristCommand(WristSubsystem subsystem)
+    public ControlWristCommand(WristSubsystem subsystem)
     {
         m_WristSubsystem = subsystem;
         addRequirements(subsystem);
@@ -36,12 +37,13 @@ public class ResetWristCommand extends CommandBase
     @Override
     public void initialize()
     {
-        m_WristSubsystem.setMotor(0);
+        m_WristSubsystem.stopMotor();
     }
 
     @Override
     public void execute()
     {
+        m_WristSubsystem.setMotor(WristPolicy.setPosition);
     }
 
     /**
@@ -58,6 +60,6 @@ public class ResetWristCommand extends CommandBase
      */
     @Override
     public boolean isFinished() {
-        return BogeyPolicy.lowLimit || BogeyPolicy.upLimit;
+        return false;
     }
 }

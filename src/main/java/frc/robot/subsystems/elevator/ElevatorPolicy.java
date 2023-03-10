@@ -82,6 +82,14 @@ public final class ElevatorPolicy
    * This tell us whether the lowerLimit switch has been hit or not
    */
   public static boolean lowLimit;
+  /**
+  * This is the lowest set point of the elevator
+  */
+  public static final double lowestSetPoint = 0;
+  /**
+  * This is the highest set point of the bogey
+  */
+  public static final double highestSetPoint = 46;
 
   /**
    * Returns the power depending on the state of the limits
@@ -115,10 +123,10 @@ public final class ElevatorPolicy
   {
     if (upperLimit && desiredPosition > setPosition)
     {
-      return setPosition - 1;
+      return lowestSetPoint;
     } else if (lowerLimit && desiredPosition < setPosition)
     {
-      return setPosition + 1;
+      return highestSetPoint;
     }
     return desiredPosition;
   }

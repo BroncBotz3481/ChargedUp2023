@@ -12,12 +12,6 @@ import frc.robot.subsystems.bogey.BogeySubsystem;
  * Bogey Command that uses a PID Control Loop to bring the Bogey to a target position
  */
 public class SetBogeyCommand extends CommandBase {
-
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    /**
-     * A BogeySubsystem object
-     */
-    private final BogeySubsystem m_BogeySubsystem;
     /**
      * Is used as the set position for the PID Control Loop
      */
@@ -29,8 +23,7 @@ public class SetBogeyCommand extends CommandBase {
      * @param subsystem used to initialize the BogeySubsystem
      * @param target    used to initialize the targetPosition
      */
-    public SetBogeyCommand(BogeySubsystem subsystem, double target) {
-        m_BogeySubsystem = subsystem;
+    public SetBogeyCommand(double target) {
         targetPosition = target;
     }
 
@@ -40,12 +33,11 @@ public class SetBogeyCommand extends CommandBase {
      */
     @Override
     public void initialize() {
-        m_BogeySubsystem.stopArm();
-        m_BogeySubsystem.runPID(targetPosition);
     }
 
     @Override
     public void execute() {
+        BogeyPolicy.setPosition = targetPosition;
     }
 
     /**
@@ -55,7 +47,6 @@ public class SetBogeyCommand extends CommandBase {
      */
     @Override
     public void end(boolean interrupted) {
-        m_BogeySubsystem.stopArm();
     }
 
     /**
@@ -64,6 +55,6 @@ public class SetBogeyCommand extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        return BogeyPolicy.encoderPosition >= targetPosition || BogeyPolicy.lowLimit || BogeyPolicy.upLimit;
+        return false;
     }
 }

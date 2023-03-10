@@ -45,7 +45,7 @@ public class SpinCommand extends CommandBase
   @Override
   public void execute()
   {
-    m_IntakeSubsystem.runIntake(-1);
+    m_IntakeSubsystem.runIntake(-.5);
   }
 
   /**
