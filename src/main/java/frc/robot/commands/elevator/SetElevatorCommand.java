@@ -5,7 +5,6 @@
 package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.IDS.Elevator;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
@@ -25,8 +24,9 @@ public class SetElevatorCommand extends CommandBase {
      * @param subsystem initializes the elevator subsystem
      * @param target    target position in meters
      */
-    public SetElevatorCommand(double target) {
+    public SetElevatorCommand(double target, ElevatorSubsystem subsystem) {
         targetPosition = target;
+        addRequirements(subsystem);
     }
 
     /**

@@ -5,8 +5,6 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.IDS.Wrist;
-import frc.robot.subsystems.bogey.BogeyPolicy;
 import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
@@ -27,9 +25,10 @@ public class SetWristCommand extends CommandBase
      * @param subsystem A WristSubsystem object used to initialize the instance WristSubsystem
      * @param target    Holds the value of the targetPosition of this specific command instance
      */
-    public SetWristCommand(double target)
+    public SetWristCommand(double target, WristSubsystem subsystem)
     {
         targetPosition = target;
+        addRequirements(subsystem);
     }
 
     /**

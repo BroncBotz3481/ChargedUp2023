@@ -23,8 +23,9 @@ public class SetBogeyCommand extends CommandBase {
      * @param subsystem used to initialize the BogeySubsystem
      * @param target    used to initialize the targetPosition
      */
-    public SetBogeyCommand(double target) {
+    public SetBogeyCommand(double target, BogeySubsystem subsystem) {
         targetPosition = target;
+        addRequirements(subsystem);
     }
 
     /**
