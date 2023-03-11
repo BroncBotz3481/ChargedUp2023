@@ -6,7 +6,6 @@ package frc.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.elevator.ElevatorPolicy;
-import frc.robot.subsystems.elevator.ElevatorSubsystem;
 
 /**
  * Elevator command that uses a PID Control Loop to bring the Elevator to a target position
@@ -21,12 +20,10 @@ public class SetElevatorCommand extends CommandBase {
     /**
      * Initializes the elevator subsystem, initializes targetPosition, and adds reqiurements
      *
-     * @param subsystem initializes the elevator subsystem
-     * @param target    target position in meters
+     * @param target target position in meters
      */
-    public SetElevatorCommand(double target, ElevatorSubsystem subsystem) {
+    public SetElevatorCommand(double target) {
         targetPosition = target;
-        addRequirements(subsystem);
     }
 
     /**

@@ -6,7 +6,6 @@ package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.wrist.WristPolicy;
-import frc.robot.subsystems.wrist.WristSubsystem;
 
 /**
  * Wrist command that uses a PID Control Loop to bring the wrist to a target position
@@ -22,13 +21,10 @@ public class SetWristCommand extends CommandBase
     /**
      * Initializes the WristSubsystem, targetPosition, and adds requirements
      *
-     * @param subsystem A WristSubsystem object used to initialize the instance WristSubsystem
-     * @param target    Holds the value of the targetPosition of this specific command instance
+     * @param target Holds the value of the targetPosition of this specific command instance
      */
-    public SetWristCommand(double target, WristSubsystem subsystem)
-    {
+    public SetWristCommand(double target) {
         targetPosition = target;
-        addRequirements(subsystem);
     }
 
     /**

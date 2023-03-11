@@ -6,7 +6,6 @@ package frc.robot.commands.bogey;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
-import frc.robot.subsystems.bogey.BogeySubsystem;
 
 /**
  * Bogey Command that uses a PID Control Loop to bring the Bogey to a target position
@@ -20,12 +19,10 @@ public class SetBogeyCommand extends CommandBase {
     /**
      * Initializes the BogeySubsystem, targetPosition, and adds requirements
      *
-     * @param subsystem used to initialize the BogeySubsystem
-     * @param target    used to initialize the targetPosition
+     * @param target used to initialize the targetPosition
      */
-    public SetBogeyCommand(double target, BogeySubsystem subsystem) {
+    public SetBogeyCommand(double target) {
         targetPosition = target;
-        addRequirements(subsystem);
     }
 
     /**

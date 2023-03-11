@@ -5,30 +5,23 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.BogeyPresets;
-import frc.robot.Constants.Drivebase;
-import frc.robot.Constants.ElevatorPresets;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.WristPresets;
+import edu.wpi.first.wpilibj2.command.button.*;
+import frc.robot.Constants.*;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.bogey.ControlBogeyCommand;
 import frc.robot.commands.bogey.ManualBogeyCommand;
 import frc.robot.commands.bogey.SetBogeyCommand;
+import frc.robot.commands.drivebase.AbsoluteDrive;
+import frc.robot.commands.drivebase.TeleopDrive;
 import frc.robot.commands.elevator.ControlElevatorCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.SetElevatorCommand;
-import frc.robot.commands.intake.SpitCommand;
 import frc.robot.commands.intake.SpinCommand;
+import frc.robot.commands.intake.SpitCommand;
 import frc.robot.commands.intake.StopIntakeCommand;
 import frc.robot.commands.wrist.ControlWristCommand;
 import frc.robot.commands.wrist.SetWristCommand;
@@ -37,7 +30,6 @@ import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.wrist.WristSubsystem;
-import frc.robot.commands.drivebase.*;
 
 import java.io.File;
 
@@ -142,21 +134,21 @@ public class RobotContainer {
         new JoystickButton(m_operatorController.getHID(), 5).whileTrue(new SpinCommand(m_intakeSubsystem));
 
         new Trigger(() -> Math.abs(m_operatorController.getRawAxis(3)) > 0.5)
-                .whileTrue(new SetWristCommand(WristPresets.FLAT, m_wristSubsystem));
+                .whileTrue(new SetWristCommand(WristPresets.FLAT));
         new JoystickButton(m_operatorController.getHID(), 2)
-                .whileTrue(Commands.parallel(new SetWristCommand(WristPresets.FLAT, m_wristSubsystem),
-                        new SetElevatorCommand(ElevatorPresets.HOME, m_elevatorSubsystem), new SetBogeyCommand(BogeyPresets.HOME, m_bogeySubsystem)));
+                .whileTrue(Commands.parallel(new SetWristCommand(WristPresets.FLAT),
+                        new SetElevatorCommand(ElevatorPresets.HOME), new SetBogeyCommand(BogeyPresets.HOME)));
 
         new JoystickButton(m_operatorController.getHID(), 4).whileTrue(Commands
-                .parallel(new SetElevatorCommand(ElevatorPresets.TRAY_HEIGHT, m_elevatorSubsystem), new SpinCommand(m_intakeSubsystem)));
+                .parallel(new SetElevatorCommand(ElevatorPresets.TRAY_HEIGHT), new SpinCommand(m_intakeSubsystem)));
 
         new JoystickButton(m_operatorController.getHID(), 3)
-                .whileTrue(Commands.parallel(new SetElevatorCommand(ElevatorPresets.SLIDE_HEIGHT, m_elevatorSubsystem),
-                        new SetWristCommand(WristPresets.SLIDE_ANGLE, m_wristSubsystem)));
+                .whileTrue(Commands.parallel(new SetElevatorCommand(ElevatorPresets.SLIDE_HEIGHT),
+                        new SetWristCommand(WristPresets.SLIDE_ANGLE)));
 
-        new JoystickButton(m_operatorController.getHID(), 10).whileTrue(new SetBogeyCommand(BogeyPresets.HOME, m_bogeySubsystem));
+        new JoystickButton(m_operatorController.getHID(), 10).whileTrue(new SetBogeyCommand(BogeyPresets.HOME));
 
-        new JoystickButton(m_operatorController.getHID(), 9).whileTrue(new SetElevatorCommand(ElevatorPresets.HOME, m_elevatorSubsystem));
+        new JoystickButton(m_operatorController.getHID(), 9).whileTrue(new SetElevatorCommand(ElevatorPresets.HOME));
 
         new Trigger(() -> Math.abs(m_operatorController.getRawAxis(5)) > 0.08)
                 .whileTrue(new ManualBogeyCommand(m_bogeySubsystem, () -> m_operatorController.getRawAxis(5)));
@@ -165,11 +157,11 @@ public class RobotContainer {
                 .whileTrue(new ManualElevatorCommand(m_elevatorSubsystem, () -> m_operatorController.getRawAxis(1)));
 
         new POVButton(m_operatorController.getHID(), 180).whileTrue(
-                Commands.parallel(new SetElevatorCommand(ElevatorPresets.LOW, m_elevatorSubsystem), new SetBogeyCommand(BogeyPresets.LOW, m_bogeySubsystem)));
+                Commands.parallel(new SetElevatorCommand(ElevatorPresets.LOW), new SetBogeyCommand(BogeyPresets.LOW)));
         new POVButton(m_operatorController.getHID(), 270).whileTrue(
-                Commands.parallel(new SetElevatorCommand(ElevatorPresets.MID, m_elevatorSubsystem), new SetBogeyCommand(BogeyPresets.MID, m_bogeySubsystem)));
+                Commands.parallel(new SetElevatorCommand(ElevatorPresets.MID), new SetBogeyCommand(BogeyPresets.MID)));
         new POVButton(m_operatorController.getHID(), 0).whileTrue(Commands
-                .parallel(new SetElevatorCommand(ElevatorPresets.HIGH, m_elevatorSubsystem), new SetBogeyCommand(BogeyPresets.HIGH, m_bogeySubsystem)));
+                .parallel(new SetElevatorCommand(ElevatorPresets.HIGH), new SetBogeyCommand(BogeyPresets.HIGH)));
 
     }
 
