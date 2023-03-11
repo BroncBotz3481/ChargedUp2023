@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.wrist.WristPolicy.PIDF;
 
@@ -80,7 +81,7 @@ public class WristSubsystem extends SubsystemBase {
      */
     public void runMotor(double power) {
         System.out.println("This is the power of the Wrist before algorithms: " + power);
-        WristPolicy.power = WristPolicy.getWristPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
+        WristPolicy.power = WristPolicy.getWristPower(power, WristPolicy.upLimit, WristPolicy.lowLimit);
         System.out.println("This is the power of the Wrist after algorithm: " + WristPolicy.power);
         wristMotor.set(WristPolicy.power);
     }
@@ -94,8 +95,8 @@ public class WristSubsystem extends SubsystemBase {
         System.out.println("This is the set position of the PID for Wrist before algorithms: " + targetPosition);
         WristPolicy.setPosition = targetPosition;
         WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition,
-                upperLimitSwitch.get(),
-                lowerLimitSwitch.get());
+                WristPolicy.upLimit,
+                WristPolicy.lowLimit);
         System.out.println("This is the set position of the PID for Wrist after algorithms: " + WristPolicy.setPosition);
         PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
     }
@@ -114,8 +115,14 @@ public class WristSubsystem extends SubsystemBase {
     public void periodic() {
         WristPolicy.encoderVelocity = encoder.getVelocity();
         WristPolicy.encoderPosition = encoder.getPosition();
-        WristPolicy.lowLimit = lowerLimitSwitch.get();
-        WristPolicy.upLimit = upperLimitSwitch.get();
+        if(RobotBase.isSimulation()) {
+            WristPolicy.lowLimit = false;
+            WristPolicy.upLimit = false;            
+        } else {
+            WristPolicy.lowLimit = lowerLimitSwitch.get();
+            WristPolicy.upLimit = upperLimitSwitch.get();
+        }
+
     }
 
 }

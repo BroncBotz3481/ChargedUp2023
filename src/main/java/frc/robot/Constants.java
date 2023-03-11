@@ -19,9 +19,10 @@ public final class Constants
 {
 
   public static class OperatorConstants {
-
     public static final int kDriverControllerPort = 0;
-    public static final int kOperatorControllerPort = 1;
+    public static final int kThrottleControllerPort = 1;
+    public static final int kOperatorControllerPort = 2;
+    
 
     public static final double LEFT_X_DEADBAND = 0.1;
 
@@ -34,6 +35,8 @@ public final class Constants
     public static final double HIGH = 200;
     public static final double MID  = 150;
     public static final double LOW  = 100;
+
+    public static final double HOME = 0;
   }
 
   public static class ElevatorPresets
@@ -45,6 +48,9 @@ public final class Constants
 
     public static final double TRAY_HEIGHT  = 125;
     public static final double SLIDE_HEIGHT = 75;
+
+    public static final double HOME = 0;
+
   }
 
   public static class WristPresets
@@ -139,6 +145,9 @@ public final class Constants
 
     // Hold time on motor brakes when disabled
     public static final double WHEEL_LOCK_TIME = 10; // seconds
+    public static final double THROTTLE_MIN = 0.4; // possibly up the min
+    public static final double THROTTLE_MAX = 1.0;
+    // min, max
   }
 
 }

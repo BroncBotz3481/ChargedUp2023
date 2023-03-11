@@ -108,8 +108,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void moveElevator(double power) {
         System.out.println("This is the power of the Elevator before algorithms: " + power);
         ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,
-                upperLimitSwitch.get(),
-                lowerLimitSwitch.get());
+                ElevatorPolicy.upLimit,
+                ElevatorPolicy.lowLimit);
         System.out.println("This is the power of the Elevator after algorithms: " + ElevatorPolicy.elevatorPower);
         rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
     }
@@ -123,8 +123,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         System.out.println("This is the Elevator PID set position before algorithms: " + targetPosition);
         ElevatorPolicy.setPosition = targetPosition;
         ElevatorPolicy.setPosition = ElevatorPolicy.getElevatorPosition(targetPosition,
-                upperLimitSwitch.get(),
-                lowerLimitSwitch.get());
+                ElevatorPolicy.upLimit,
+                ElevatorPolicy.lowLimit);
         System.out.println("This is the Elevator PID set position after alogrithms: "  + ElevatorPolicy.setPosition);
         PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
     }
@@ -146,7 +146,14 @@ public class ElevatorSubsystem extends SubsystemBase {
         ElevatorPolicy.rightEncoderPosition = rightEncoder.getPosition();
         ElevatorPolicy.leftEncoderVelocity = leftEncoder.getVelocity();
         ElevatorPolicy.leftEncoderPosition = leftEncoder.getPosition();
-        ElevatorPolicy.lowLimit = lowerLimitSwitch.get();
-        ElevatorPolicy.upLimit = upperLimitSwitch.get();
+        if(RobotBase.isSimulation()) {
+            ElevatorPolicy.lowLimit = false;
+            ElevatorPolicy.upLimit = false;            
+        } else {
+            ElevatorPolicy.lowLimit = lowerLimitSwitch.get();
+            ElevatorPolicy.upLimit = upperLimitSwitch.get();
+        }
+
+
     }
 }

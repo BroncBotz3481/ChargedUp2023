@@ -77,11 +77,11 @@ public final class ElevatorPolicy
   /**
    * This tells us whether the upperLimit switch has been hit or not
    */
-  public static boolean upLimit;
+  public static boolean upLimit = false;
   /**
    * This tell us whether the lowerLimit switch has been hit or not
    */
-  public static boolean lowLimit;
+  public static boolean lowLimit = false;
   /**
   * This is the lowest set point of the elevator
   */

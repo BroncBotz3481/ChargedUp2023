@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.bogey.BogeyPolicy.PIDF;
 
@@ -83,7 +84,7 @@ public class BogeySubsystem extends SubsystemBase {
      */
     public void moveArm(double power) {
         System.out.println("This is the power of the Bogey before algorithms: " + power);
-        BogeyPolicy.bogeyPower = BogeyPolicy.getBogeyPower(power, upperLimitSwitch.get(), lowerLimitSwitch.get());
+        BogeyPolicy.bogeyPower = BogeyPolicy.getBogeyPower(power, BogeyPolicy.upLimit, BogeyPolicy.lowLimit);
         System.out.println("This is the power of the Bogey after algorithms: " + BogeyPolicy.bogeyPower);
         bogeyMotor.set(BogeyPolicy.bogeyPower);
     }
@@ -97,8 +98,8 @@ public class BogeySubsystem extends SubsystemBase {
         System.out.println("This is the set position of the PID for Bogey before algorithms: " + targetPosition);
         BogeyPolicy.setPosition = targetPosition;
         BogeyPolicy.setPosition = BogeyPolicy.getBogeyPosition(targetPosition,
-                upperLimitSwitch.get(),
-                lowerLimitSwitch.get());
+                BogeyPolicy.upLimit,
+                BogeyPolicy.lowLimit);
         System.out.println("This is the set position of the PID for Bogey after algorithms: " +BogeyPolicy.setPosition);
         PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
     }
@@ -117,8 +118,14 @@ public class BogeySubsystem extends SubsystemBase {
     public void periodic() {
         BogeyPolicy.encoderVelocity = bogeyEncoder.getVelocity();
         BogeyPolicy.encoderPosition = bogeyEncoder.getPosition();
-        BogeyPolicy.upLimit = upperLimitSwitch.get();
-        BogeyPolicy.lowLimit = lowerLimitSwitch.get();
+
+        if(RobotBase.isSimulation()) {
+            BogeyPolicy.lowLimit = false;
+            BogeyPolicy.upLimit = false;            
+        } else {
+            BogeyPolicy.lowLimit = lowerLimitSwitch.get();
+            BogeyPolicy.upLimit = upperLimitSwitch.get();
+        }
     }
 }
 
