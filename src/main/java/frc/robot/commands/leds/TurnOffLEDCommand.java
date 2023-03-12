@@ -36,7 +36,7 @@ public class TurnOffLEDCommand extends CommandBase
   @Override
   public void initialize()
   {
-    m_LedSubsystem.stopLED();
+    m_LedSubsystem.setLEDStrip(32, 42, 68);
   }
 
 
