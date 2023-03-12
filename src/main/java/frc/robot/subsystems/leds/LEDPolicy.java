@@ -2,23 +2,25 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.intake;
+package frc.robot.subsystems.leds;
 
 import frc.robot.Constants.IDS.Intake.CAN;
+import frc.robot.Constants.IDS.LED.PWM;
 
 /**
  * This is the Intake policy, holding all algorithmic functions for the Intake Subsystem and Commands. Holds all
  * important values from the subsystem
  **/
-public final class IntakePolicy
+public final class LEDPolicy
 {
 
   /**
-   * CAN ID for the intake motor
+   * PWM port for the LED strip
    */
-  public static final int    INTAKE_ID_PORT = CAN.main;
+  public static final int   LED_PWM_PORT = PWM.main;
   /**
-   * The power set to the Intake
+   * How many LEDs are on the LED strip
    */
-  public static       double power;
+  public static final int LED_STRIP_LENGTH = 100;
+
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.Constants.*;
+import frc.robot.Constants.IDS.Intake;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.bogey.ControlBogeyCommand;
 import frc.robot.commands.bogey.ManualBogeyCommand;
@@ -23,11 +24,15 @@ import frc.robot.commands.elevator.SetElevatorCommand;
 import frc.robot.commands.intake.SpinCommand;
 import frc.robot.commands.intake.SpitCommand;
 import frc.robot.commands.intake.StopIntakeCommand;
+import frc.robot.commands.leds.ConeLEDCommand;
+import frc.robot.commands.leds.CubeLEDCommand;
+import frc.robot.commands.leds.TurnOffLEDCommand;
 import frc.robot.commands.wrist.ControlWristCommand;
 import frc.robot.commands.wrist.SetWristCommand;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.leds.LEDSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
@@ -49,6 +54,7 @@ public class RobotContainer {
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
     private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     private final WristSubsystem m_wristSubsystem = new WristSubsystem();
+    private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     private final CommandJoystick driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort);
@@ -123,11 +129,16 @@ public class RobotContainer {
         new JoystickButton(driverController.getHID(), 2)
                 .whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
 
+        new JoystickButton(throttleController.getHID(), 1).onTrue(new CubeLEDCommand(m_ledSubsystem));
+        
+        new JoystickButton(throttleController.getHID(), 2).onTrue(new ConeLEDCommand(m_ledSubsystem));
+
         drivebase.setDefaultCommand(closedFieldRel);
         m_bogeySubsystem.setDefaultCommand(new ControlBogeyCommand(m_bogeySubsystem));
         m_elevatorSubsystem.setDefaultCommand(new ControlElevatorCommand(m_elevatorSubsystem));
         m_wristSubsystem.setDefaultCommand(new ControlWristCommand(m_wristSubsystem));
         m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
+        m_ledSubsystem.setDefaultCommand(new TurnOffLEDCommand(m_ledSubsystem));
 
         new Trigger(() -> Math.abs(m_operatorController.getRawAxis(2)) > 0.5)
                 .whileTrue(new SpitCommand(m_intakeSubsystem));

@@ -127,6 +127,15 @@ public final class Constants
         public static int lower = 5;
       }
     }
+
+    public static class LED{
+
+      public static class PWM{
+
+        public static int main = 0;
+        
+      }
+    }
   }
 
   public static final class Auton
