@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.Constants.*;
-import frc.robot.Constants.IDS.Intake;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.bogey.ControlBogeyCommand;
 import frc.robot.commands.bogey.ManualBogeyCommand;
@@ -129,10 +128,6 @@ public class RobotContainer {
         new JoystickButton(driverController.getHID(), 2)
                 .whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
 
-        new JoystickButton(throttleController.getHID(), 1).onTrue(new CubeLEDCommand(m_ledSubsystem));
-        
-        new JoystickButton(throttleController.getHID(), 2).onTrue(new ConeLEDCommand(m_ledSubsystem));
-
         drivebase.setDefaultCommand(closedFieldRel);
         m_bogeySubsystem.setDefaultCommand(new ControlBogeyCommand(m_bogeySubsystem));
         m_elevatorSubsystem.setDefaultCommand(new ControlElevatorCommand(m_elevatorSubsystem));
@@ -173,6 +168,10 @@ public class RobotContainer {
                 Commands.parallel(new SetElevatorCommand(ElevatorPresets.MID), new SetBogeyCommand(BogeyPresets.MID)));
         new POVButton(m_operatorController.getHID(), 0).whileTrue(Commands
                 .parallel(new SetElevatorCommand(ElevatorPresets.HIGH), new SetBogeyCommand(BogeyPresets.HIGH)));
+
+        new JoystickButton(m_operatorController.getHID(), 11).onTrue(new CubeLEDCommand(m_ledSubsystem));
+
+        new JoystickButton(m_operatorController.getHID(), 12).onTrue(new ConeLEDCommand(m_ledSubsystem));
 
     }
 
