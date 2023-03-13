@@ -10,7 +10,7 @@ import frc.robot.subsystems.leds.LEDSubsystem;
 /**
  * LED command that turns off LED strip
  */
-public class TurnOffLEDCommand extends CommandBase
+public class NavyLEDCommand extends CommandBase
 {
 
   /**
@@ -24,7 +24,7 @@ public class TurnOffLEDCommand extends CommandBase
    *
    * @param subsystem A LEDSubsystem used to initialize the instance LEDSubsystem
    */
-  public TurnOffLEDCommand(LEDSubsystem subsystem)
+  public NavyLEDCommand(LEDSubsystem subsystem)
   {
     m_LedSubsystem = subsystem;
     addRequirements(subsystem);

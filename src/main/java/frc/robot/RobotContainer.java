@@ -25,7 +25,7 @@ import frc.robot.commands.intake.SpitCommand;
 import frc.robot.commands.intake.StopIntakeCommand;
 import frc.robot.commands.leds.ConeLEDCommand;
 import frc.robot.commands.leds.CubeLEDCommand;
-import frc.robot.commands.leds.TurnOffLEDCommand;
+import frc.robot.commands.leds.NavyLEDCommand;
 import frc.robot.commands.wrist.ControlWristCommand;
 import frc.robot.commands.wrist.SetWristCommand;
 import frc.robot.subsystems.bogey.BogeySubsystem;
@@ -133,7 +133,7 @@ public class RobotContainer {
         m_elevatorSubsystem.setDefaultCommand(new ControlElevatorCommand(m_elevatorSubsystem));
         m_wristSubsystem.setDefaultCommand(new ControlWristCommand(m_wristSubsystem));
         m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
-        m_ledSubsystem.setDefaultCommand(new TurnOffLEDCommand(m_ledSubsystem));
+        m_ledSubsystem.setDefaultCommand(new NavyLEDCommand(m_ledSubsystem));
 
         new Trigger(() -> Math.abs(m_operatorController.getRawAxis(2)) > 0.5)
                 .whileTrue(new SpitCommand(m_intakeSubsystem));
@@ -150,7 +150,7 @@ public class RobotContainer {
 
         new JoystickButton(m_operatorController.getHID(), 3)
                 .whileTrue(Commands.parallel(new SetElevatorCommand(ElevatorPresets.SLIDE_HEIGHT),
-                        new SetWristCommand(WristPresets.SLIDE_ANGLE)));
+                        new SetWristCommand(WristPresets.SLIDE_ANGLE),new SpinCommand(m_intakeSubsystem)));
 
         new JoystickButton(m_operatorController.getHID(), 10).whileTrue(new SetBogeyCommand(BogeyPresets.HOME));
 
@@ -169,9 +169,9 @@ public class RobotContainer {
         new POVButton(m_operatorController.getHID(), 0).whileTrue(Commands
                 .parallel(new SetElevatorCommand(ElevatorPresets.HIGH), new SetBogeyCommand(BogeyPresets.HIGH)));
 
-        new JoystickButton(m_operatorController.getHID(), 11).onTrue(new CubeLEDCommand(m_ledSubsystem));
+        new JoystickButton(m_operatorController.getHID(), 7).onTrue(new CubeLEDCommand(m_ledSubsystem));
 
-        new JoystickButton(m_operatorController.getHID(), 12).onTrue(new ConeLEDCommand(m_ledSubsystem));
+        new JoystickButton(m_operatorController.getHID(), 8).onTrue(new ConeLEDCommand(m_ledSubsystem));
 
     }
 
