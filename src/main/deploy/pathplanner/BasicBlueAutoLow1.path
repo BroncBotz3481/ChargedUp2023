@@ -17,7 +17,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "align_mid",
+          "align_low",
           "score"
         ],
         "executionBehavior": "sequential",
@@ -52,11 +52,11 @@
     },
     {
       "anchorPoint": {
-        "x": 3.8157688133558088,
+        "x": 3.82,
         "y": 3.32
       },
       "prevControl": {
-        "x": 3.5329894551130057,
+        "x": 3.5372206417571967,
         "y": 3.32
       },
       "nextControl": null,
@@ -73,8 +73,12 @@
       }
     }
   ],
-  "maxVelocity": 2.0,
-  "maxAcceleration": 2.0,
-  "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.1,
+      "names": [
+        "reset"
+      ]
+    }
+  ]
 }

@@ -16,10 +16,13 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "names": [
+          "align_high",
+          "score"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "after",
+        "waitTime": 1.0
       }
     },
     {
@@ -114,9 +117,11 @@
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": false,
+      "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "score"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -145,5 +150,60 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.1,
+      "names": [
+        "reset"
+      ]
+    },
+    {
+      "position": 0.9,
+      "names": [
+        "drop_wrist_intake"
+      ]
+    },
+    {
+      "position": 1.05,
+      "names": [
+        "stop_outake"
+      ]
+    },
+    {
+      "position": 1.8,
+      "names": [
+        "align_high"
+      ]
+    },
+    {
+      "position": 2.05,
+      "names": [
+        "reset"
+      ]
+    },
+    {
+      "position": 2.9,
+      "names": [
+        "drop_wrist_intake"
+      ]
+    },
+    {
+      "position": 3.1,
+      "names": [
+        "stop_outake"
+      ]
+    },
+    {
+      "position": 3.95,
+      "names": [
+        "align_high"
+      ]
+    },
+    {
+      "position": 4.02,
+      "names": [
+        "reset"
+      ]
+    }
+  ]
 }

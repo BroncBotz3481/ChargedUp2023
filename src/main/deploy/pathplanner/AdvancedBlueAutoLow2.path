@@ -16,10 +16,13 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "names": [
+          "align_low",
+          "score"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "after",
+        "waitTime": 1.0
       }
     },
     {
@@ -41,7 +44,9 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "pickup"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -66,7 +71,9 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "score"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -116,7 +123,9 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "score"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -145,8 +154,60 @@
       }
     }
   ],
-  "maxVelocity": 3.5,
-  "maxAcceleration": null,
-  "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.1,
+      "names": [
+        "reset"
+      ]
+    },
+    {
+      "position": 0.9,
+      "names": [
+        "drop_wrist_intake"
+      ]
+    },
+    {
+      "position": 1.05,
+      "names": [
+        "stop_outake"
+      ]
+    },
+    {
+      "position": 1.7,
+      "names": [
+        "align_low"
+      ]
+    },
+    {
+      "position": 2.1,
+      "names": [
+        "reset"
+      ]
+    },
+    {
+      "position": 2.9,
+      "names": [
+        "drop_wrist_intake"
+      ]
+    },
+    {
+      "position": 3.1,
+      "names": [
+        "stop_outake"
+      ]
+    },
+    {
+      "position": 3.9,
+      "names": [
+        "align_low"
+      ]
+    },
+    {
+      "position": 4.2,
+      "names": [
+        "reset"
+      ]
+    }
+  ]
 }

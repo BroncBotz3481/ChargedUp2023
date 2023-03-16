@@ -166,28 +166,11 @@ public final class Autos {
     }
 
 
-    /**
-     * Example static factory for an autonomous command.
-     */
-    public static CommandBase exampleAuto(SwerveSubsystem swerve) {
-        PathPlannerTrajectory example = PathPlanner.loadPath("AdvancedBlueAuto2",
-                new PathConstraints(Auton.MAX_SPEED, Auton.MAX_ACCELERATION));
-        // Simple path with holonomic rotation. Stationary start/end. Max velocity of 4
-        // m/s and max accel of 3 m/s^2
-        // PathPlannerTrajectory example = PathPlanner.generatePath(
-        // new PathConstraints(4, 3),
-        // new PathPoint(new Translation2d(0, 0), Rotation2d.fromDegrees(0),
-        // Rotation2d.fromDegrees(0)),
-        //// position, heading(direction of travel), holonomic rotation
-        // new PathPoint(new Translation2d(1.0, 1.0), Rotation2d.fromDegrees(0),
-        // Rotation2d.fromDegrees(0)),
-        //// position, heading(direction of travel), holonomic rotation
-        // new PathPoint(new Translation2d(3.0, 3.0), Rotation2d.fromDegrees(45),
-        // Rotation2d.fromDegrees(-90))
-        // // position, heading(direction of travel), holonomic rotation
-        // );
-        return Commands.sequence(new FollowTrajectory(swerve, example, true));
-    }
+
+
+
+
+
 
     public static CommandBase AdvancedBlueAutoLow2(SwerveSubsystem swerve, IntakeSubsystem intake) {
         List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("AdvancedBlueAutoLow2",
@@ -332,6 +315,11 @@ public final class Autos {
         );
         return Commands.sequence(autoBuilder.fullAuto(example1));
     }
+
+
+
+
+
 
 
     public static CommandBase AdvancedBlueAutoHigh1(SwerveSubsystem swerve, IntakeSubsystem intake) {
@@ -479,6 +467,11 @@ public final class Autos {
     }
 
 
+
+
+
+
+
     public static CommandBase AdvancedBlueAutoHigh1NoDock(SwerveSubsystem swerve, IntakeSubsystem intake) {
         List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("AdvancedBlueAutoHigh1NoDock",
                 new PathConstraints(Auton.MAX_SPEED, Auton.MAX_ACCELERATION));
@@ -526,6 +519,11 @@ public final class Autos {
         );
         return Commands.sequence(autoBuilder.fullAuto(example1));
     }
+
+
+
+
+
 
     public static CommandBase AdvancedBlueAutoHigh2NoDock(SwerveSubsystem swerve, IntakeSubsystem intake) {
         List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("AdvancedBlueAutoHigh2NoDock",

@@ -183,7 +183,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return Autos.basicBlueAuto1(drivebase, m_intakeSubsystem);
+        return Autos.BasicBlueAutoHigh1(drivebase, m_intakeSubsystem);
 
     }
 

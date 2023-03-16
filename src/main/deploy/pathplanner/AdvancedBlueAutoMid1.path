@@ -16,10 +16,13 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0.5
+        "names": [
+          "align_mid",
+          "score"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "after",
+        "waitTime": 1.0
       }
     },
     {
@@ -66,7 +69,9 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "score"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -116,7 +121,9 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "score"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -149,11 +156,11 @@
     },
     {
       "anchorPoint": {
-        "x": 3.9706283048929736,
+        "x": 3.97,
         "y": 2.0
       },
       "prevControl": {
-        "x": 3.835940879165697,
+        "x": 3.8353125742727237,
         "y": 2.0
       },
       "nextControl": null,
@@ -170,8 +177,60 @@
       }
     }
   ],
-  "maxVelocity": 3.5,
-  "maxAcceleration": 1.0,
-  "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.1,
+      "names": [
+        "reset"
+      ]
+    },
+    {
+      "position": 0.9,
+      "names": [
+        "drop_wrist_intake"
+      ]
+    },
+    {
+      "position": 1.05,
+      "names": [
+        "stop_outake"
+      ]
+    },
+    {
+      "position": 1.9,
+      "names": [
+        "align_mid"
+      ]
+    },
+    {
+      "position": 2.1,
+      "names": [
+        "reset"
+      ]
+    },
+    {
+      "position": 2.9,
+      "names": [
+        "drop_wrist_intake"
+      ]
+    },
+    {
+      "position": 3.1,
+      "names": [
+        "stop_outake"
+      ]
+    },
+    {
+      "position": 3.95,
+      "names": [
+        "align_mid"
+      ]
+    },
+    {
+      "position": 4.2,
+      "names": [
+        "reset"
+      ]
+    }
+  ]
 }
