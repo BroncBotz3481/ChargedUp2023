@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.Constants.*;
 import frc.robot.commands.auto.AutonomousCommand;
+import frc.robot.commands.auto.Autos;
 import frc.robot.commands.bogey.ControlBogeyCommand;
 import frc.robot.commands.bogey.ManualBogeyCommand;
 import frc.robot.commands.bogey.SetBogeyCommand;
@@ -182,7 +183,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return new AutonomousCommand();
+        return Autos.basicBlueAuto1(drivebase, m_intakeSubsystem);
 
     }
 
