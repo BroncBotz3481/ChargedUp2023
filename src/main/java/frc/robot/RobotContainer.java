@@ -155,24 +155,25 @@ public class RobotContainer
     new JoystickButton(m_operatorController.getHID(), 5).whileTrue(new SpinCommand(m_intakeSubsystem));
 
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(3)) > 0.5)
-        .whileTrue(new SetWristCommand(WristPresets.FLAT));
+        .whileTrue(new SetWristCommand(WristPresets.FLAT, false));
     new JoystickButton(m_operatorController.getHID(), 2)
-        .whileTrue(Commands.parallel(new SetWristCommand(WristPresets.FLAT),
-                                     new SetElevatorCommand(ElevatorPresets.HOME),
-                                     new SetBogeyCommand(BogeyPresets.HOME)));
+        .whileTrue(Commands.parallel(new SetWristCommand(WristPresets.FLAT, false),
+                                     new SetElevatorCommand(ElevatorPresets.HOME, false),
+                                     new SetBogeyCommand(BogeyPresets.HOME, false)));
 
     new JoystickButton(m_operatorController.getHID(), 4).whileTrue(Commands
-                                                                       .parallel(new SetElevatorCommand(ElevatorPresets.TRAY_HEIGHT),
+                                                                       .parallel(new SetElevatorCommand(ElevatorPresets.TRAY_HEIGHT,
+                                                                                                        false),
                                                                                  new SpinCommand(m_intakeSubsystem)));
 
     new JoystickButton(m_operatorController.getHID(), 3)
-        .whileTrue(Commands.parallel(new SetElevatorCommand(ElevatorPresets.SLIDE_HEIGHT),
-                                     new SetWristCommand(WristPresets.SLIDE_ANGLE),
+        .whileTrue(Commands.parallel(new SetElevatorCommand(ElevatorPresets.SLIDE_HEIGHT, false),
+                                     new SetWristCommand(WristPresets.SLIDE_ANGLE, false),
                                      new SpinCommand(m_intakeSubsystem)));
 
-    new JoystickButton(m_operatorController.getHID(), 10).whileTrue(new SetBogeyCommand(BogeyPresets.HOME));
+    new JoystickButton(m_operatorController.getHID(), 10).whileTrue(new SetBogeyCommand(BogeyPresets.HOME, false));
 
-    new JoystickButton(m_operatorController.getHID(), 9).whileTrue(new SetElevatorCommand(ElevatorPresets.HOME));
+    new JoystickButton(m_operatorController.getHID(), 9).whileTrue(new SetElevatorCommand(ElevatorPresets.HOME, false));
 
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(5)) > 0.08)
         .whileTrue(new RepeatCommand(new ManualBogeyCommand(m_bogeySubsystem,
@@ -183,12 +184,16 @@ public class RobotContainer
                                                                () -> m_operatorController.getRawAxis(1))));
 
     new POVButton(m_operatorController.getHID(), 180).whileTrue(
-        Commands.parallel(new SetElevatorCommand(ElevatorPresets.LOW), new SetBogeyCommand(BogeyPresets.LOW)));
+        Commands.parallel(new SetElevatorCommand(ElevatorPresets.LOW, false),
+                          new SetBogeyCommand(BogeyPresets.LOW, false)));
     new POVButton(m_operatorController.getHID(), 270).whileTrue(
-        Commands.parallel(new SetElevatorCommand(ElevatorPresets.MID), new SetBogeyCommand(BogeyPresets.MID)));
+        Commands.parallel(new SetElevatorCommand(ElevatorPresets.MID, false),
+                          new SetBogeyCommand(BogeyPresets.MID, false)));
     new POVButton(m_operatorController.getHID(), 0).whileTrue(Commands
-                                                                  .parallel(new SetElevatorCommand(ElevatorPresets.HIGH),
-                                                                            new SetBogeyCommand(BogeyPresets.HIGH)));
+                                                                  .parallel(new SetElevatorCommand(ElevatorPresets.HIGH,
+                                                                                                   false),
+                                                                            new SetBogeyCommand(BogeyPresets.HIGH,
+                                                                                                false)));
 
     //new JoystickButton(m_operatorController.getHID(), 7).onTrue(new CubeLEDCommand(m_ledSubsystem));
 

@@ -47,15 +47,15 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_high", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HIGH),
-        new SetBogeyCommand(BogeyPresets.HIGH),
-        new SetWristCommand(WristPresets.MID),
+        new SetElevatorCommand(ElevatorPresets.HIGH, true),
+        new SetBogeyCommand(BogeyPresets.HIGH, true),
+        new SetWristCommand(WristPresets.MID, true),
         new StopIntakeCommand(intake)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME)));
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -93,15 +93,15 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_mid", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.MID),
-        new SetBogeyCommand(BogeyPresets.MID),
-        new SetWristCommand(WristPresets.MID),
+        new SetElevatorCommand(ElevatorPresets.MID, true),
+        new SetBogeyCommand(BogeyPresets.MID, true),
+        new SetWristCommand(WristPresets.MID, true),
         new StopIntakeCommand(intake)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME)));
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -139,15 +139,15 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_low", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.LOW),
-        new SetBogeyCommand(BogeyPresets.LOW),
-        new SetWristCommand(WristPresets.FLAT),
+        new SetElevatorCommand(ElevatorPresets.LOW, true),
+        new SetBogeyCommand(BogeyPresets.LOW, true),
+        new SetWristCommand(WristPresets.FLAT, true),
         new StopIntakeCommand(intake)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME)));
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -186,19 +186,19 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_low", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.LOW),
-        new SetBogeyCommand(BogeyPresets.LOW),
-        new SetWristCommand(WristPresets.FLAT)));
+        new SetElevatorCommand(ElevatorPresets.LOW, true),
+        new SetBogeyCommand(BogeyPresets.LOW, true),
+        new SetWristCommand(WristPresets.FLAT, true)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME),
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true),
         new StopIntakeCommand(intake)));
-    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT),
+    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT, true),
                                                                new SpinCommand(intake)));
     eventMap.put("stop_outake", new ParallelCommandGroup(new StopIntakeCommand(intake),
-                                                         new SetWristCommand(WristPresets.HOME)));
+                                                         new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -236,19 +236,19 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_mid", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.MID),
-        new SetBogeyCommand(BogeyPresets.MID),
-        new SetWristCommand(WristPresets.MID)));
+        new SetElevatorCommand(ElevatorPresets.MID, true),
+        new SetBogeyCommand(BogeyPresets.MID, true),
+        new SetWristCommand(WristPresets.MID, true)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME),
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true),
         new StopIntakeCommand(intake)));
-    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT),
+    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT, true),
                                                                new SpinCommand(intake)));
     eventMap.put("stop_outake", new ParallelCommandGroup(new StopIntakeCommand(intake),
-                                                         new SetWristCommand(WristPresets.HOME)));
+                                                         new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -286,19 +286,19 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_high", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HIGH),
-        new SetBogeyCommand(BogeyPresets.HIGH),
-        new SetWristCommand(WristPresets.MID)));
+        new SetElevatorCommand(ElevatorPresets.HIGH, true),
+        new SetBogeyCommand(BogeyPresets.HIGH, true),
+        new SetWristCommand(WristPresets.MID, true)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME),
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true),
         new StopIntakeCommand(intake)));
-    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT),
+    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT, true),
                                                                new SpinCommand(intake)));
     eventMap.put("stop_outake", new ParallelCommandGroup(new StopIntakeCommand(intake),
-                                                         new SetWristCommand(WristPresets.HOME)));
+                                                         new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -337,19 +337,19 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_high", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HIGH),
-        new SetBogeyCommand(BogeyPresets.HIGH),
-        new SetWristCommand(WristPresets.MID)));
+        new SetElevatorCommand(ElevatorPresets.HIGH, true),
+        new SetBogeyCommand(BogeyPresets.HIGH, true),
+        new SetWristCommand(WristPresets.MID, true)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME),
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true),
         new StopIntakeCommand(intake)));
-    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT),
+    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT, true),
                                                                new SpinCommand(intake)));
     eventMap.put("stop_outake", new ParallelCommandGroup(new StopIntakeCommand(intake),
-                                                         new SetWristCommand(WristPresets.HOME)));
+                                                         new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -387,19 +387,19 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_mid", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.MID),
-        new SetBogeyCommand(BogeyPresets.MID),
-        new SetWristCommand(WristPresets.MID)));
+        new SetElevatorCommand(ElevatorPresets.MID, true),
+        new SetBogeyCommand(BogeyPresets.MID, true),
+        new SetWristCommand(WristPresets.MID, true)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME),
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true),
         new StopIntakeCommand(intake)));
-    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT),
+    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT, true),
                                                                new SpinCommand(intake)));
     eventMap.put("stop_outake", new ParallelCommandGroup(new StopIntakeCommand(intake),
-                                                         new SetWristCommand(WristPresets.HOME)));
+                                                         new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -437,19 +437,19 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_low", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.LOW),
-        new SetBogeyCommand(BogeyPresets.LOW),
-        new SetWristCommand(WristPresets.FLAT)));
+        new SetElevatorCommand(ElevatorPresets.LOW, true),
+        new SetBogeyCommand(BogeyPresets.LOW, true),
+        new SetWristCommand(WristPresets.FLAT, true)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME),
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true),
         new StopIntakeCommand(intake)));
-    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT),
+    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT, true),
                                                                new SpinCommand(intake)));
     eventMap.put("stop_outake", new ParallelCommandGroup(new StopIntakeCommand(intake),
-                                                         new SetWristCommand(WristPresets.HOME)));
+                                                         new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -488,19 +488,19 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_high", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HIGH),
-        new SetBogeyCommand(BogeyPresets.HIGH),
-        new SetWristCommand(WristPresets.MID)));
+        new SetElevatorCommand(ElevatorPresets.HIGH, true),
+        new SetBogeyCommand(BogeyPresets.HIGH, true),
+        new SetWristCommand(WristPresets.MID, true)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME),
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true),
         new StopIntakeCommand(intake)));
-    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT),
+    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT, true),
                                                                new SpinCommand(intake)));
     eventMap.put("stop_outake", new ParallelCommandGroup(new StopIntakeCommand(intake),
-                                                         new SetWristCommand(WristPresets.HOME)));
+                                                         new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
@@ -539,19 +539,19 @@ public final class Autos
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("align_high", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HIGH),
-        new SetBogeyCommand(BogeyPresets.HIGH),
-        new SetWristCommand(WristPresets.MID)));
+        new SetElevatorCommand(ElevatorPresets.HIGH, true),
+        new SetBogeyCommand(BogeyPresets.HIGH, true),
+        new SetWristCommand(WristPresets.MID, true)));
     eventMap.put("score", new SpitCommand(intake));
     eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME),
-        new SetBogeyCommand(BogeyPresets.HOME),
-        new SetWristCommand(WristPresets.HOME),
+        new SetElevatorCommand(ElevatorPresets.HOME, true),
+        new SetBogeyCommand(BogeyPresets.HOME, true),
+        new SetWristCommand(WristPresets.HOME, true),
         new StopIntakeCommand(intake)));
-    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT),
+    eventMap.put("drop_wrist_intake", new ParallelCommandGroup(new SetWristCommand(WristPresets.FLAT, true),
                                                                new SpinCommand(intake)));
     eventMap.put("stop_outake", new ParallelCommandGroup(new StopIntakeCommand(intake),
-                                                         new SetWristCommand(WristPresets.HOME)));
+                                                         new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
