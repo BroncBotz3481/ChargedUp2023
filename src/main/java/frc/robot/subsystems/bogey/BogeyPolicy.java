@@ -8,7 +8,8 @@ import frc.robot.Constants.IDS.Bogey.CAN;
 import frc.robot.Constants.IDS.Bogey.DIO;
 
 /**
- * This is the Bogey policy, holding all algorithmic functions for the Bogey Subsystem and Commands. Holds all important
+ * This is the Bogey policy, holding all algorithmic functions for the Bogey
+ * Subsystem and Commands. Holds all important
  * values from the subsystem
  **/
 public final class BogeyPolicy {
@@ -26,7 +27,8 @@ public final class BogeyPolicy {
      */
     public static final int LOWER_LIMIT_CHANNEL = DIO.lower;
     /**
-     * This is the gear ratio for the number of times the motor has spin for the bogey to rotate once
+     * This is the gear ratio for the number of times the motor has spin for the
+     * bogey to rotate once
      */
     public static final double bogeyGearRatio = 9;
     /**
@@ -61,10 +63,14 @@ public final class BogeyPolicy {
      * This is the lowest set point of the bogey
      */
     public static final double lowestSetPoint = 0;
-     /**
+    /**
      * This is the highest set point of the bogey
      */
     public static final double highestSetPoint = 26.75;
+    /**
+     * Acceptable tolerance for ending the SetWristCommand in autonomous
+     */
+    public static final double acceptableTolerance = 2;
 
     /**
      * Returns the power depending on the state of the limits

@@ -7,9 +7,9 @@ package frc.robot.subsystems.wrist;
 import frc.robot.Constants.IDS.Wrist.CAN;
 import frc.robot.Constants.IDS.Wrist.DIO;
 
-
 /**
- * This is the Wrist policy, holding all algorithmic functions for the Wrist Subsystem and Commands. Holds all important
+ * This is the Wrist policy, holding all algorithmic functions for the Wrist
+ * Subsystem and Commands. Holds all important
  * values from the subsystem
  **/
 public final class WristPolicy {
@@ -27,7 +27,8 @@ public final class WristPolicy {
      */
     public static final int LOWER_LIMIT_CHANNEL = DIO.lower;
     /**
-     * This is the gear ratio for the number of times the motor has spin for the wrist to rotate once
+     * This is the gear ratio for the number of times the motor has spin for the
+     * wrist to rotate once
      */
     public static final double wristGearRatio = 81;
     /**
@@ -54,14 +55,18 @@ public final class WristPolicy {
      * This tell us whether the lowerLimit switch has been hit or not
      */
     public static boolean lowLimit = false;
-     /**
+    /**
      * This is the lowest set point of the wrist
      */
     public static final double lowestSetPoint = 0;
-     /**
+    /**
      * This is the highest set point of the bogey
      */
     public static final double highestSetPoint = 90;
+    /**
+     * Acceptable tolerance for ending the SetWristCommand in autonomous
+     */
+    public static final double acceptableTolerance = 2;
 
     /**
      * Returns the power depending on the state of the limits

@@ -8,25 +8,32 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.bogey.BogeyPolicy;
 
 /**
- * Bogey Command that uses a PID Control Loop to bring the Bogey to a target position
+ * Bogey Command that uses a PID Control Loop to bring the Bogey to a target
+ * position
  */
 public class SetBogeyCommand extends CommandBase {
     /**
      * Is used as the set position for the PID Control Loop
      */
-    private final double         targetPosition;
+    private final double targetPosition;
+    /**
+     * Boolean to determine the isFinished() behavior for autonomous use
+     */
+    private final boolean waitForSetpoint;
 
     /**
      * Initializes the BogeySubsystem, targetPosition, and adds requirements
      *
      * @param target used to initialize the targetPosition
      */
-    public SetBogeyCommand(double target) {
+    public SetBogeyCommand(double target, boolean waitForSetpoint) {
         targetPosition = target;
+        this.waitForSetpoint = waitForSetpoint;
     }
 
     /**
-     * Stops the arm, then runs PID for the arm to reach target position upon initialization when the command is
+     * Stops the arm, then runs PID for the arm to reach target position upon
+     * initialization when the command is
      * scheduled
      */
     @Override
@@ -48,11 +55,20 @@ public class SetBogeyCommand extends CommandBase {
     }
 
     /**
-     * returns true if either limit switch is pressed or the encoder position is greater than target position,
+     * returns true if either limit switch is pressed or the encoder position is
+     * greater than target position,
      * removing the command from the command scheduler
      */
     @Override
     public boolean isFinished() {
-        return false;
+        if (waitForSetpoint) {
+            if (Math.abs(BogeyPolicy.encoderPosition - BogeyPolicy.setPosition) < BogeyPolicy.acceptableTolerance) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
