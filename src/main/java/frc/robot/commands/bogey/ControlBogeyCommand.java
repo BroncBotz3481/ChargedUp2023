@@ -18,6 +18,10 @@ public class ControlBogeyCommand extends CommandBase
    * A BogeySubsystem object
    */
   private final BogeySubsystem m_BogeySubsystem;
+  /**
+   * Old setpoint.
+   */
+  private       double         oldSetpoint = 0;
 
   /**
    * Initializes the BogeySubsystem and adds requirements
@@ -43,7 +47,11 @@ public class ControlBogeyCommand extends CommandBase
   @Override
   public void execute()
   {
-    m_BogeySubsystem.runPID(BogeyPolicy.setPosition);
+    if (BogeyPolicy.setPosition != oldSetpoint)
+    {
+      m_BogeySubsystem.runPID(BogeyPolicy.setPosition);
+      oldSetpoint = BogeyPolicy.setPosition;
+    }
 
   }
 

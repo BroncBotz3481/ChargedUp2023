@@ -18,6 +18,10 @@ public class ControlWristCommand extends CommandBase
    * An object of the WristSubsystem
    */
   private final WristSubsystem m_WristSubsystem;
+  /**
+   * Old setpoint.
+   */
+  private       double         oldSetpoint = 0;
 
   /**
    * Initializes the WristSubsystem and adds requirements
@@ -42,7 +46,11 @@ public class ControlWristCommand extends CommandBase
   @Override
   public void execute()
   {
-    m_WristSubsystem.setMotor(WristPolicy.setPosition);
+    if (oldSetpoint != WristPolicy.setPosition)
+    {
+      m_WristSubsystem.setMotor(WristPolicy.setPosition);
+      oldSetpoint = WristPolicy.setPosition;
+    }
   }
 
   /**

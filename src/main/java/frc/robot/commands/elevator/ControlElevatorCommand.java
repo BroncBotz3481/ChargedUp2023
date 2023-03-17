@@ -18,6 +18,10 @@ public class ControlElevatorCommand extends CommandBase
    * A ElevatorSubsystem object
    */
   private final ElevatorSubsystem m_ElevatorSubsystem;
+  /**
+   * The old position.
+   */
+  private       double            oldPosition = 0;
 
   /**
    * Initializes the ElevatorSubsystem and adds requirements
@@ -42,7 +46,11 @@ public class ControlElevatorCommand extends CommandBase
   @Override
   public void execute()
   {
-    m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);
+    if (ElevatorPolicy.setPosition != oldPosition)
+    {
+      m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);
+      oldPosition = ElevatorPolicy.setPosition;
+    }
   }
 
   /**
