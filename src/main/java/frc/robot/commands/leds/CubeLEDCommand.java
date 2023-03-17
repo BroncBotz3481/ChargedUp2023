@@ -2,57 +2,57 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.leds;
+// package frc.robot.commands.leds;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.leds.LEDSubsystem;
+// import edu.wpi.first.wpilibj2.command.CommandBase;
+// import frc.robot.subsystems.leds.LEDSubsystem;
 
-/**
- * LED Command that turns the LED color to purple
- */
-public class CubeLEDCommand extends CommandBase
-{
+// /**
+//  * LED Command that turns the LED color to purple
+//  */
+// public class CubeLEDCommand extends CommandBase
+// {
 
-  /**
-   * An object of LEDSubsystem
-   */
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final LEDSubsystem m_LedSubsystem;
+//   /**
+//    * An object of LEDSubsystem
+//    */
+//   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+//   private final LEDSubsystem m_LedSubsystem;
 
-  /**
-   * Initializes the LEDSubsystem and adds requirments
-   *
-   * @param subsystem A LEDSubsystem used to initialize the instance LEDSubsystem
-   */
-  public CubeLEDCommand(LEDSubsystem subsystem)
-  {
-    m_LedSubsystem = subsystem;
-    addRequirements(subsystem);
-  }
+//   /**
+//    * Initializes the LEDSubsystem and adds requirments
+//    *
+//    * @param subsystem A LEDSubsystem used to initialize the instance LEDSubsystem
+//    */
+//   public CubeLEDCommand(LEDSubsystem subsystem)
+//   {
+//     m_LedSubsystem = subsystem;
+//     addRequirements(subsystem);
+//   }
 
-  /**
-   * Sets the color of the LED to purple
-   */
-  @Override
-  public void initialize()
-  {
-    m_LedSubsystem.setLEDStrip(138, 43, 226);
-  }
+//   /**
+//    * Sets the color of the LED to purple
+//    */
+//   @Override
+//   public void initialize()
+//   {
+//     m_LedSubsystem.setLEDStrip(138, 43, 226);
+//   }
 
 
-  @Override
-  public void execute()
-  {
-  }
+//   @Override
+//   public void execute()
+//   {
+//   }
 
-  @Override
-  public void end(boolean interrupted)
-  {
-  }
+//   @Override
+//   public void end(boolean interrupted)
+//   {
+//   }
 
-  @Override
-  public boolean isFinished()
-  {
-    return false;
-  }
-}
+//   @Override
+//   public boolean isFinished()
+//   {
+//     return false;
+//   }
+// }

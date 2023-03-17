@@ -27,15 +27,15 @@ import frc.robot.commands.elevator.SetElevatorCommand;
 import frc.robot.commands.intake.SpinCommand;
 import frc.robot.commands.intake.SpitCommand;
 import frc.robot.commands.intake.StopIntakeCommand;
-import frc.robot.commands.leds.ConeLEDCommand;
-import frc.robot.commands.leds.CubeLEDCommand;
-import frc.robot.commands.leds.NavyLEDCommand;
+// import frc.robot.commands.leds.ConeLEDCommand;
+// import frc.robot.commands.leds.CubeLEDCommand;
+// import frc.robot.commands.leds.NavyLEDCommand;
 import frc.robot.commands.wrist.ControlWristCommand;
 import frc.robot.commands.wrist.SetWristCommand;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
-import frc.robot.subsystems.leds.LEDSubsystem;
+// import frc.robot.subsystems.leds.LEDSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
 import frc.robot.subsystems.wrist.WristSubsystem;
 
@@ -51,14 +51,13 @@ import java.io.File;
  */
 public class RobotContainer {
 
-        // The robot's subsystems and commands are defined here...
-        private final SwerveSubsystem drivebase = new SwerveSubsystem(
-                        new File(Filesystem.getDeployDirectory(), "swerve"));
-        private final BogeySubsystem m_bogeySubsystem = new BogeySubsystem();
-        private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
-        private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-        private final WristSubsystem m_wristSubsystem = new WristSubsystem();
-        private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
+    // The robot's subsystems and commands are defined here...
+    private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
+    private final BogeySubsystem m_bogeySubsystem = new BogeySubsystem();
+    private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+    private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    private final WristSubsystem m_wristSubsystem = new WristSubsystem();
+    //private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
 
         // Replace with CommandPS4Controller or CommandJoystick if needed
         private final CommandJoystick driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort);
@@ -143,10 +142,12 @@ public class RobotContainer {
                 // Reset the robot gyroscope
                 new JoystickButton(driverController.getHID(), 3).onTrue((new InstantCommand(drivebase::zeroGyro)));
 
-                // Point all modules toward the robot center, thus making the robot very
-                // difficult to move. Forcing the robot to keep the current pose
-                new JoystickButton(driverController.getHID(), 2)
-                                .whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
+        drivebase.setDefaultCommand(closedFieldRel);
+        m_bogeySubsystem.setDefaultCommand(new ControlBogeyCommand(m_bogeySubsystem));
+        m_elevatorSubsystem.setDefaultCommand(new ControlElevatorCommand(m_elevatorSubsystem));
+        m_wristSubsystem.setDefaultCommand(new ControlWristCommand(m_wristSubsystem));
+        m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
+        //m_ledSubsystem.setDefaultCommand(new NavyLEDCommand(m_ledSubsystem));
 
                 drivebase.setDefaultCommand(closedFieldRel);
                 m_bogeySubsystem.setDefaultCommand(new ControlBogeyCommand(m_bogeySubsystem));
@@ -188,19 +189,11 @@ public class RobotContainer {
                                 .whileTrue(new ManualElevatorCommand(m_elevatorSubsystem,
                                                 () -> m_operatorController.getRawAxis(1)));
 
-                new POVButton(m_operatorController.getHID(), 180).whileTrue(
-                                Commands.parallel(new SetElevatorCommand(ElevatorPresets.LOW, false),
-                                                new SetBogeyCommand(BogeyPresets.LOW, false)));
-                new POVButton(m_operatorController.getHID(), 270).whileTrue(
-                                Commands.parallel(new SetElevatorCommand(ElevatorPresets.MID, false),
-                                                new SetBogeyCommand(BogeyPresets.MID, false)));
-                new POVButton(m_operatorController.getHID(), 0).whileTrue(Commands
-                                .parallel(new SetElevatorCommand(ElevatorPresets.HIGH, false),
-                                                new SetBogeyCommand(BogeyPresets.HIGH, false)));
+        //new JoystickButton(m_operatorController.getHID(), 7).onTrue(new CubeLEDCommand(m_ledSubsystem));
 
-                new JoystickButton(m_operatorController.getHID(), 7).onTrue(new CubeLEDCommand(m_ledSubsystem));
+       // new JoystickButton(m_operatorController.getHID(), 8).onTrue(new ConeLEDCommand(m_ledSubsystem));
 
-                new JoystickButton(m_operatorController.getHID(), 8).onTrue(new ConeLEDCommand(m_ledSubsystem));
+                // new JoystickButton(m_operatorController.getHID(), 8).onTrue(new ConeLEDCommand(m_ledSubsystem));
 
         }
 
