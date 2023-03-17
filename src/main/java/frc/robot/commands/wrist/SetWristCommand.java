@@ -8,19 +8,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.wrist.WristPolicy;
 
 /**
- * Wrist command that uses a PID Control Loop to bring the wrist to a target
- * position
+ * Wrist command that uses a PID Control Loop to bring the wrist to a target position
  */
-public class SetWristCommand extends CommandBase {
+public class SetWristCommand extends CommandBase
+{
 
-    /**
-     * Is used as the set position for the PID Control Loop
-     */
-    private final double targetPosition;
-    /**
-     * Boolean to determine the isFinished() behavior for autonomous use
-     */
-    private final boolean waitForSetpoint;
+  /**
+   * Is used as the set position for the PID Control Loop
+   */
+  private final double  targetPosition;
+  /**
+   * Boolean to determine the isFinished() behavior for autonomous use
+   */
+  private final boolean waitForSetpoint;
 
     /**
      * Initializes the WristSubsystem, targetPosition, and adds requirements
@@ -28,46 +28,47 @@ public class SetWristCommand extends CommandBase {
      * @param target Holds the value of the targetPosition of this specific command
      *               instance
      */
-    public SetWristCommand(double target, boolean waitForSetpoint) {
-        targetPosition = target;
-        this.waitForSetpoint = waitForSetpoint;
+    public SetWristCommand(double target, boolean waitForSetpoint)
+    {
+      targetPosition = target;
+      this.waitForSetpoint = waitForSetpoint;
     }
 
-    /**
-     * Stops the wrist at when the command is scheduled, and it starts the PID
-     * Control Loop with the targetPosition as the setPosition
-     */
-    @Override
-    public void initialize() {
-    }
+  /**
+   * Stops the wrist at when the command is scheduled, and it starts the PID Control Loop with the targetPosition as the
+   * setPosition
+   */
+  @Override
+  public void initialize()
+  {
+  }
 
-    @Override
-    public void execute() {
-        WristPolicy.setPosition = targetPosition;
-    }
+  @Override
+  public void execute()
+  {
+    WristPolicy.setPosition = targetPosition;
+  }
 
-    /**
-     * Stops the wrist when the command is removed from the command
-     * 
-     * @param interrupted whether the command was interrupted/canceled
-     */
-    @Override
-    public void end(boolean interrupted) {
-    }
+  /**
+   * Stops the wrist when the command is removed from the command
+   *
+   * @param interrupted whether the command was interrupted/canceled
+   */
+  @Override
+  public void end(boolean interrupted)
+  {
+  }
 
-    /**
-     * Returns true if either limit switch is pressed or if the encoderPosition
-     * exceeds the setPosition, removing the
-     * command from the command scheduler
-     */
-    @Override
-    public boolean isFinished() {
-        if (waitForSetpoint) {
-            if (Math.abs(WristPolicy.encoderPosition - WristPolicy.setPosition) < WristPolicy.acceptableTolerance) {
-                return true;
-            } else {
-                return false;
-            }
+  /**
+   * Returns true if either limit switch is pressed or if the encoderPosition exceeds the setPosition, removing the
+   * command from the command scheduler
+   */
+  @Override
+  public boolean isFinished()
+  {
+    if (waitForSetpoint)
+    {
+      return Math.abs(WristPolicy.encoderPosition - WristPolicy.setPosition) < WristPolicy.acceptableTolerance;
         } else {
             return false;
         }

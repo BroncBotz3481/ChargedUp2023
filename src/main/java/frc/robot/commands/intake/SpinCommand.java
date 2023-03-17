@@ -50,6 +50,7 @@ public class SpinCommand extends CommandBase
 
   /**
    * Stops the intake when the command is removed from the command scheduler
+   *
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override

@@ -18,11 +18,13 @@ import swervelib.parser.PIDFConfig;
 public final class Constants
 {
 
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+  public static class OperatorConstants
+  {
+
+    public static final int kDriverControllerPort   = 0;
     public static final int kThrottleControllerPort = 1;
     public static final int kOperatorControllerPort = 2;
-    
+
 
     public static final double LEFT_X_DEADBAND = 0.1;
 
@@ -56,9 +58,9 @@ public final class Constants
   public static class WristPresets
   {
 
-    public static final double HOME = 90;
-    public static final double FLAT = 0;
-    public static final double MID = 45;
+    public static final double HOME        = 90;
+    public static final double FLAT        = 0;
+    public static final double MID         = 45;
     public static final double SLIDE_ANGLE = 33.69;
   }
 
@@ -70,6 +72,7 @@ public final class Constants
 
       public static class CAN
       {
+
 
         public static final int left  = 1;
         public static final int right = 8;
@@ -128,12 +131,14 @@ public final class Constants
       }
     }
 
-    public static class LED{
+    public static class LED
+    {
 
-      public static class PWM{
+      public static class PWM
+      {
 
         public static int main = 0;
-        
+
       }
     }
   }
@@ -154,8 +159,8 @@ public final class Constants
 
     // Hold time on motor brakes when disabled
     public static final double WHEEL_LOCK_TIME = 10; // seconds
-    public static final double THROTTLE_MIN = 0.4; // possibly up the min
-    public static final double THROTTLE_MAX = 1.0;
+    public static final double THROTTLE_MIN    = 0.4; // possibly up the min
+    public static final double THROTTLE_MAX    = 1.0;
     // min, max
   }
 

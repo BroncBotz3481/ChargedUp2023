@@ -21,6 +21,7 @@ public class ControlElevatorCommand extends CommandBase
 
   /**
    * Initializes the ElevatorSubsystem and adds requirements
+   *
    * @param subsystem used to initialize the elevator subsystem
    */
   public ControlElevatorCommand(ElevatorSubsystem subsystem)
@@ -39,12 +40,14 @@ public class ControlElevatorCommand extends CommandBase
   }
 
   @Override
-  public void execute() {
+  public void execute()
+  {
     m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);
   }
 
   /**
    * Stops the elevator when the command is removed from the command scheduled
+   *
    * @param interrupted whether the command was interrupted/canceled
    */
   @Override
@@ -54,7 +57,7 @@ public class ControlElevatorCommand extends CommandBase
   }
 
   /**
-   *returns true when either limit switch is pressed, removing the command from the command scheduler
+   * returns true when either limit switch is pressed, removing the command from the command scheduler
    */
   @Override
   public boolean isFinished()

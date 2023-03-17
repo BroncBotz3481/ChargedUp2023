@@ -15,85 +15,85 @@ import frc.robot.Constants.IDS.Elevator.DIO;
 /**
  * Add your docs here.
  */
-public final class ElevatorPolicy {
+public final class ElevatorPolicy
+{
 
   /**
    * CAN ID for left elevator motor
    */
-  public static final int LEFT_ELEV_ID_PORT = CAN.left;
+  public static final int     LEFT_ELEV_ID_PORT   = CAN.left;
   /**
    * CAN ID for right elevator motor
    */
-  public static final int RIGHT_ELEV_ID_PORT = CAN.right;
+  public static final int     RIGHT_ELEV_ID_PORT  = CAN.right;
   /**
    * Pin channel for upper limit on roborio
    */
-  public static final int UPPER_LIMIT_CHANNEL = DIO.upper;
+  public static final int     UPPER_LIMIT_CHANNEL = DIO.upper;
   /**
    * Pin channel for lower limit on roborio
    */
-  public static final int LOWER_LIMIT_CHANNEL = DIO.lower;
+  public static final int     LOWER_LIMIT_CHANNEL = DIO.lower;
   /**
    * The left elevator motor is inversed
    */
-  public static final boolean INV_LEFT = true;
+  public static final boolean INV_LEFT            = true;
   /**
    * The right elevator motor is not inversed
    */
-  public static final boolean INV_RIGHT = false;
+  public static final boolean INV_RIGHT           = false;
   /**
-   * This is the gear ratio for the number of times the motor has spin for the
-   * elevator to rotate once
+   * This is the gear ratio for the number of times the motor has spin for the elevator to rotate once
    */
-  public static final double elevatorGearRatio = 7;
+  public static final double  elevatorGearRatio   = 7;
   /**
    * The radius of the sprocket on the elevator
    */
-  public static final double radiusofSprocket = .944;
-  /**
-   * The power set to the elevator
-   */
-  public static double elevatorPower;
-  /**
-   * How fast the right elevator motor is spinning
-   */
-  public static double rightEncoderVelocity;
-  /**
-   * How fast the left elevator is spinning
-   */
-  public static double leftEncoderVelocity;
-  /**
-   * The position of the right elevator motor
-   */
-  public static double rightEncoderPosition;
-  /**
-   * The position of the left elevator motor
-   */
-  public static double leftEncoderPosition;
-  /**
-   * Target position for PID control loop
-   */
-  public static double setPosition;
-  /**
-   * This tells us whether the upperLimit switch has been hit or not
-   */
-  public static boolean upLimit = false;
-  /**
-   * This tell us whether the lowerLimit switch has been hit or not
-   */
-  public static boolean lowLimit = false;
+  public static final double  radiusofSprocket    = .944;
   /**
    * This is the lowest set point of the elevator
    */
-  public static final double lowestSetPoint = 0;
+  public static final double  lowestSetPoint      = 0;
   /**
    * This is the highest set point of the bogey
    */
-  public static final double highestSetPoint = 46;
+  public static final double  highestSetPoint     = 46;
   /**
    * Acceptable tolerance for ending the SetElevatorCommand in autonomous
    */
-  public static final double acceptableTolerance = 2;
+  public static final double  acceptableTolerance = 2;
+  /**
+   * The power set to the elevator
+   */
+  public static       double  elevatorPower;
+  /**
+   * How fast the right elevator motor is spinning
+   */
+  public static       double  rightEncoderVelocity;
+  /**
+   * How fast the left elevator is spinning
+   */
+  public static       double  leftEncoderVelocity;
+  /**
+   * The position of the right elevator motor
+   */
+  public static       double  rightEncoderPosition;
+  /**
+   * The position of the left elevator motor
+   */
+  public static       double  leftEncoderPosition;
+  /**
+   * Target position for PID control loop
+   */
+  public static       double  setPosition;
+  /**
+   * This tells us whether the upperLimit switch has been hit or not
+   */
+  public static       boolean upLimit             = false;
+  /**
+   * This tell us whether the lowerLimit switch has been hit or not
+   */
+  public static       boolean lowLimit            = false;
 
   /**
    * Returns the power depending on the state of the limits
@@ -103,10 +103,13 @@ public final class ElevatorPolicy {
    * @param lowerLimit   The lower limit
    * @return returns the power depending on the state of the limits
    */
-  public static double getElevatorPower(double desiredPower, boolean upperLimit, boolean lowerLimit) {
-    if (upperLimit) {
+  public static double getElevatorPower(double desiredPower, boolean upperLimit, boolean lowerLimit)
+  {
+    if (upperLimit)
+    {
       return 0;
-    } else if (lowerLimit) {
+    } else if (lowerLimit)
+    {
       return 0;
     }
     return desiredPower;
@@ -120,10 +123,13 @@ public final class ElevatorPolicy {
    * @param lowerLimit      The lower limit position
    * @return returns the position depending on the state of the limits
    */
-  public static double getElevatorPosition(double desiredPosition, boolean upperLimit, boolean lowerLimit) {
-    if (upperLimit && desiredPosition > setPosition) {
+  public static double getElevatorPosition(double desiredPosition, boolean upperLimit, boolean lowerLimit)
+  {
+    if (upperLimit && desiredPosition > setPosition)
+    {
       return lowestSetPoint;
-    } else if (lowerLimit && desiredPosition < setPosition) {
+    } else if (lowerLimit && desiredPosition < setPosition)
+    {
       return highestSetPoint;
     }
     return desiredPosition;
@@ -132,27 +138,31 @@ public final class ElevatorPolicy {
   /**
    * Holds all PIDF constants for ElevatorSubsystem
    */
-  public static class PIDF {
+  public static class PIDF
+  {
 
     /**
      * Feedforward constant for PID loop
      */
-    public static final double FEEDFORWARD = 0;
+    public static final double FEEDFORWARD   = 0;
     /**
      * Proportion constant for PID loop
      */
-    public static final double PROPORTION = 0.01;
+    public static final double PROPORTION    = 0.01;
     /**
      * Integral constant for PID loop
      */
-    public static final double INTEGRAL = 0.0;
+    public static final double INTEGRAL      = 0.0;
     /**
      * Derivative constant for PID loop
      */
-    public static final double DERIVATIVE = 0.0;
+    public static final double DERIVATIVE    = 0.0;
     /**
      * Integral zone constant for PID loop
      */
     public static final double INTEGRAL_ZONE = 0.0;
   }
 }
+
+
+
