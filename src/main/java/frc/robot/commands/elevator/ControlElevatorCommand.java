@@ -41,16 +41,19 @@ public class ControlElevatorCommand extends CommandBase
   public void initialize()
   {
     m_ElevatorSubsystem.stopEle();
+    ElevatorPolicy.setPosition = ElevatorPolicy.rightEncoderPosition;
+    ElevatorPolicy.offSet = ElevatorPolicy.rightEncoderPosition;
   }
 
   @Override
   public void execute()
   {
-    if (ElevatorPolicy.setPosition != oldPosition)
-    {
-      m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);
-      oldPosition = ElevatorPolicy.setPosition;
-    }
+    // if (ElevatorPolicy.setPosition != oldPosition)
+    // {
+    //   m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);
+    //   oldPosition = ElevatorPolicy.setPosition;
+    // }
+    m_ElevatorSubsystem.moveElevator(-.1);
   }
 
   /**

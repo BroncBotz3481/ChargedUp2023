@@ -69,7 +69,7 @@ public class ElevatorSubsystem extends SubsystemBase
     rightElevatorMotor.setIdleMode(IdleMode.kBrake);
     rightEncoder = rightElevatorMotor.getEncoder();
     leftEncoder = leftElevatorMotor.getEncoder();
-    rightEncoder.setPositionConversionFactor(1 / ElevatorPolicy.elevatorGearRatio);
+    //rightEncoder.setPositionConversionFactor(1 / ElevatorPolicy.elevatorGearRatio);
     PIDController.setFeedbackDevice(rightEncoder);
     upperLimitSwitch = new DigitalInput(ElevatorPolicy.UPPER_LIMIT_CHANNEL);
     lowerLimitSwitch = new DigitalInput(ElevatorPolicy.LOWER_LIMIT_CHANNEL);
@@ -110,12 +110,12 @@ public class ElevatorSubsystem extends SubsystemBase
    */
   public void moveElevator(double power)
   {
-    System.out.println("This is the power of the Elevator before algorithms: " + power);
+    //System.out.println("This is the power of the Elevator before algorithms: " + power);
     ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,
                                                                    ElevatorPolicy.upLimit,
                                                                    ElevatorPolicy.lowLimit);
-    System.out.println("This is the power of the Elevator after algorithms: " + ElevatorPolicy.elevatorPower);
-    rightElevatorMotor.set(power);
+    //System.out.println("This is the power of the Elevator after algorithms: " + ElevatorPolicy.elevatorPower);
+    rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
   }
 
   /**
@@ -125,12 +125,12 @@ public class ElevatorSubsystem extends SubsystemBase
    */
   public void runPID(double targetPosition)
   {
-    System.out.println("This is the Elevator PID set position before algorithms: " + targetPosition);
+    //System.out.println("This is the Elevator PID set position before algorithms: " + targetPosition);
     ElevatorPolicy.setPosition = targetPosition;
     ElevatorPolicy.setPosition = ElevatorPolicy.getElevatorPosition(targetPosition,
                                                                     ElevatorPolicy.upLimit,
                                                                     ElevatorPolicy.lowLimit);
-    System.out.println("This is the Elevator PID set position after alogrithms: " + ElevatorPolicy.setPosition);
+    //System.out.println("This is the Elevator PID set position after alogrithms: " + ElevatorPolicy.setPosition);
     PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
   }
 
@@ -159,8 +159,8 @@ public class ElevatorSubsystem extends SubsystemBase
       ElevatorPolicy.upLimit = false;
     } else
     {
-      ElevatorPolicy.lowLimit = lowerLimitSwitch.get();
-      ElevatorPolicy.upLimit = upperLimitSwitch.get();
+      ElevatorPolicy.lowLimit = !lowerLimitSwitch.get();
+      ElevatorPolicy.upLimit = !upperLimitSwitch.get();
     }
 
 

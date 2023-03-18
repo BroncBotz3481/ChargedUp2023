@@ -51,7 +51,7 @@ public class WristSubsystem extends SubsystemBase
     wristMotor.restoreFactoryDefaults();
     wristMotor.setInverted(true);
     encoder = wristMotor.getEncoder();
-    encoder.setPositionConversionFactor(1 / WristPolicy.wristGearRatio);
+    //encoder.setPositionConversionFactor(1 / WristPolicy.wristGearRatio);
     PIDController = wristMotor.getPIDController();
     PIDController.setFeedbackDevice(encoder);
     setPIDF(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
@@ -84,10 +84,10 @@ public class WristSubsystem extends SubsystemBase
    */
   public void runMotor(double power)
   {
-    System.out.println("This is the power of the Wrist before algorithms: " + power);
+    //System.out.println("This is the power of the Wrist before algorithms: " + power);
     WristPolicy.power = WristPolicy.getWristPower(power, WristPolicy.upLimit, WristPolicy.lowLimit);
-    System.out.println("This is the power of the Wrist after algorithm: " + WristPolicy.power);
-    wristMotor.set(WristPolicy.power);
+    //System.out.println("This is the power of the Wrist after algorithm: " + WristPolicy.power);
+    wristMotor.set(power);
   }
 
   /**
@@ -97,12 +97,12 @@ public class WristSubsystem extends SubsystemBase
    */
   public void setMotor(double targetPosition)
   {
-    System.out.println("This is the set position of the PID for Wrist before algorithms: " + targetPosition);
+    //System.out.println("This is the set position of the PID for Wrist before algorithms: " + targetPosition);
     WristPolicy.setPosition = targetPosition;
     WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition,
                                                            WristPolicy.upLimit,
                                                            WristPolicy.lowLimit);
-    System.out.println("This is the set position of the PID for Wrist after algorithms: " + WristPolicy.setPosition);
+    //System.out.println("This is the set position of the PID for Wrist after algorithms: " + WristPolicy.setPosition);
     PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
   }
 

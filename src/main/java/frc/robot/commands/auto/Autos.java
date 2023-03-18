@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.Auton;
 import frc.robot.Constants.BogeyPresets;
 import frc.robot.Constants.ElevatorPresets;
@@ -25,9 +27,14 @@ import frc.robot.commands.elevator.SetElevatorCommand;
 import frc.robot.commands.intake.SpinCommand;
 import frc.robot.commands.intake.SpitCommand;
 import frc.robot.commands.intake.StopIntakeCommand;
+import frc.robot.commands.wrist.ControlWristCommand;
+import frc.robot.commands.wrist.ManualWristCommand;
 import frc.robot.commands.wrist.SetWristCommand;
+import frc.robot.commands.wrist.StopWristCommand;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
+import frc.robot.subsystems.wrist.WristSubsystem;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,141 +48,240 @@ public final class Autos
 
   public static CommandBase BasicBlueAutoHigh1(SwerveSubsystem swerve, IntakeSubsystem intake)
   {
-    List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("BasicBlueAutoHigh1",
+    PathPlannerTrajectory example1 = PathPlanner.loadPath("BasicBlueAutoHigh1",
                                                                      new PathConstraints(Auton.MAX_SPEED,
                                                                                          Auton.MAX_ACCELERATION));
 
-    HashMap<String, Command> eventMap = new HashMap<>();
-    eventMap.put("align_high", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HIGH, true),
-        new SetBogeyCommand(BogeyPresets.HIGH, true),
-        new SetWristCommand(WristPresets.MID, true),
-        new StopIntakeCommand(intake)));
-    eventMap.put("score", new SpitCommand(intake));
-    eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME, true),
-        new SetBogeyCommand(BogeyPresets.HOME, true),
-        new SetWristCommand(WristPresets.HOME, true)));
+    // HashMap<String, Command> eventMap = new HashMap<>();
+    // eventMap.put("align_high", new ParallelCommandGroup(
+    //     new SetElevatorCommand(ElevatorPresets.HIGH, true),
+    //     new SetBogeyCommand(BogeyPresets.HIGH, true),
+    //     new SetWristCommand(WristPresets.MID, true),
+    //     new StopIntakeCommand(intake)));
+    // eventMap.put("score", new SpitCommand(intake));
+    // eventMap.put("reset", new ParallelCommandGroup(
+    //     new SetElevatorCommand(ElevatorPresets.HOME, true),
+    //     new SetBogeyCommand(BogeyPresets.HOME, true),
+    //     new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
     // to create an auto command. A good place to put this is in RobotContainer
     // along with your subsystems.
-    SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-        swerve::getPose,
-        // Pose2d supplier
-        swerve::resetOdometry,
-        // Pose2d consumer, used to reset odometry at the beginning of auto
-        new PIDConstants(Auton.yAutoPID.p, Auton.yAutoPID.i, Auton.yAutoPID.d),
-        // PID constants to correct for translation error (used to create the X and Y
-        // PID controllers)
-        new PIDConstants(Auton.angleAutoPID.p, Auton.angleAutoPID.i, Auton.angleAutoPID.d),
-        // PID constants to correct for rotation error (used to create the rotation
-        // controller)
-        swerve::setChassisSpeeds,
-        // Module states consumer used to output to the drive subsystem
-        eventMap,
-        false,
-        // Should the path be automatically mirrored depending on alliance color.
-        // Optional, defaults to true
-        swerve
-        // The drive subsystem. Used to properly set the requirements of path following
-        // commands
-    );
-    return Commands.sequence(autoBuilder.fullAuto(example1));
+    // SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+    //     swerve::getPose,
+    //     // Pose2d supplier
+    //     swerve::resetOdometry,
+    //     // Pose2d consumer, used to reset odometry at the beginning of auto
+    //     new PIDConstants(Auton.yAutoPID.p, Auton.yAutoPID.i, Auton.yAutoPID.d),
+    //     // PID constants to correct for translation error (used to create the X and Y
+    //     // PID controllers)
+    //     new PIDConstants(Auton.angleAutoPID.p, Auton.angleAutoPID.i, Auton.angleAutoPID.d),
+    //     // PID constants to correct for rotation error (used to create the rotation
+    //     // controller)
+    //     swerve::setChassisSpeeds,
+    //     // Module states consumer used to output to the drive subsystem
+    //     null,
+    //     false,
+    //     // Should the path be automatically mirrored depending on alliance color.
+    //     // Optional, defaults to true
+    //     swerve
+    //     // The drive subsystem. Used to properly set the requirements of path following
+    //     // commands
+    // );
+    return Commands.sequence(new FollowTrajectory(swerve, example1, true));
   }
 
-  public static CommandBase BasicBlueAutoMid1(SwerveSubsystem swerve, IntakeSubsystem intake)
+//   public static CommandBase BasicBlueAutoMid1(SwerveSubsystem swerve, IntakeSubsystem intake)
+//   {
+//     List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("BasicBlueAutoMid1",
+//                                                                      new PathConstraints(Auton.MAX_SPEED,
+//                                                                                          Auton.MAX_ACCELERATION));
+
+//     HashMap<String, Command> eventMap = new HashMap<>();
+//     eventMap.put("align_mid", new ParallelCommandGroup(
+//         new SetElevatorCommand(ElevatorPresets.MID, true),
+//         new SetBogeyCommand(BogeyPresets.MID, true),
+//         new SetWristCommand(WristPresets.MID, true),
+//         new StopIntakeCommand(intake)));
+//     eventMap.put("score", new SpitCommand(intake));
+//     eventMap.put("reset", new ParallelCommandGroup(
+//         new SetElevatorCommand(ElevatorPresets.HOME, true),
+//         new SetBogeyCommand(BogeyPresets.HOME, true),
+//         new SetWristCommand(WristPresets.HOME, true)));
+
+//     // Create the AutoBuilder. This only needs to be created once when robot code
+//     // starts, not every time you want
+//     // to create an auto command. A good place to put this is in RobotContainer
+//     // along with your subsystems.
+//     SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+//         swerve::getPose,
+//         // Pose2d supplier
+//         swerve::resetOdometry,
+//         // Pose2d consumer, used to reset odometry at the beginning of auto
+//         new PIDConstants(Auton.yAutoPID.p, Auton.yAutoPID.i, Auton.yAutoPID.d),
+//         // PID constants to correct for translation error (used to create the X and Y
+//         // PID controllers)
+//         new PIDConstants(Auton.angleAutoPID.p, Auton.angleAutoPID.i, Auton.angleAutoPID.d),
+//         // PID constants to correct for rotation error (used to create the rotation
+//         // controller)
+//         swerve::setChassisSpeeds,
+//         // Module states consumer used to output to the drive subsystem
+//         eventMap,
+//         false,
+//         // Should the path be automatically mirrored depending on alliance color.
+//         // Optional, defaults to true
+//         swerve
+//         // The drive subsystem. Used to properly set the requirements of path following
+//         // commands
+//     );
+//     return Commands.sequence(autoBuilder.fullAuto(example1));
+//   }
+
+public static CommandBase BasicBlueAutoMid1(SwerveSubsystem swerve, IntakeSubsystem intake)
   {
-    List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("BasicBlueAutoMid1",
+    PathPlannerTrajectory example1 = PathPlanner.loadPath("BasicBlueAutoMid1",
                                                                      new PathConstraints(Auton.MAX_SPEED,
                                                                                          Auton.MAX_ACCELERATION));
 
-    HashMap<String, Command> eventMap = new HashMap<>();
-    eventMap.put("align_mid", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.MID, true),
-        new SetBogeyCommand(BogeyPresets.MID, true),
-        new SetWristCommand(WristPresets.MID, true),
-        new StopIntakeCommand(intake)));
-    eventMap.put("score", new SpitCommand(intake));
-    eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME, true),
-        new SetBogeyCommand(BogeyPresets.HOME, true),
-        new SetWristCommand(WristPresets.HOME, true)));
+    // HashMap<String, Command> eventMap = new HashMap<>();
+    // eventMap.put("align_high", new ParallelCommandGroup(
+    //     new SetElevatorCommand(ElevatorPresets.HIGH, true),
+    //     new SetBogeyCommand(BogeyPresets.HIGH, true),
+    //     new SetWristCommand(WristPresets.MID, true),
+    //     new StopIntakeCommand(intake)));
+    // eventMap.put("score", new SpitCommand(intake));
+    // eventMap.put("reset", new ParallelCommandGroup(
+    //     new SetElevatorCommand(ElevatorPresets.HOME, true),
+    //     new SetBogeyCommand(BogeyPresets.HOME, true),
+    //     new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
     // to create an auto command. A good place to put this is in RobotContainer
     // along with your subsystems.
-    SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-        swerve::getPose,
-        // Pose2d supplier
-        swerve::resetOdometry,
-        // Pose2d consumer, used to reset odometry at the beginning of auto
-        new PIDConstants(Auton.yAutoPID.p, Auton.yAutoPID.i, Auton.yAutoPID.d),
-        // PID constants to correct for translation error (used to create the X and Y
-        // PID controllers)
-        new PIDConstants(Auton.angleAutoPID.p, Auton.angleAutoPID.i, Auton.angleAutoPID.d),
-        // PID constants to correct for rotation error (used to create the rotation
-        // controller)
-        swerve::setChassisSpeeds,
-        // Module states consumer used to output to the drive subsystem
-        eventMap,
-        false,
-        // Should the path be automatically mirrored depending on alliance color.
-        // Optional, defaults to true
-        swerve
-        // The drive subsystem. Used to properly set the requirements of path following
-        // commands
-    );
-    return Commands.sequence(autoBuilder.fullAuto(example1));
+    // SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+    //     swerve::getPose,
+    //     // Pose2d supplier
+    //     swerve::resetOdometry,
+    //     // Pose2d consumer, used to reset odometry at the beginning of auto
+    //     new PIDConstants(Auton.yAutoPID.p, Auton.yAutoPID.i, Auton.yAutoPID.d),
+    //     // PID constants to correct for translation error (used to create the X and Y
+    //     // PID controllers)
+    //     new PIDConstants(Auton.angleAutoPID.p, Auton.angleAutoPID.i, Auton.angleAutoPID.d),
+    //     // PID constants to correct for rotation error (used to create the rotation
+    //     // controller)
+    //     swerve::setChassisSpeeds,
+    //     // Module states consumer used to output to the drive subsystem
+    //     null,
+    //     false,
+    //     // Should the path be automatically mirrored depending on alliance color.
+    //     // Optional, defaults to true
+    //     swerve
+    //     // The drive subsystem. Used to properly set the requirements of path following
+    //     // commands
+    // );
+    return Commands.sequence(new FollowTrajectory(swerve, example1, true));
   }
 
   public static CommandBase BasicBlueAutoLow1(SwerveSubsystem swerve, IntakeSubsystem intake)
   {
-    List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("BasicBlueAutoLow1",
+    PathPlannerTrajectory example1 = PathPlanner.loadPath("BasicBlueAutoLow1",
                                                                      new PathConstraints(Auton.MAX_SPEED,
                                                                                          Auton.MAX_ACCELERATION));
 
-    HashMap<String, Command> eventMap = new HashMap<>();
-    eventMap.put("align_low", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.LOW, true),
-        new SetBogeyCommand(BogeyPresets.LOW, true),
-        new SetWristCommand(WristPresets.FLAT, true),
-        new StopIntakeCommand(intake)));
-    eventMap.put("score", new SpitCommand(intake));
-    eventMap.put("reset", new ParallelCommandGroup(
-        new SetElevatorCommand(ElevatorPresets.HOME, true),
-        new SetBogeyCommand(BogeyPresets.HOME, true),
-        new SetWristCommand(WristPresets.HOME, true)));
+    // HashMap<String, Command> eventMap = new HashMap<>();
+    // eventMap.put("align_high", new ParallelCommandGroup(
+    //     new SetElevatorCommand(ElevatorPresets.HIGH, true),
+    //     new SetBogeyCommand(BogeyPresets.HIGH, true),
+    //     new SetWristCommand(WristPresets.MID, true),
+    //     new StopIntakeCommand(intake)));
+    // eventMap.put("score", new SpitCommand(intake));
+    // eventMap.put("reset", new ParallelCommandGroup(
+    //     new SetElevatorCommand(ElevatorPresets.HOME, true),
+    //     new SetBogeyCommand(BogeyPresets.HOME, true),
+    //     new SetWristCommand(WristPresets.HOME, true)));
 
     // Create the AutoBuilder. This only needs to be created once when robot code
     // starts, not every time you want
     // to create an auto command. A good place to put this is in RobotContainer
     // along with your subsystems.
-    SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-        swerve::getPose,
-        // Pose2d supplier
-        swerve::resetOdometry,
-        // Pose2d consumer, used to reset odometry at the beginning of auto
-        new PIDConstants(Auton.yAutoPID.p, Auton.yAutoPID.i, Auton.yAutoPID.d),
-        // PID constants to correct for translation error (used to create the X and Y
-        // PID controllers)
-        new PIDConstants(Auton.angleAutoPID.p, Auton.angleAutoPID.i, Auton.angleAutoPID.d),
-        // PID constants to correct for rotation error (used to create the rotation
-        // controller)
-        swerve::setChassisSpeeds,
-        // Module states consumer used to output to the drive subsystem
-        eventMap,
-        false,
-        // Should the path be automatically mirrored depending on alliance color.
-        // Optional, defaults to true
-        swerve
-        // The drive subsystem. Used to properly set the requirements of path following
-        // commands
-    );
-    return Commands.sequence(autoBuilder.fullAuto(example1));
+    // SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+    //     swerve::getPose,
+    //     // Pose2d supplier
+    //     swerve::resetOdometry,
+    //     // Pose2d consumer, used to reset odometry at the beginning of auto
+    //     new PIDConstants(Auton.yAutoPID.p, Auton.yAutoPID.i, Auton.yAutoPID.d),
+    //     // PID constants to correct for translation error (used to create the X and Y
+    //     // PID controllers)
+    //     new PIDConstants(Auton.angleAutoPID.p, Auton.angleAutoPID.i, Auton.angleAutoPID.d),
+    //     // PID constants to correct for rotation error (used to create the rotation
+    //     // controller)
+    //     swerve::setChassisSpeeds,
+    //     // Module states consumer used to output to the drive subsystem
+    //     null,
+    //     false,
+    //     // Should the path be automatically mirrored depending on alliance color.
+    //     // Optional, defaults to true
+    //     swerve
+    //     // The drive subsystem. Used to properly set the requirements of path following
+    //     // commands
+    // );
+    return Commands.sequence(new FollowTrajectory(swerve, example1, true));
   }
+  
+//   public static CommandBase BasicBlueAutoLow1(SwerveSubsystem swerve, IntakeSubsystem intake, WristSubsystem wrist)
+//   {
+//     List<PathPlannerTrajectory> example1 = PathPlanner.loadPathGroup("BasicBlueAutoLow1",
+//                                                                      new PathConstraints(Auton.MAX_SPEED,
+//                                                                                          Auton.MAX_ACCELERATION));
+
+//     HashMap<String, Command> eventMap = new HashMap<>();
+//     eventMap.put("align_low", new ParallelCommandGroup(
+//         new SetElevatorCommand(ElevatorPresets.LOW, true),
+//         new SetBogeyCommand(BogeyPresets.LOW, true),
+//         new SetWristCommand(WristPresets.FLAT, true),
+//         new StopIntakeCommand(intake)));
+//     eventMap.put("score", new SequentialCommandGroup(
+//         new ManualWristCommand(wrist, () -> {return -.3;}, true),
+//         new WaitCommand(.75),
+//         new StopWristCommand(wrist),
+//         new SpitCommand(intake),
+//         new WaitCommand(2))
+//     );
+//     eventMap.put("stop_intake", new StopIntakeCommand(intake));
+//     eventMap.put("reset", new ParallelCommandGroup(
+//         new SetElevatorCommand(ElevatorPresets.HOME, true),
+//         new SetBogeyCommand(BogeyPresets.HOME, true),
+//         new SetWristCommand(WristPresets.HOME, true)));
+
+//     // Create the AutoBuilder. This only needs to be created once when robot code
+//     // starts, not every time you want
+//     // to create an auto command. A good place to put this is in RobotContainer
+//     // along with your subsystems.
+//     SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+//         swerve::getPose,
+//         // Pose2d supplier
+//         swerve::resetOdometry,
+//         // Pose2d consumer, used to reset odometry at the beginning of auto
+//         new PIDConstants(Auton.yAutoPID.p, Auton.yAutoPID.i, Auton.yAutoPID.d),
+//         // PID constants to correct for translation error (used to create the X and Y
+//         // PID controllers)
+//         new PIDConstants(Auton.angleAutoPID.p, Auton.angleAutoPID.i, Auton.angleAutoPID.d),
+//         // PID constants to correct for rotation error (used to create the rotation
+//         // controller)
+//         swerve::setChassisSpeeds,
+//         // Module states consumer used to output to the drive subsystem
+//         eventMap,
+//         false,
+//         // Should the path be automatically mirrored depending on alliance color.
+//         // Optional, defaults to true
+//         swerve
+//         // The drive subsystem. Used to properly set the requirements of path following
+//         // commands
+//     );
+//     return Commands.sequence(autoBuilder.fullAuto(example1));
+//   }
 
 
   public static CommandBase AdvancedBlueAutoLow2(SwerveSubsystem swerve, IntakeSubsystem intake)

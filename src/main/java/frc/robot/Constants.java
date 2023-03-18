@@ -81,8 +81,8 @@ public final class Constants
       public static class DIO
       {
 
-        public static int upper = 0;
-        public static int lower = 1;
+        public static int upper = 1;
+        public static int lower = 0;
       }
     }
 

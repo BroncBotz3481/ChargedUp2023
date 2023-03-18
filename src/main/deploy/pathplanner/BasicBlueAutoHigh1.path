@@ -16,12 +16,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "align_high",
-          "score"
-        ],
+        "names": [],
         "executionBehavior": "sequential",
-        "waitBehavior": "after",
+        "waitBehavior": "none",
         "waitTime": 4.0
       }
     },
@@ -52,11 +49,11 @@
     },
     {
       "anchorPoint": {
-        "x": 3.82,
+        "x": 5.6,
         "y": 3.32
       },
       "prevControl": {
-        "x": 3.5372206417571967,
+        "x": 5.3172206417571966,
         "y": 3.32
       },
       "nextControl": null,
@@ -76,12 +73,5 @@
   "maxVelocity": 2.0,
   "maxAcceleration": 2.0,
   "isReversed": null,
-  "markers": [
-    {
-      "position": 0.1,
-      "names": [
-        "reset"
-      ]
-    }
-  ]
+  "markers": []
 }

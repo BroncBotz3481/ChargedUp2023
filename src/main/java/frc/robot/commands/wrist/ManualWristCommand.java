@@ -10,11 +10,13 @@ public class ManualWristCommand extends CommandBase
 
   private final WristSubsystem wristSubsystem;
   private final DoubleSupplier supplier;
+  private final boolean isAuto;
 
-  public ManualWristCommand(WristSubsystem wristSubsystem, DoubleSupplier wristSupplier)
+  public ManualWristCommand(WristSubsystem wristSubsystem, DoubleSupplier wristSupplier, boolean isAuto)
   {
     this.wristSubsystem = wristSubsystem;
     this.supplier = wristSupplier;
+    this.isAuto = isAuto;
     // each subsystem used by the command must be passed into the
     // addRequirements() method (which takes a vararg of Subsystem)
     addRequirements(this.wristSubsystem);
@@ -56,7 +58,7 @@ public class ManualWristCommand extends CommandBase
   public boolean isFinished()
   {
     // TODO: Make this return true when this Command no longer needs to run execute()
-    return false;
+    return isAuto;
   }
 
   /**

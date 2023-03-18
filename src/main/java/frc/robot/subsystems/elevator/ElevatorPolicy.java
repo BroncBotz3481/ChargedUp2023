@@ -95,6 +95,8 @@ public final class ElevatorPolicy
    */
   public static       boolean lowLimit            = false;
 
+  public static double offSet;
+
   /**
    * Returns the power depending on the state of the limits
    *
@@ -105,10 +107,11 @@ public final class ElevatorPolicy
    */
   public static double getElevatorPower(double desiredPower, boolean upperLimit, boolean lowerLimit)
   {
-    if (upperLimit)
-    {
-      return 0;
-    } else if (lowerLimit)
+    // if (upperLimit)
+    // {
+    //   return 0;
+    // } else
+     if (lowerLimit && desiredPower > 0)
     {
       return 0;
     }
@@ -144,11 +147,11 @@ public final class ElevatorPolicy
     /**
      * Feedforward constant for PID loop
      */
-    public static final double FEEDFORWARD   = 0;
+    public static final double FEEDFORWARD   = 0.00;
     /**
      * Proportion constant for PID loop
      */
-    public static final double PROPORTION    = 0.01;
+    public static final double PROPORTION    = 0.00;
     /**
      * Integral constant for PID loop
      */

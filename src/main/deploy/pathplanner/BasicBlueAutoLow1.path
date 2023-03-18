@@ -16,13 +16,10 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "align_low",
-          "score"
-        ],
+        "names": [],
         "executionBehavior": "sequential",
-        "waitBehavior": "after",
-        "waitTime": 4.0
+        "waitBehavior": "none",
+        "waitTime": 3.0
       }
     },
     {
@@ -42,7 +39,7 @@
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": true,
+      "isStopPoint": false,
       "stopEvent": {
         "names": [],
         "executionBehavior": "parallel",
@@ -52,11 +49,11 @@
     },
     {
       "anchorPoint": {
-        "x": 3.82,
+        "x": 5.4,
         "y": 3.32
       },
       "prevControl": {
-        "x": 3.5372206417571967,
+        "x": 5.117220641757197,
         "y": 3.32
       },
       "nextControl": null,
@@ -73,12 +70,5 @@
       }
     }
   ],
-  "markers": [
-    {
-      "position": 0.1,
-      "names": [
-        "reset"
-      ]
-    }
-  ]
+  "markers": []
 }

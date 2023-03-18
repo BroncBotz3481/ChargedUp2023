@@ -43,7 +43,7 @@ public class ManualElevatorCommand extends CommandBase
   @Override
   public void initialize()
   {
-    m_elevatorSubsystem.stopEle();
+    // m_elevatorSubsystem.stopEle();
   }
 
   /**
@@ -53,7 +53,7 @@ public class ManualElevatorCommand extends CommandBase
   public void execute()
   {
     m_elevatorSubsystem.moveElevator(powSupplier.getAsDouble());
-    System.out.println("\nIs this running??\n");
+    //System.out.println("\nIs this running??\n");
   }
 
   /**

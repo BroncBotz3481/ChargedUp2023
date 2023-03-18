@@ -42,6 +42,8 @@ public class ControlBogeyCommand extends CommandBase
   public void initialize()
   {
     m_BogeySubsystem.stopArm();
+    BogeyPolicy.setPosition = BogeyPolicy.encoderPosition;
+    BogeyPolicy.offSet = BogeyPolicy.encoderPosition;
   }
 
   @Override

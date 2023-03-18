@@ -41,6 +41,8 @@ public class ControlWristCommand extends CommandBase
   public void initialize()
   {
     m_WristSubsystem.stopMotor();
+    WristPolicy.setPosition = WristPolicy.encoderPosition;
+    WristPolicy.offSet = WristPolicy.encoderPosition;
   }
 
   @Override

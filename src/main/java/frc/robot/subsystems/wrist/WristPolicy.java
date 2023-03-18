@@ -68,6 +68,8 @@ public final class WristPolicy
    */
   public static       boolean lowLimit            = false;
 
+  public static double offSet;
+
   /**
    * Returns the power depending on the state of the limits
    *
@@ -121,7 +123,7 @@ public final class WristPolicy
     /**
      * Proportion constant for PID Loop
      */
-    public static final double PROPORTION    = 0.01;
+    public static final double PROPORTION    = 0.00;
     /**
      * Integral constant for PID Loop
      */

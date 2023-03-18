@@ -53,7 +53,7 @@ public class BogeySubsystem extends SubsystemBase
     bogeyEncoder = bogeyMotor.getEncoder();
     bogeyMotor.setIdleMode(IdleMode.kBrake);
     PIDController.setFeedbackDevice(bogeyEncoder);
-    bogeyEncoder.setPositionConversionFactor(1 / BogeyPolicy.bogeyGearRatio);
+    //bogeyEncoder.setPositionConversionFactor(1 / BogeyPolicy.bogeyGearRatio);
     upperLimitSwitch = new DigitalInput(BogeyPolicy.UPPER_LIMIT_CHANNEL);
     lowerLimitSwitch = new DigitalInput(BogeyPolicy.LOWER_LIMIT_CHANNEL);
 
@@ -87,10 +87,10 @@ public class BogeySubsystem extends SubsystemBase
    */
   public void moveArm(double power)
   {
-    System.out.println("This is the power of the Bogey before algorithms: " + power);
+    //System.out.println("This is the power of the Bogey before algorithms: " + power);
     BogeyPolicy.bogeyPower = BogeyPolicy.getBogeyPower(power, BogeyPolicy.upLimit, BogeyPolicy.lowLimit);
-    System.out.println("This is the power of the Bogey after algorithms: " + BogeyPolicy.bogeyPower);
-    bogeyMotor.set(power);
+    //System.out.println("This is the power of the Bogey after algorithms: " + BogeyPolicy.bogeyPower);
+    bogeyMotor.set(power*0.5);
   }
 
   /**
@@ -100,12 +100,12 @@ public class BogeySubsystem extends SubsystemBase
    */
   public void runPID(double targetPosition)
   {
-    System.out.println("This is the set position of the PID for Bogey before algorithms: " + targetPosition);
+    //System.out.println("This is the set position of the PID for Bogey before algorithms: " + targetPosition);
     BogeyPolicy.setPosition = targetPosition;
     BogeyPolicy.setPosition = BogeyPolicy.getBogeyPosition(targetPosition,
                                                            BogeyPolicy.upLimit,
                                                            BogeyPolicy.lowLimit);
-    System.out.println("This is the set position of the PID for Bogey after algorithms: " + BogeyPolicy.setPosition);
+    //System.out.println("This is the set position of the PID for Bogey after algorithms: " + BogeyPolicy.setPosition);
     PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
   }
 

@@ -28,6 +28,7 @@ import frc.robot.commands.drivebase.TeleopDrive;
 import frc.robot.commands.elevator.ControlElevatorCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.SetElevatorCommand;
+import frc.robot.commands.wrist.ManualWristCommand;
 import frc.robot.commands.intake.SpinCommand;
 import frc.robot.commands.intake.SpitCommand;
 import frc.robot.commands.intake.StopIntakeCommand;
@@ -69,6 +70,7 @@ public class RobotContainer
   public RobotContainer()
   {
     configureBindings();
+
   }
 
   /**
@@ -131,7 +133,7 @@ public class RobotContainer
                                          ? driverController.getRawAxis(0)
                                            * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
                                          : 0,
-                                     () -> -throttleController.getRawAxis(4),
+                                     () -> throttleController.getRawAxis(4),
                                      () -> -throttleController.getRawAxis(3),
                                      false));
 
@@ -153,9 +155,10 @@ public class RobotContainer
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(2)) > 0.5)
         .whileTrue(new SpitCommand(m_intakeSubsystem));
     new JoystickButton(m_operatorController.getHID(), 5).whileTrue(new SpinCommand(m_intakeSubsystem));
+    new JoystickButton(m_operatorController.getHID(), 6).whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem, () -> { return -0.2; }, false)));
 
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(3)) > 0.5)
-        .whileTrue(new SetWristCommand(WristPresets.FLAT, false));
+        .whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem,() -> m_operatorController.getRawAxis(3) * .5, false)));
     new JoystickButton(m_operatorController.getHID(), 2)
         .whileTrue(Commands.parallel(new SetWristCommand(WristPresets.FLAT, false),
                                      new SetElevatorCommand(ElevatorPresets.HOME, false),
@@ -209,7 +212,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return Autos.BasicBlueAutoHigh1(drivebase, m_intakeSubsystem);
+    return Autos.BasicBlueAutoMid1(drivebase, m_intakeSubsystem);
 
   }
 }

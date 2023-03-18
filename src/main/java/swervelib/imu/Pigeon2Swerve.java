@@ -84,9 +84,9 @@ public class Pigeon2Swerve extends SwerveIMU
   @Override
   public Rotation3d getRawRotation3d()
   {
-    double[] wxyz = new double[4];
-    imu.get6dQuaternion(wxyz);
-    return new Rotation3d(new Quaternion(wxyz[0], wxyz[1], wxyz[2], wxyz[3]));
+    double[] ypr = new double[3];
+    imu.getYawPitchRoll(ypr);
+    return new Rotation3d(Math.toRadians(ypr[2]), Math.toRadians(ypr[1]), Math.toRadians(ypr[0]));
   }
 
   /**

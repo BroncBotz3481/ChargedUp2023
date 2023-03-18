@@ -39,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase
   public void runIntake(double power)
   {
     IntakePolicy.power = power;
-    System.out.println("This is the power of the Intake: " + IntakePolicy.power);
+    //System.out.println("This is the power of the Intake: " + IntakePolicy.power);
     motorIntake.set(IntakePolicy.power);
   }
 
