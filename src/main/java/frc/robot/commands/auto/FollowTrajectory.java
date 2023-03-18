@@ -2,6 +2,8 @@ package frc.robot.commands.auto;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.Auton;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
@@ -27,6 +29,6 @@ public class FollowTrajectory extends SequentialCommandGroup
             Auton.angleAutoPID.createPIDController(),
             drivebase::setChassisSpeeds,
             drivebase)
-               );
+        , new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
   }
 }

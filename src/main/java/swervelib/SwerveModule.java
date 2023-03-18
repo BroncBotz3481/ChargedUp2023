@@ -185,11 +185,23 @@ public class SwerveModule
     // If we are forcing the angle
     if (force)
     {
-      angleMotor.setReference(angle, Math.toDegrees(desiredState.omegaRadPerSecond) * configuration.angleKV);
+      // Synchronize encoders if queued and send in the current position as the value from the absolute encoder.
+      if (absoluteEncoder != null && synchronizeEncoderQueued)
+      {
+        double absoluteEncoderPosition = getAbsolutePosition();
+        angleMotor.setPosition(absoluteEncoderPosition);
+        angleMotor.setReference(angle,
+                                Math.toDegrees(desiredState.omegaRadPerSecond) * configuration.angleKV,
+                                absoluteEncoderPosition);
+        synchronizeEncoderQueued = false;
+      } else
+      {
+        angleMotor.setReference(angle, Math.toDegrees(desiredState.omegaRadPerSecond) * configuration.angleKV);
+      }
     } else
     {
       // Prevents module rotation if speed is less than 1%
-      angle = Math.abs(desiredState.speedMetersPerSecond) <= (configuration.maxSpeed * 0.02) ? lastAngle : angle;
+      angle = Math.abs(desiredState.speedMetersPerSecond) <= (configuration.maxSpeed * 0.01) ? lastAngle : angle;
       // Prevent module rotation if angle is the same as the previous angle.
       if (angle != lastAngle || synchronizeEncoderQueued)
       {
