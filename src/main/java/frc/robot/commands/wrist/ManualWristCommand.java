@@ -1,6 +1,8 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IDS.Wrist;
+import frc.robot.subsystems.wrist.WristPolicy;
 import frc.robot.subsystems.wrist.WristSubsystem;
 import java.util.function.DoubleSupplier;
 
@@ -10,13 +12,11 @@ public class ManualWristCommand extends CommandBase
 
   private final WristSubsystem wristSubsystem;
   private final DoubleSupplier supplier;
-  private final boolean isAuto;
 
-  public ManualWristCommand(WristSubsystem wristSubsystem, DoubleSupplier wristSupplier, boolean isAuto)
+  public ManualWristCommand(WristSubsystem wristSubsystem, DoubleSupplier wristSupplier)
   {
     this.wristSubsystem = wristSubsystem;
     this.supplier = wristSupplier;
-    this.isAuto = isAuto;
     // each subsystem used by the command must be passed into the
     // addRequirements() method (which takes a vararg of Subsystem)
     addRequirements(this.wristSubsystem);
@@ -58,7 +58,7 @@ public class ManualWristCommand extends CommandBase
   public boolean isFinished()
   {
     // TODO: Make this return true when this Command no longer needs to run execute()
-    return isAuto;
+    return WristPolicy.upLimit || WristPolicy.lowLimit;
   }
 
   /**
@@ -71,6 +71,9 @@ public class ManualWristCommand extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-
+    if (interrupted)
+    {
+      WristPolicy.setPosition = WristPolicy.encoderPosition;
+    }
   }
 }

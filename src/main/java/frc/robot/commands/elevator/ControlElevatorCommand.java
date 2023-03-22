@@ -53,7 +53,9 @@ public class ControlElevatorCommand extends CommandBase
     //   m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);
     //   oldPosition = ElevatorPolicy.setPosition;
     // }
-    m_ElevatorSubsystem.moveElevator(-.1);
+    // m_ElevatorSubsystem.moveElevator(-.1);
+    m_ElevatorSubsystem.moveElevator(0);
+    
   }
 
   /**

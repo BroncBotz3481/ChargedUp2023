@@ -89,13 +89,13 @@ public class CANCoderSwerve extends SwerveAbsoluteEncoder
 
     if (strength != MagnetFieldStrength.Good_GreenLED)
     {
-      DriverStation.reportWarning(
-          "CANCoder " + encoder.getDeviceID() + " magnetic field is less than ideal.\n", false);
+      // DriverStation.reportWarning(
+      //     "CANCoder " + encoder.getDeviceID() + " magnetic field is less than ideal.\n", false);
     }
     if (strength == MagnetFieldStrength.Invalid_Unknown || strength == MagnetFieldStrength.BadRange_RedLED)
     {
       readingError = true;
-      DriverStation.reportWarning("CANCoder " + encoder.getDeviceID() + " reading was faulty.\n", false);
+      // DriverStation.reportWarning("CANCoder " + encoder.getDeviceID() + " reading was faulty.\n", false);
       return 0;
     }
     double angle = encoder.getAbsolutePosition();
@@ -122,7 +122,7 @@ public class CANCoderSwerve extends SwerveAbsoluteEncoder
     if (code != ErrorCode.OK)
     {
       readingError = true;
-      DriverStation.reportWarning("CANCoder " + encoder.getDeviceID() + " reading was faulty, ignoring.\n", false);
+      // DriverStation.reportWarning("CANCoder " + encoder.getDeviceID() + " reading was faulty, ignoring.\n", false);
     }
 
     return angle;

@@ -155,10 +155,10 @@ public class RobotContainer
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(2)) > 0.5)
         .whileTrue(new SpitCommand(m_intakeSubsystem));
     new JoystickButton(m_operatorController.getHID(), 5).whileTrue(new SpinCommand(m_intakeSubsystem));
-    new JoystickButton(m_operatorController.getHID(), 6).whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem, () -> { return -0.2; }, false)));
+    new JoystickButton(m_operatorController.getHID(), 6).whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem, () -> { return -0.2; })));
 
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(3)) > 0.5)
-        .whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem,() -> m_operatorController.getRawAxis(3) * .5, false)));
+        .whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem,() -> m_operatorController.getRawAxis(3) * .5)));
     new JoystickButton(m_operatorController.getHID(), 2)
         .whileTrue(Commands.parallel(new SetWristCommand(WristPresets.FLAT, false),
                                      new SetElevatorCommand(ElevatorPresets.HOME, false),
