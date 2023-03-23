@@ -48,13 +48,13 @@ public class ControlElevatorCommand extends CommandBase
   @Override
   public void execute()
   {
-    // if (ElevatorPolicy.setPosition != oldPosition)
-    // {
-    //   m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);
-    //   oldPosition = ElevatorPolicy.setPosition;
-    // }
+    if (ElevatorPolicy.setPosition != oldPosition)
+    {
+      m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);
+      oldPosition = ElevatorPolicy.setPosition;
+    }
     // m_ElevatorSubsystem.moveElevator(-.1);
-    m_ElevatorSubsystem.moveElevator(0);
+    // m_ElevatorSubsystem.moveElevator(0);
     
   }
 

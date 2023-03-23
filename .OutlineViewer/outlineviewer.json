@@ -3,9 +3,18 @@
     "open": true
   },
   "NetworkTables Settings": {
-    "mode": "Client (NT3)"
+    "mode": "Client (NT4)",
+    "serverTeam": "10.34.81.2"
   },
   "Persistent Values": {
     "open": false
+  },
+  "transitory": {
+    "SmartDashboard": {
+      "open": true,
+      "swerve": {
+        "open": true
+      }
+    }
   }
 }

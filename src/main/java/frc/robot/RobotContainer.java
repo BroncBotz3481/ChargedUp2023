@@ -164,11 +164,12 @@ public class RobotContainer
                                      new SetElevatorCommand(ElevatorPresets.HOME, false),
                                      new SetBogeyCommand(BogeyPresets.HOME, false)));
 
+      
     new JoystickButton(m_operatorController.getHID(), 4).whileTrue(Commands
                                                                        .parallel(new SetElevatorCommand(ElevatorPresets.TRAY_HEIGHT,
                                                                                                         false),
                                                                                  new SpinCommand(m_intakeSubsystem)));
-
+    //TODO: Is this a useful command now with the new intake?
     new JoystickButton(m_operatorController.getHID(), 3)
         .whileTrue(Commands.parallel(new SetElevatorCommand(ElevatorPresets.SLIDE_HEIGHT, false),
                                      new SetWristCommand(WristPresets.SLIDE_ANGLE, false),

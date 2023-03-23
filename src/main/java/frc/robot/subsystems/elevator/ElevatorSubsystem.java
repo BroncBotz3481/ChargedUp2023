@@ -115,7 +115,7 @@ public class ElevatorSubsystem extends SubsystemBase
                                                                    ElevatorPolicy.upLimit,
                                                                    ElevatorPolicy.lowLimit);
     //System.out.println("This is the power of the Elevator after algorithms: " + ElevatorPolicy.elevatorPower);
-    rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
+    rightElevatorMotor.set(power);
   }
 
   /**

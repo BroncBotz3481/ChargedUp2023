@@ -53,6 +53,7 @@ public class BogeySubsystem extends SubsystemBase
     bogeyEncoder = bogeyMotor.getEncoder();
     bogeyMotor.setIdleMode(IdleMode.kBrake);
     PIDController.setFeedbackDevice(bogeyEncoder);
+    //TODO: Maybe set motor inverted to make it make sense
     //bogeyEncoder.setPositionConversionFactor(1 / BogeyPolicy.bogeyGearRatio);
     upperLimitSwitch = new DigitalInput(BogeyPolicy.UPPER_LIMIT_CHANNEL);
     lowerLimitSwitch = new DigitalInput(BogeyPolicy.LOWER_LIMIT_CHANNEL);
