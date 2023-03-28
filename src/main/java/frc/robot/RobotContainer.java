@@ -63,6 +63,7 @@ public class RobotContainer
   private final CommandJoystick       throttleController   = new CommandJoystick(OperatorConstants.kThrottleControllerPort);
   private final CommandXboxController m_operatorController = new CommandXboxController(
       OperatorConstants.kOperatorControllerPort);
+      private final CommandJoystick    m_driverController     = new CommandJoystick(OperatorConstants.k_m_DriverControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -99,7 +100,7 @@ public class RobotContainer
    */
   private void configureBindings()
   {
-
+/* 
     // Default Swerve Drive With Flight Joystick and Throttle
     TeleopDrive closedFieldRel = new TeleopDrive(
         drivebase,
@@ -138,8 +139,50 @@ public class RobotContainer
                                      () -> throttleController.getRawAxis(4),
                                      () -> -throttleController.getRawAxis(3),
                                      false));
+*/
+            
 
-                                     
+// Default Swerve Drive With Xbox Controller and Throttle
+TeleopDrive closedFieldRel = new TeleopDrive(
+  drivebase,
+  () -> (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
+        ? m_driverController.getRawAxis(1)
+          * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+        : 0,
+  () -> (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
+        ? m_driverController.getRawAxis(0)
+          * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+        : 0,
+  () -> (Math.abs(driverController.getRawAxis(4)) > .12) // FIXME
+        ? -driverController.getRawAxis(4)
+          * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+        : 0,
+  () -> true, false);
+
+// Swerve Absolute Positioning Control on right Stick Xbox Controller
+new Trigger(
+  () -> Math.abs(m_driverController.getRawAxis(4)) > 0.5
+        || (Math.abs(m_driverController.getRawAxis(5)) > 0.5))
+  .whileTrue(new AbsoluteDrive(drivebase,
+                               // Applies deadbands and inverts controls because joysticks
+                               // are back-right positive while robot
+                               // controls are front-left positive
+                               () ->
+                                   (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_Y_DEADBAND)
+                                   ? m_driverController.getRawAxis(0)
+                                     * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+                                   : 0,
+                               () ->
+                                   (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_X_DEADBAND)
+                                   ? m_driverController.getRawAxis(1)
+                                     * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+                                   : 0,
+                               () -> m_driverController.getRawAxis(4),
+                               () -> m_driverController.getRawAxis(5),
+                               false));
+
+
+
     // Reset the robot gyroscope on Flight Joystick
     new JoystickButton(driverController.getHID(), 3).onTrue((new InstantCommand(drivebase::zeroGyro)));
 
