@@ -80,6 +80,8 @@ public class RobotContainer
    * @param input Input from throttle on the interval [-1,1]
    * @return Output on the interval (0,1]
    */
+
+  //Throttle Conversion
   private static double convertThrottleInput(double input)
   {
     double output = ((Drivebase.THROTTLE_MAX - Drivebase.THROTTLE_MIN) / 2) * (-input + 1)
@@ -98,7 +100,7 @@ public class RobotContainer
   private void configureBindings()
   {
 
-    // Default Swerve Drive
+    // Default Swerve Drive With Flight Joystick and Throttle
     TeleopDrive closedFieldRel = new TeleopDrive(
         drivebase,
         () -> (Math.abs(driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
@@ -115,7 +117,7 @@ public class RobotContainer
               : 0,
         () -> true, false);
 
-    // Swerve Absolute Positioning Control
+    // Swerve Absolute Positioning Control on Throttle Controller
     new Trigger(
         () -> Math.abs(throttleController.getRawAxis(3)) > 0.5
               || (Math.abs(throttleController.getRawAxis(4)) > 0.5))
@@ -137,11 +139,13 @@ public class RobotContainer
                                      () -> -throttleController.getRawAxis(3),
                                      false));
 
-    // Reset the robot gyroscope
+                                     
+    // Reset the robot gyroscope on Flight Joystick
     new JoystickButton(driverController.getHID(), 3).onTrue((new InstantCommand(drivebase::zeroGyro)));
 
     // Point all modules toward the robot center, thus making the robot very
     // difficult to move. Forcing the robot to keep the current pose
+    //Turtle Mode
     new JoystickButton(driverController.getHID(), 2)
         .whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
 
@@ -184,7 +188,7 @@ public class RobotContainer
                                                             () -> m_operatorController.getRawAxis(5))));
 
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(1)) > 0.08)
-        .whileTrue(new RepeatCommand(new ManualElevatorCommand(m_elevatorSubsystem,
+        .whileTrue((new ManualElevatorCommand(m_elevatorSubsystem,
                                                                () -> m_operatorController.getRawAxis(1))));
 
     new POVButton(m_operatorController.getHID(), 180).whileTrue(

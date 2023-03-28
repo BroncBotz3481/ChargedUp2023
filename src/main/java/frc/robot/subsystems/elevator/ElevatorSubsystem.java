@@ -114,7 +114,7 @@ public class ElevatorSubsystem extends SubsystemBase
     ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,
                                                                    ElevatorPolicy.upLimit,
                                                                    ElevatorPolicy.lowLimit);
-    //System.out.println("This is the power of the Elevator after algorithms: " + ElevatorPolicy.elevatorPower);
+    //System.out.println("This is the power of the Elevator after algorithms: " + power);
     rightElevatorMotor.set(power);
   }
 
@@ -149,6 +149,7 @@ public class ElevatorSubsystem extends SubsystemBase
   public void periodic()
   {
     // This method will be called once per scheduler run
+    System.out.println(rightElevatorMotor.get());
     ElevatorPolicy.rightEncoderVelocity = rightEncoder.getVelocity();
     ElevatorPolicy.rightEncoderPosition = rightEncoder.getPosition();
     ElevatorPolicy.leftEncoderVelocity = leftEncoder.getVelocity();

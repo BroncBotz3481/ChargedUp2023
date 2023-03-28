@@ -48,6 +48,7 @@ public class ControlElevatorCommand extends CommandBase
   @Override
   public void execute()
   {
+    System.out.println("IS THIS RUNNING????");
     if (ElevatorPolicy.setPosition != oldPosition)
     {
       m_ElevatorSubsystem.runPID(ElevatorPolicy.setPosition);

@@ -111,10 +111,10 @@ public final class ElevatorPolicy
     // {
     //   return 0;
     // } else
-     if (lowerLimit && desiredPower > 0)
-    {
-      return 0;
-    }
+    //  if (lowerLimit && desiredPower > 0)
+    // {
+    //   return 0;
+    // }
     return desiredPower;
   }
 
