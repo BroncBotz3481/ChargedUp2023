@@ -59,14 +59,6 @@ public final class WristPolicy
    * The position of the motor
    */
   public static       double  encoderPosition;
-  /**
-   * This tells us whether the upperLimit switch has been hit or not
-   */
-  public static       boolean upLimit             = false;
-  /**
-   * This tell us whether the lowerLimit switch has been hit or not
-   */
-  public static       boolean lowLimit            = false;
 
   public static double offSet;
 
@@ -74,16 +66,14 @@ public final class WristPolicy
    * Returns the power depending on the state of the limits
    *
    * @param desiredPower The desired power of the wrist motor
-   * @param upperLimit   The upper limit
-   * @param lowerLimit   The lower limit
-   * @return returns the power depending on the state of the limits
+   * @return returns the power depending on the state of the bogey
    */
-  public static double getWristPower(double desiredPower, boolean upperLimit, boolean lowerLimit)
+  public static double getWristPower(double desiredPower)
   {
-    if (upperLimit)
+    if (encoderPosition >= highestSetPoint && desiredPower > 0)
     {
       return 0;
-    } else if (lowerLimit)
+    } else if (encoderPosition <= lowestSetPoint && desiredPower < 0)
     {
       return 0;
     }
@@ -94,18 +84,16 @@ public final class WristPolicy
    * Returns the position depending on the state of the limits
    *
    * @param desiredPosition The desired position of the wrist
-   * @param upperLimit      The upper limit position
-   * @param lowerLimit      The lower limit position
-   * @return returns the position depending on the state of the limits
+   * @return returns the position depending on the state of the of the wrist
    */
-  public static double getWristPosition(double desiredPosition, boolean upperLimit, boolean lowerLimit)
+  public static double getWristPosition(double desiredPosition)
   {
-    if (upperLimit && desiredPosition > setPosition)
+    if (encoderPosition >= highestSetPoint && desiredPosition > setPosition)
     {
-      return lowestSetPoint;
-    } else if (lowerLimit && desiredPosition < setPosition)
+      return WristPolicy.encoderPosition - 1;
+    } else if (encoderPosition <= lowestSetPoint && desiredPosition < setPosition)
     {
-      return highestSetPoint;
+      return 1;
     }
     return desiredPosition;
   }

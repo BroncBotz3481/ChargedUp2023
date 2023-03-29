@@ -7,7 +7,9 @@ package frc.robot.subsystems.wrist;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -27,19 +29,13 @@ public class WristSubsystem extends SubsystemBase
   /**
    * Relative encoder from the SparkMax
    */
-  private final RelativeEncoder       encoder;
+
   /**
    * SparkMaxPIDController from the SparkMax
    */
   private final SparkMaxPIDController PIDController;
-  /**
-   * Prevents wrist from extending past upper limit
-   */
-  private final DigitalInput          upperLimitSwitch;
-  /**
-   * Prevents wrist from extending past lower limit
-   */
-  private final DigitalInput          lowerLimitSwitch;
+
+  private final SparkMaxAbsoluteEncoder absoluteEncoder;
 
   /**
    * The constructor motor initializes the wristMotor, encoder, and PIDController.
@@ -50,13 +46,11 @@ public class WristSubsystem extends SubsystemBase
     wristMotor = new CANSparkMax(WristPolicy.WRIST_ID_PORT, MotorType.kBrushless);
     wristMotor.restoreFactoryDefaults();
     wristMotor.setInverted(true);
-    encoder = wristMotor.getEncoder();
     //encoder.setPositionConversionFactor(1 / WristPolicy.wristGearRatio);
     PIDController = wristMotor.getPIDController();
-    PIDController.setFeedbackDevice(encoder);
+    absoluteEncoder = wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
+    PIDController.setFeedbackDevice(absoluteEncoder);
     setPIDF(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
-    upperLimitSwitch = new DigitalInput(WristPolicy.UPPER_LIMIT_CHANNEL);
-    lowerLimitSwitch = new DigitalInput(WristPolicy.LOWER_LIMIT_CHANNEL);
   }
 
   /**
@@ -85,9 +79,10 @@ public class WristSubsystem extends SubsystemBase
   public void runMotor(double power)
   {
     //System.out.println("This is the power of the Wrist before algorithms: " + power);
-    WristPolicy.power = WristPolicy.getWristPower(power, WristPolicy.upLimit, WristPolicy.lowLimit);
+    WristPolicy.power = WristPolicy.getWristPower(power);
+    
     //System.out.println("This is the power of the Wrist after algorithm: " + WristPolicy.power);
-    wristMotor.set(power);
+    wristMotor.set(WristPolicy.power);
   }
 
   /**
@@ -99,9 +94,7 @@ public class WristSubsystem extends SubsystemBase
   {
     //System.out.println("This is the set position of the PID for Wrist before algorithms: " + targetPosition);
     WristPolicy.setPosition = targetPosition;
-    WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition,
-                                                           WristPolicy.upLimit,
-                                                           WristPolicy.lowLimit);
+    WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition);
     //System.out.println("This is the set position of the PID for Wrist after algorithms: " + WristPolicy.setPosition);
     PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
   }
@@ -120,17 +113,23 @@ public class WristSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    WristPolicy.encoderVelocity = encoder.getVelocity();
-    WristPolicy.encoderPosition = encoder.getPosition();
-    if (RobotBase.isSimulation())
-    {
-      WristPolicy.lowLimit = false;
-      WristPolicy.upLimit = false;
-    } else
-    {
-      WristPolicy.lowLimit = lowerLimitSwitch.get();
-      WristPolicy.upLimit = upperLimitSwitch.get();
-    }
+    WristPolicy.encoderVelocity = absoluteEncoder.getVelocity();
+    WristPolicy.encoderPosition = absoluteEncoder.getPosition();
+    // if (WristPolicy.encoderPosition >= WristPolicy.highestSetPoint)
+    // {
+
+    // } else if (WristPolicy.encoderPosition <= WristPolicy.lowestSetPoint){
+
+    // }
+    // if (RobotBase.isSimulation())
+    // {
+    //   WristPolicy.lowLimit = false;
+    //   WristPolicy.upLimit = false;
+    // } else
+    // {
+    //   WristPolicy.lowLimit = lowerLimitSwitch.get();
+    //   WristPolicy.upLimit = upperLimitSwitch.get();
+    // }
 
   }
 
