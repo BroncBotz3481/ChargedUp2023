@@ -74,6 +74,8 @@ public class ElevatorSubsystem extends SubsystemBase
     upperLimitSwitch = new DigitalInput(ElevatorPolicy.UPPER_LIMIT_CHANNEL);
     lowerLimitSwitch = new DigitalInput(ElevatorPolicy.LOWER_LIMIT_CHANNEL);
 
+    rightEncoder.setPosition(0);
+
     set(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE,
         PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
 
@@ -110,12 +112,12 @@ public class ElevatorSubsystem extends SubsystemBase
    */
   public void moveElevator(double power)
   {
-    //System.out.println("This is the power of the Elevator before algorithms: " + power);
+    System.out.println("This is the power of the Elevator BEFORE algorithms: " + power);
     ElevatorPolicy.elevatorPower = ElevatorPolicy.getElevatorPower(power,
                                                                    ElevatorPolicy.upLimit,
                                                                    ElevatorPolicy.lowLimit);
-    //System.out.println("This is the power of the Elevator after algorithms: " + power);
-    rightElevatorMotor.set(power);
+    System.out.println("This is the power of the Elevator AFTER algorithms: " + ElevatorPolicy.elevatorPower);
+    rightElevatorMotor.set(ElevatorPolicy.elevatorPower);
   }
 
   /**
@@ -125,12 +127,12 @@ public class ElevatorSubsystem extends SubsystemBase
    */
   public void runPID(double targetPosition)
   {
-    //System.out.println("This is the Elevator PID set position before algorithms: " + targetPosition);
+    System.out.println("This is the Elevator PID set position BEFORE algorithms: " + targetPosition);
     ElevatorPolicy.setPosition = targetPosition;
     ElevatorPolicy.setPosition = ElevatorPolicy.getElevatorPosition(targetPosition,
                                                                     ElevatorPolicy.upLimit,
                                                                     ElevatorPolicy.lowLimit);
-    //System.out.println("This is the Elevator PID set position after alogrithms: " + ElevatorPolicy.setPosition);
+    System.out.println("This is the Elevator PID set position AFTER alogrithms: " + ElevatorPolicy.setPosition);
     PIDController.setReference(ElevatorPolicy.setPosition, ControlType.kPosition);
   }
 
@@ -149,10 +151,11 @@ public class ElevatorSubsystem extends SubsystemBase
   public void periodic()
   {
     // This method will be called once per scheduler run
-    System.out.println(rightElevatorMotor.get());
+    //System.out.println(rightElevatorMotor.get());
     ElevatorPolicy.rightEncoderVelocity = rightEncoder.getVelocity();
-    ElevatorPolicy.rightEncoderPosition = rightEncoder.getPosition();
     ElevatorPolicy.leftEncoderVelocity = leftEncoder.getVelocity();
+    
+    ElevatorPolicy.rightEncoderPosition = rightEncoder.getPosition();
     ElevatorPolicy.leftEncoderPosition = leftEncoder.getPosition();
     if (RobotBase.isSimulation())
     {
@@ -162,6 +165,11 @@ public class ElevatorSubsystem extends SubsystemBase
     {
       ElevatorPolicy.lowLimit = !lowerLimitSwitch.get();
       ElevatorPolicy.upLimit = !upperLimitSwitch.get();
+    }
+    if(ElevatorPolicy.lowLimit)
+    {
+      rightEncoder.setPosition(0);
+      ElevatorPolicy.rightEncoderPosition = 0;
     }
 
 

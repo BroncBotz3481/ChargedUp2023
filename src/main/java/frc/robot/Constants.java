@@ -38,7 +38,7 @@ public final class Constants
 
     public static final double HIGH = 200;
     public static final double MID  = 150;
-    public static final double LOW  = 100;
+    public static final double LOW  = 20;
 
     public static final double HOME = 0;
   }
@@ -48,7 +48,7 @@ public final class Constants
 
     public static final double HIGH = 200;
     public static final double MID  = 150;
-    public static final double LOW  = 100;
+    public static final double LOW  = -8;
 
     public static final double TRAY_HEIGHT  = 125;
     public static final double SLIDE_HEIGHT = 75;
@@ -84,7 +84,7 @@ public final class Constants
       {
 
         public static int upper = 1;
-        public static int lower = 0;
+        public static int lower = 7;
       }
     }
 
@@ -101,7 +101,7 @@ public final class Constants
       {
 
         public static int upper = 2;
-        public static int lower = 3;
+        public static int lower = 0;
       }
     }
 

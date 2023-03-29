@@ -111,10 +111,10 @@ public final class ElevatorPolicy
     // {
     //   return 0;
     // } else
-    //  if (lowerLimit && desiredPower > 0)
-    // {
-    //   return 0;
-    // }
+     if (lowerLimit && desiredPower > 0)
+    {
+      return 0;
+    }
     return desiredPower;
   }
 
@@ -128,12 +128,15 @@ public final class ElevatorPolicy
    */
   public static double getElevatorPosition(double desiredPosition, boolean upperLimit, boolean lowerLimit)
   {
+    System.out.println();
+    System.out.println(lowerLimit);
+    System.out.println();
     if (upperLimit && desiredPosition > setPosition)
     {
-      return lowestSetPoint;
+      return rightEncoderPosition - 1;
     } else if (lowerLimit && desiredPosition < setPosition)
     {
-      return highestSetPoint;
+      return 1;
     }
     return desiredPosition;
   }
@@ -147,11 +150,11 @@ public final class ElevatorPolicy
     /**
      * Feedforward constant for PID loop
      */
-    public static final double FEEDFORWARD   = 0.00;
+    public static final double FEEDFORWARD   = 0.01;
     /**
      * Proportion constant for PID loop
      */
-    public static final double PROPORTION    = 0.00;
+    public static final double PROPORTION    = 0.05;
     /**
      * Integral constant for PID loop
      */

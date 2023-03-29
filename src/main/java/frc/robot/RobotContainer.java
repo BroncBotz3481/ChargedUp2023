@@ -168,13 +168,13 @@ new Trigger(
                                // are back-right positive while robot
                                // controls are front-left positive
                                () ->
-                                   (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_Y_DEADBAND)
-                                   ? m_driverController.getRawAxis(0)
+                                   (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
+                                   ? m_driverController.getRawAxis(1)
                                      * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
                                    : 0,
                                () ->
-                                   (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_X_DEADBAND)
-                                   ? m_driverController.getRawAxis(1)
+                                   (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
+                                   ? m_driverController.getRawAxis(0)
                                      * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
                                    : 0,
                                () -> m_driverController.getRawAxis(4),
@@ -199,13 +199,14 @@ new Trigger(
     m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
     //m_ledSubsystem.setDefaultCommand(new NavyLEDCommand(m_ledSubsystem));
 
+
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(2)) > 0.5)
         .whileTrue(new SpitCommand(m_intakeSubsystem));
     new JoystickButton(m_operatorController.getHID(), 5).whileTrue(new SpinCommand(m_intakeSubsystem));
-    new JoystickButton(m_operatorController.getHID(), 6).whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem, () -> { return -0.2; })));
+    new JoystickButton(m_operatorController.getHID(), 6).whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem, () -> { return 0.2; })));
 
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(3)) > 0.5)
-        .whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem,() -> m_operatorController.getRawAxis(3) * .5)));
+        .whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem,() -> -(m_operatorController.getRawAxis(3)) * .25)));
     new JoystickButton(m_operatorController.getHID(), 2)
         .whileTrue(Commands.parallel(new SetWristCommand(WristPresets.FLAT, false),
                                      new SetElevatorCommand(ElevatorPresets.HOME, false),
@@ -231,18 +232,21 @@ new Trigger(
                                                             () -> m_operatorController.getRawAxis(5))));
 
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(1)) > 0.08)
-        .whileTrue((new ManualElevatorCommand(m_elevatorSubsystem,
+        .whileTrue(new RepeatCommand(new ManualElevatorCommand(m_elevatorSubsystem,
                                                                () -> m_operatorController.getRawAxis(1))));
 
     new POVButton(m_operatorController.getHID(), 180).whileTrue(
-        Commands.parallel(new SetElevatorCommand(ElevatorPresets.LOW, false),
+        Commands.parallel(
+          //new SetElevatorCommand(ElevatorPresets.LOW, false),
                           new SetBogeyCommand(BogeyPresets.LOW, false)));
     new POVButton(m_operatorController.getHID(), 270).whileTrue(
-        Commands.parallel(new SetElevatorCommand(ElevatorPresets.MID, false),
+        Commands.parallel(
+          //new SetElevatorCommand(ElevatorPresets.MID, false),
                           new SetBogeyCommand(BogeyPresets.MID, false)));
     new POVButton(m_operatorController.getHID(), 0).whileTrue(Commands
-                                                                  .parallel(new SetElevatorCommand(ElevatorPresets.HIGH,
-                                                                                                   false),
+                                                                  .parallel(
+                                                                    //new SetElevatorCommand(ElevatorPresets.HIGH,
+                                                                      //                             false),
                                                                             new SetBogeyCommand(BogeyPresets.HIGH,
                                                                                                 false)));
 

@@ -83,10 +83,10 @@ public final class BogeyPolicy
    */
   public static double getBogeyPower(double desiredPower, boolean upperLimit, boolean lowerLimit)
   {
-    if (upperLimit)
-    {
-      return 0;
-    } else if (lowerLimit)
+    // if (upperLimit)
+    // {
+    //   return 0;
+    if (lowerLimit && desiredPower > 0)
     {
       return 0;
     }
@@ -103,12 +103,13 @@ public final class BogeyPolicy
    */
   public static double getBogeyPosition(double desiredPosition, boolean upperLimit, boolean lowerLimit)
   {
-    if (upperLimit && desiredPosition > setPosition)
+    // if (upperLimit && desiredPosition < setPosition)
+    // {
+    //   return encoderPosition - 1;
+    // }
+    if (lowerLimit && desiredPosition > setPosition)
     {
-      return lowestSetPoint;
-    } else if (lowerLimit && desiredPosition < setPosition)
-    {
-      return highestSetPoint;
+      return 1;
     }
     return desiredPosition;
   }
@@ -126,7 +127,7 @@ public final class BogeyPolicy
     /**
      * Proportion constant for PID Loop
      */
-    public static final double PROPORTION    = 0.00;
+    public static final double PROPORTION    = 0.03;
     /**
      * Integral constant for PID Loop
      */

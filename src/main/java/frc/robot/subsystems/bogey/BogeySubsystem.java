@@ -88,10 +88,10 @@ public class BogeySubsystem extends SubsystemBase
    */
   public void moveArm(double power)
   {
-    //System.out.println("This is the power of the Bogey before algorithms: " + power);
-    BogeyPolicy.bogeyPower = BogeyPolicy.getBogeyPower(power, BogeyPolicy.upLimit, BogeyPolicy.lowLimit);
-    //System.out.println("This is the power of the Bogey after algorithms: " + BogeyPolicy.bogeyPower);
-    bogeyMotor.set(power*0.5);
+    System.out.println("This is the power of the Bogey before algorithms: " + power);
+    BogeyPolicy.bogeyPower = BogeyPolicy.getBogeyPower(power*.5, BogeyPolicy.upLimit, BogeyPolicy.lowLimit);
+    System.out.println("This is the power of the Bogey after algorithms: " + BogeyPolicy.bogeyPower);
+    bogeyMotor.set(BogeyPolicy.bogeyPower);
   }
 
   /**
@@ -101,12 +101,12 @@ public class BogeySubsystem extends SubsystemBase
    */
   public void runPID(double targetPosition)
   {
-    //System.out.println("This is the set position of the PID for Bogey before algorithms: " + targetPosition);
+    System.out.println("This is the set position of the PID for Bogey before algorithms: " + targetPosition);
     BogeyPolicy.setPosition = targetPosition;
     BogeyPolicy.setPosition = BogeyPolicy.getBogeyPosition(targetPosition,
                                                            BogeyPolicy.upLimit,
                                                            BogeyPolicy.lowLimit);
-    //System.out.println("This is the set position of the PID for Bogey after algorithms: " + BogeyPolicy.setPosition);
+    System.out.println("This is the set position of the PID for Bogey after algorithms: " + BogeyPolicy.setPosition);
     PIDController.setReference(BogeyPolicy.setPosition, ControlType.kPosition);
   }
 
@@ -124,6 +124,7 @@ public class BogeySubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    System.out.println(BogeyPolicy.lowLimit);
     BogeyPolicy.encoderVelocity = bogeyEncoder.getVelocity();
     BogeyPolicy.encoderPosition = bogeyEncoder.getPosition();
 
@@ -133,8 +134,13 @@ public class BogeySubsystem extends SubsystemBase
       BogeyPolicy.upLimit = false;
     } else
     {
-      BogeyPolicy.lowLimit = lowerLimitSwitch.get();
-      BogeyPolicy.upLimit = upperLimitSwitch.get();
+      BogeyPolicy.lowLimit = !lowerLimitSwitch.get();
+      BogeyPolicy.upLimit = !upperLimitSwitch.get();
+    }
+    if(BogeyPolicy.lowLimit)
+    {
+      bogeyEncoder.setPosition(0);
+      BogeyPolicy.encoderPosition = 0;
     }
   }
 }
