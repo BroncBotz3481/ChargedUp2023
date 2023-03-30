@@ -245,18 +245,20 @@ public class RobotContainer
         .whileTrue(new RepeatCommand(new ManualElevatorCommand(m_elevatorSubsystem,
                                                                () -> m_operatorController.getRawAxis(1))));
 
-  new POVButton(m_operatorController.getHID(), 270).whileTrue( new SetWristCommand(WristPresets.MID, false));                                                  
+  //new POVButton(m_operatorController.getHID(), 270).whileTrue( new SetWristCommand(WristPresets.MID, false));                                                  
 /*    new POVButton(m_operatorController.getHID(), 180).whileTrue(
         Commands.parallel(
           //new SetElevatorCommand(ElevatorPresets.LOW, false),
-                          new SetBogeyCommand(BogeyPresets.LOW, false)));
+                          new SetBogeyCommand(BogeyPresets.LOW, false))); */
     new POVButton(m_operatorController.getHID(), 270).whileTrue(
-        Commands.parallel(
-          //new SetElevatorCommand(ElevatorPresets.MID, false),
-                          new SetBogeyCommand(BogeyPresets.MID, false))); */
-//  /   new POVButton(m_operatorController.getHID(), 0).whileTrue(Commands
-                                                                  // .parallel(
-                                                                  //new SetElevatorCommand(ElevatorPresets.HIGH,
+          new SetElevatorCommand(ElevatorPresets.MID, false));
+
+    new POVButton(m_operatorController.getHID(), 0).whileTrue(
+          //new SetElevatorCommand(ElevatorPresets.HIGH, false));
+          new SetBogeyCommand(BogeyPresets.HIGH, false));
+    //new POVButton(m_operatorController.getHID(), 0).whileTrue(Commands
+                                                        //          .parallel(
+                                                             //     new SetElevatorCommand(ElevatorPresets.HIGH,
                                                                       //                             false),
                                                                             // new SetBogeyCommand(BogeyPresets.HIGH,
                                                                                                 // false)));

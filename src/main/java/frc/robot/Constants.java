@@ -36,7 +36,7 @@ public final class Constants
   public static class BogeyPresets
   {
 
-    public static final double HIGH = 200;
+    public static final double HIGH = 2;
     public static final double MID  = 150;
     public static final double LOW  = 20;
 
@@ -46,9 +46,9 @@ public final class Constants
   public static class ElevatorPresets
   {
 
-    public static final double HIGH = 200;
-    public static final double MID  = 150;
-    public static final double LOW  = -8;
+    public static final double HIGH = -18;
+    public static final double MID  = -10;
+    public static final double LOW = 0;
 
     public static final double TRAY_HEIGHT  = 125;
     public static final double SLIDE_HEIGHT = 75;
