@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -23,16 +24,15 @@ import frc.robot.commands.auto.Autos;
 import frc.robot.commands.bogey.ControlBogeyCommand;
 import frc.robot.commands.bogey.ManualBogeyCommand;
 import frc.robot.commands.bogey.SetBogeyCommand;
-import frc.robot.commands.drivebase.AbsoluteDrive;
-import frc.robot.commands.drivebase.TeleopDrive;
+import frc.robot.commands.drivebase.ComboDriveCommand;
 import frc.robot.commands.elevator.ControlElevatorCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.SetElevatorCommand;
-import frc.robot.commands.wrist.ManualWristCommand;
 import frc.robot.commands.intake.SpinCommand;
 import frc.robot.commands.intake.SpitCommand;
 import frc.robot.commands.intake.StopIntakeCommand;
 import frc.robot.commands.wrist.ControlWristCommand;
+import frc.robot.commands.wrist.ManualWristCommand;
 import frc.robot.commands.wrist.SetWristCommand;
 import frc.robot.subsystems.bogey.BogeySubsystem;
 import frc.robot.subsystems.elevator.ElevatorSubsystem;
@@ -143,43 +143,53 @@ public class RobotContainer
             
 
 // Default Swerve Drive With Xbox Controller and Throttle
-TeleopDrive closedFieldRel = new TeleopDrive(
-  drivebase,
-  () -> (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
-        ? m_driverController.getRawAxis(1)
-          * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
-        : 0,
-  () -> (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
-        ? m_driverController.getRawAxis(0)
-          * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
-        : 0,
-  () -> (Math.abs(m_driverController.getRawAxis(3)) > .12) 
-        ? m_driverController.getRawAxis(3)
-          * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
-        : 0,
-  () -> true, false);
-
-// Swerve Absolute Positioning Control on right Stick Xbox Controller
-new Trigger(
-  () -> Math.abs(m_driverController.getRawAxis(4)) > 0.5
-        || (Math.abs(m_driverController.getRawAxis(5)) > 0.5))
-  .whileTrue(new AbsoluteDrive(drivebase,
-                               // Applies deadbands and inverts controls because joysticks
-                               // are back-right positive while robot
-                               // controls are front-left positive
-                               () ->
-                                   (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
-                                   ? m_driverController.getRawAxis(1)
-                                     * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
-                                   : 0,
-                               () ->
-                                   (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
-                                   ? m_driverController.getRawAxis(0)
-                                     * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
-                                   : 0,
-                               () -> m_driverController.getRawAxis(4),
-                               () -> m_driverController.getRawAxis(5),
-                               false));
+    ComboDriveCommand closedFieldRel = new ComboDriveCommand(
+        drivebase,
+        () -> MathUtil.applyDeadband(m_driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),// Translation X
+        () -> MathUtil.applyDeadband(m_driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),// Translation Y
+        () -> m_driverController.getRawAxis(3),// Right X
+        () -> m_driverController.getRawAxis(4),// Right Y
+        () -> m_driverController.getRawAxis(5),// Left trigger
+        () -> m_driverController.getRawAxis(6),// Right trigger
+        () -> RobotContainer.convertThrottleInput(throttleController.getRawAxis(0)),// Throttle value.
+        false);
+//TeleopDrive closedFieldRel = new TeleopDrive(
+//  drivebase,
+//  () -> (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
+//        ? m_driverController.getRawAxis(1)
+//          * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+//        : 0,
+//  () -> (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
+//        ? m_driverController.getRawAxis(0)
+//          * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+//        : 0,
+//  () -> (Math.abs(m_driverController.getRawAxis(3)) > .12)
+//        ? m_driverController.getRawAxis(3)
+//          * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+//        : 0,
+//  () -> true, false);
+//
+//// Swerve Absolute Positioning Control on right Stick Xbox Controller
+//new Trigger(
+//  () -> Math.abs(m_driverController.getRawAxis(4)) > 0.5
+//        || (Math.abs(m_driverController.getRawAxis(5)) > 0.5))
+//  .whileTrue(new AbsoluteDrive(drivebase,
+//                               // Applies deadbands and inverts controls because joysticks
+//                               // are back-right positive while robot
+//                               // controls are front-left positive
+//                               () ->
+//                                   (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
+//                                   ? m_driverController.getRawAxis(1)
+//                                     * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+//                                   : 0,
+//                               () ->
+//                                   (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
+//                                   ? m_driverController.getRawAxis(0)
+//                                     * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+//                                   : 0,
+//                               () -> m_driverController.getRawAxis(4),
+//                               () -> m_driverController.getRawAxis(5),
+//                               false));
 
 
 
