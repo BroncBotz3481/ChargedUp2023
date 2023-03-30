@@ -48,11 +48,8 @@ public class ControlWristCommand extends CommandBase
   @Override
   public void execute()
   {
-    if (oldSetpoint != WristPolicy.setPosition)
-    {
       m_WristSubsystem.setMotor(WristPolicy.setPosition);
       oldSetpoint = WristPolicy.setPosition;
-    }
   }
 
   /**
@@ -63,7 +60,6 @@ public class ControlWristCommand extends CommandBase
   @Override
   public void end(boolean interrupted)
   {
-    m_WristSubsystem.stopMotor();
   }
 
   /**

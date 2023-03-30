@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -50,7 +51,8 @@ public class WristSubsystem extends SubsystemBase
     PIDController = wristMotor.getPIDController();
     absoluteEncoder = wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
     PIDController.setFeedbackDevice(absoluteEncoder);
-    setPIDF(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, PIDF.FEEDFORWARD, PIDF.INTEGRAL_ZONE);
+    setPIDF(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, 0, PIDF.INTEGRAL_ZONE);
+    wristMotor.burnFlash();
   }
 
   /**
@@ -93,10 +95,11 @@ public class WristSubsystem extends SubsystemBase
   public void setMotor(double targetPosition)
   {
     //System.out.println("This is the set position of the PID for Wrist before algorithms: " + targetPosition);
-    WristPolicy.setPosition = targetPosition;
     WristPolicy.setPosition = WristPolicy.getWristPosition(targetPosition);
     //System.out.println("This is the set position of the PID for Wrist after algorithms: " + WristPolicy.setPosition);
-    PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition);
+    System.out.println("Position: "+WristPolicy.setPosition+"\nFF: "+WristPolicy.getkF());
+
+    PIDController.setReference(WristPolicy.setPosition, ControlType.kPosition, 0, WristPolicy.getkF(), ArbFFUnits.kPercentOut);
   }
 
   /**

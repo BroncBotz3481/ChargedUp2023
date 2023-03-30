@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.wrist;
 
+import edu.wpi.first.math.MathUtil;
+import frc.robot.Constants.IDS.Wrist;
 import frc.robot.Constants.IDS.Wrist.CAN;
 import frc.robot.Constants.IDS.Wrist.DIO;
 
@@ -34,11 +36,11 @@ public final class WristPolicy
   /**
    * This is the lowest set point of the wrist
    */
-  public static final double  lowestSetPoint      = 0;
+  public static final double  LOWEST_SETPOSITION     = 0.2;
   /**
    * This is the highest set point of the bogey
    */
-  public static final double  highestSetPoint     = 90;
+  public static final double  HIGHEST_SETPOSITION     = 0.44;
   /**
    * Acceptable tolerance for ending the SetWristCommand in autonomous
    */
@@ -62,6 +64,8 @@ public final class WristPolicy
 
   public static double offSet;
 
+  public static final double kFMAX = .025;
+  
   /**
    * Returns the power depending on the state of the limits
    *
@@ -70,10 +74,10 @@ public final class WristPolicy
    */
   public static double getWristPower(double desiredPower)
   {
-    if (encoderPosition >= highestSetPoint && desiredPower > 0)
+    if (encoderPosition >= HIGHEST_SETPOSITION && desiredPower > 0)
     {
       return 0;
-    } else if (encoderPosition <= lowestSetPoint && desiredPower < 0)
+    } else if (encoderPosition <= LOWEST_SETPOSITION && desiredPower < 0)
     {
       return 0;
     }
@@ -88,14 +92,20 @@ public final class WristPolicy
    */
   public static double getWristPosition(double desiredPosition)
   {
-    if (encoderPosition >= highestSetPoint && desiredPosition > setPosition)
-    {
-      return WristPolicy.encoderPosition - 1;
-    } else if (encoderPosition <= lowestSetPoint && desiredPosition < setPosition)
-    {
-      return 1;
-    }
-    return desiredPosition;
+    // if (encoderPosition >= HIGHEST_SETPOSITION && desiredPosition > setPosition)
+    // {
+    //   return WristPolicy.encoderPosition - 1;
+    // } else if (encoderPosition <= LOWEST_SETPOSITION && desiredPosition < setPosition)
+    // {
+    //   return 1;
+    // }
+    
+    return MathUtil.clamp(desiredPosition, LOWEST_SETPOSITION, HIGHEST_SETPOSITION);
+  }
+
+  public static double getkF(){
+    PIDF.FEEDFORWARD = MathUtil.clamp((-kFMAX/(HIGHEST_SETPOSITION - LOWEST_SETPOSITION - .05))*(WristPolicy.encoderPosition - HIGHEST_SETPOSITION), 0, kFMAX);
+    return PIDF.FEEDFORWARD;
   }
 
   /**
@@ -107,11 +117,11 @@ public final class WristPolicy
     /**
      * Feedforward constant for PID Loop
      */
-    public static final double FEEDFORWARD   = 0.0;
+    public static double FEEDFORWARD   = 0;
     /**
      * Proportion constant for PID Loop
      */
-    public static final double PROPORTION    = 0.00;
+    public static final double PROPORTION    = 0.01;
     /**
      * Integral constant for PID Loop
      */

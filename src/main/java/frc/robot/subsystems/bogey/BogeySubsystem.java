@@ -124,7 +124,6 @@ public class BogeySubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
-    System.out.println(BogeyPolicy.lowLimit);
     BogeyPolicy.encoderVelocity = bogeyEncoder.getVelocity();
     BogeyPolicy.encoderPosition = bogeyEncoder.getPosition();
 
