@@ -153,8 +153,8 @@ TeleopDrive closedFieldRel = new TeleopDrive(
         ? m_driverController.getRawAxis(0)
           * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
         : 0,
-  () -> (Math.abs(driverController.getRawAxis(4)) > .12) // FIXME
-        ? -driverController.getRawAxis(4)
+  () -> (Math.abs(m_driverController.getRawAxis(3)) > .12) 
+        ? m_driverController.getRawAxis(3)
           * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
         : 0,
   () -> true, false);

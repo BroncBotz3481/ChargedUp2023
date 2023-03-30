@@ -22,9 +22,11 @@ public class TeleopDrive extends CommandBase
   private final DoubleSupplier   vX;
   private final DoubleSupplier   vY;
   private final DoubleSupplier   omega;
+  // private final DoubleSupplier   negOmega;
   private final BooleanSupplier  driveMode;
   private final boolean          isOpenLoop;
   private final SwerveController controller;
+
 
 
   /**
@@ -39,6 +41,7 @@ public class TeleopDrive extends CommandBase
     this.vX = vX;
     this.vY = vY;
     this.omega = omega;
+    // this.negOmega = negOmega;
     this.driveMode = driveMode;
     this.isOpenLoop = isOpenLoop;
     this.controller = swerve.getSwerveController();
@@ -59,9 +62,12 @@ public class TeleopDrive extends CommandBase
     double xVelocity   = Math.pow(vX.getAsDouble(), 3) * controller.config.maxSpeed;
     double yVelocity   = Math.pow(vY.getAsDouble(), 3) * controller.config.maxSpeed;
     double angVelocity = Math.pow(omega.getAsDouble(), 3) * controller.config.maxAngularVelocity;
+    // double angNegVelocity = Math.pow(omega.getAsDouble(), 3) * controller.config.maxAngularVelocity;
+
     SmartDashboard.putNumber("vX", xVelocity);
     SmartDashboard.putNumber("vY", yVelocity);
     SmartDashboard.putNumber("omega", angVelocity);
+    // SmartDashboard.putNumber("negOmega", angVelocity);
     swerve.drive(
         new Translation2d(
             xVelocity,

@@ -4,6 +4,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -222,14 +223,17 @@ public class SwerveDrive
 
     // Heading Angular Velocity Deadband, might make a configuration option later.
     // Originally made by Team 1466 Webb Robotics.
-    // if (Math.abs(rotation) < 0.01 && headingCorrection)
-    // {
-    //   velocity.omegaRadiansPerSecond =
-    //       swerveController.headingCalculate(lastHeadingRadians, getYaw().getRadians());
-    // } else
-    // {
-    //   lastHeadingRadians = getYaw().getRadians();
-    // }
+    if (headingCorrection)
+    {
+      if (Math.abs(rotation) < 0.01)
+      {
+        velocity.omegaRadiansPerSecond =
+            swerveController.headingCalculate(lastHeadingRadians, getYaw().getRadians());
+      } else
+      {
+        lastHeadingRadians = getYaw().getRadians();
+      }
+    }
 
     // Display commanded speed for testing
     if (SwerveDriveTelemetry.verbosity == TelemetryVerbosity.HIGH)
@@ -268,18 +272,18 @@ public class SwerveDrive
       if (SwerveDriveTelemetry.verbosity.ordinal() >= TelemetryVerbosity.HIGH.ordinal())
       {
         SwerveDriveTelemetry.desiredStates[module.moduleNumber *
-                                           2] = desiredStates[module.moduleNumber].angle.getDegrees();
+                                           2] = module.lastState.angle.getDegrees();
         SwerveDriveTelemetry.desiredStates[(module.moduleNumber * 2) +
-                                           1] = desiredStates[module.moduleNumber].speedMetersPerSecond;
+                                           1] = module.lastState.speedMetersPerSecond;
       }
       if (SwerveDriveTelemetry.verbosity == TelemetryVerbosity.HIGH)
       {
         SmartDashboard.putNumber(
-            "Module " + module.moduleNumber + " Speed Setpoint: ",
-            desiredStates[module.moduleNumber].speedMetersPerSecond);
+            "Module[" + module.moduleNumber + "] Speed Setpoint: ",
+            module.lastState.speedMetersPerSecond);
         SmartDashboard.putNumber(
-            "Module " + module.moduleNumber + " Angle Setpoint: ",
-            desiredStates[module.moduleNumber].angle.getDegrees());
+            "Module[" + module.moduleNumber + "] Angle Setpoint: ",
+            module.lastState.angle.getDegrees());
       }
     }
   }
@@ -530,6 +534,47 @@ public class SwerveDrive
   }
 
   /**
+   * Set the maximum speed of the drive motors, modified {@link SwerveControllerConfiguration#maxSpeed} and
+   * {@link SwerveDriveConfiguration#maxSpeed} which is used for the
+   * {@link SwerveDrive#setRawModuleStates(SwerveModuleState2[], boolean)} function and
+   * {@link SwerveController#getTargetSpeeds(double, double, double, double, double)} functions. This function overrides
+   * what was placed in the JSON and could damage your motor/robot if set too high or unachievable rates.
+   *
+   * @param maximumSpeed            Maximum speed for the drive motors in meters / second.
+   * @param updateModuleFeedforward Update the swerve module feedforward to account for the new maximum speed. This
+   *                                should be true unless you have replaced the drive motor feedforward with
+   *                                {@link SwerveDrive#replaceSwerveModuleFeedforward(SimpleMotorFeedforward)}
+   */
+  public void setMaximumSpeed(double maximumSpeed, boolean updateModuleFeedforward)
+  {
+    swerveDriveConfiguration.maxSpeed = maximumSpeed;
+    swerveController.config.maxSpeed = maximumSpeed;
+    for (SwerveModule module : swerveModules)
+    {
+      module.configuration.maxSpeed = maximumSpeed;
+      if (updateModuleFeedforward)
+      {
+        module.feedforward = module.configuration.createDriveFeedforward();
+      }
+    }
+  }
+
+  /**
+   * Set the maximum speed of the drive motors, modified {@link SwerveControllerConfiguration#maxSpeed} and
+   * {@link SwerveDriveConfiguration#maxSpeed} which is used for the
+   * {@link SwerveDrive#setRawModuleStates(SwerveModuleState2[], boolean)} function and
+   * {@link SwerveController#getTargetSpeeds(double, double, double, double, double)} functions. This function overrides
+   * what was placed in the JSON and could damage your motor/robot if set too high or unachievable rates. Overwrites the
+   * {@link SwerveModule#feedforward}.
+   *
+   * @param maximumSpeed Maximum speed for the drive motors in meters / second.
+   */
+  public void setMaximumSpeed(double maximumSpeed)
+  {
+    setMaximumSpeed(maximumSpeed, true);
+  }
+
+  /**
    * Point all modules toward the robot center, thus making the robot very difficult to move. Forcing the robot to keep
    * the current pose.
    */
@@ -696,6 +741,29 @@ public class SwerveDrive
   }
 
   /**
+   * Add a vision measurement to the {@link SwerveDrivePoseEstimator} and update the {@link SwerveIMU} gyro reading with
+   * the given timestamp of the vision measurement.
+   *
+   * @param robotPose                Robot {@link Pose2d} as measured by vision.
+   * @param timestamp                Timestamp the measurement was taken as time since startup, should be taken from
+   *                                 {@link Timer#getFPGATimestamp()} or similar sources.
+   * @param soft                     Add vision estimate using the
+   *                                 {@link SwerveDrivePoseEstimator#addVisionMeasurement(Pose2d, double)} function, or
+   *                                 hard reset odometry with the given position with
+   *                                 {@link edu.wpi.first.math.kinematics.SwerveDriveOdometry#resetPosition(Rotation2d,
+   *                                 SwerveModulePosition[], Pose2d)}.
+   * @param visionMeasurementStdDevs Vision measurement standard deviation that will be sent to the
+   *                                 {@link SwerveDrivePoseEstimator}.
+   */
+  public void addVisionMeasurement(Pose2d robotPose, double timestamp, boolean soft,
+                                   Matrix<N3, N1> visionMeasurementStdDevs)
+  {
+    this.visionMeasurementStdDevs = visionMeasurementStdDevs;
+    addVisionMeasurement(robotPose, timestamp, soft, 1);
+  }
+
+
+  /**
    * Set the expected gyroscope angle using a {@link Rotation3d} object. To reset gyro, set to a new
    * {@link Rotation3d}.
    *
@@ -704,6 +772,31 @@ public class SwerveDrive
   public void setGyro(Rotation3d gyro)
   {
     imu.setOffset(imu.getRawRotation3d().minus(gyro));
+  }
+
+  /**
+   * Helper function to get the {@link SwerveDrive#swerveController} for the {@link SwerveDrive} which can be used to
+   * generate {@link ChassisSpeeds} for the robot to orient it correctly given axis or angles, and apply
+   * {@link edu.wpi.first.math.filter.SlewRateLimiter} to given inputs. Important functions to look at are
+   * {@link SwerveController#getTargetSpeeds(double, double, double, double)},
+   * {@link SwerveController#addSlewRateLimiters(SlewRateLimiter, SlewRateLimiter, SlewRateLimiter)},
+   * {@link SwerveController#getRawTargetSpeeds(double, double, double)}.
+   *
+   * @return {@link SwerveController} for the {@link SwerveDrive}.
+   */
+  public SwerveController getSwerveController()
+  {
+    return swerveController;
+  }
+
+  /**
+   * Get the {@link SwerveModule}s associated with the {@link SwerveDrive}.
+   *
+   * @return {@link SwerveModule} array specified by configurations.
+   */
+  public SwerveModule[] getModules()
+  {
+    return swerveDriveConfiguration.modules;
   }
 
   /**

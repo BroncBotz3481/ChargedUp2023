@@ -2,7 +2,6 @@ package swervelib.motors;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.REVLibError;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -200,6 +199,7 @@ public class SparkMaxSwerve extends SwerveMotor
   {
     int pidSlot =
         isDriveMotor ? SparkMAX_slotIdx.Velocity.ordinal() : SparkMAX_slotIdx.Position.ordinal();
+    pidSlot = 0;
     pid.setP(config.p, pidSlot);
     pid.setI(config.i, pidSlot);
     pid.setD(config.d, pidSlot);
@@ -294,18 +294,25 @@ public class SparkMaxSwerve extends SwerveMotor
   @Override
   public void setReference(double setpoint, double feedforward)
   {
+    boolean possibleBurnOutIssue = true;
     int pidSlot =
         isDriveMotor ? SparkMAX_slotIdx.Velocity.ordinal() : SparkMAX_slotIdx.Position.ordinal();
-    if(isDriveMotor)
+    pidSlot = 0;
+
+    if (isDriveMotor)
+    {
       pid.setReference(
-        setpoint,
-        isDriveMotor ? ControlType.kVelocity : ControlType.kPosition,
-        pidSlot,
-        feedforward);
-    else
+          setpoint,
+          ControlType.kVelocity,
+          pidSlot,
+          feedforward);
+    } else
+    {
       pid.setReference(
-        setpoint,
-        isDriveMotor ? ControlType.kVelocity : ControlType.kPosition);
+          setpoint,
+          ControlType.kPosition,
+          pidSlot);
+    }
   }
 
   /**

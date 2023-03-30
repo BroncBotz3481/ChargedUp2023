@@ -52,7 +52,7 @@ public class ManualElevatorCommand extends CommandBase
   @Override
   public void execute()
   {
-    m_elevatorSubsystem.moveElevator(powSupplier.getAsDouble()*.5);
+    m_elevatorSubsystem.moveElevator(powSupplier.getAsDouble()*.35);
     //System.out.println("\nIs this running??\n");
   }
 
