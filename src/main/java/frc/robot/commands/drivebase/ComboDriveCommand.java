@@ -78,7 +78,7 @@ public class ComboDriveCommand extends CommandBase
 //    Translation2d translation = new Translation2d(xVelocity, yVelocity);
     if (Math.abs(leftTrigger.getAsDouble()) > 0.5 || rightTrigger.getAsDouble() > 0.5)
     {
-      headingOffset += Math.toDegrees(0.5);
+      headingOffset += (Math.abs(leftTrigger.getAsDouble()) > 0.5 ? 1 : -1) * Math.toDegrees(0.5);
     } else
     {
       headingOffset = 0;
