@@ -44,7 +44,7 @@ public class SpitCommand extends CommandBase
   @Override
   public void execute()
   {
-    m_IntakeSubsystem.runIntake(.5);
+    m_IntakeSubsystem.runIntake(1);
   }
 
   /**
