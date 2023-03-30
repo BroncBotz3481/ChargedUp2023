@@ -121,7 +121,7 @@ public final class WristPolicy
     /**
      * Proportion constant for PID Loop
      */
-    public static final double PROPORTION    = 0.01;
+    public static final double PROPORTION    = .75;
     /**
      * Integral constant for PID Loop
      */

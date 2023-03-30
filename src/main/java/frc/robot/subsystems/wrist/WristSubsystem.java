@@ -52,6 +52,8 @@ public class WristSubsystem extends SubsystemBase
     absoluteEncoder = wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
     PIDController.setFeedbackDevice(absoluteEncoder);
     setPIDF(PIDF.PROPORTION, PIDF.INTEGRAL, PIDF.DERIVATIVE, 0, PIDF.INTEGRAL_ZONE);
+    wristMotor.setClosedLoopRampRate(1);
+    wristMotor.setOpenLoopRampRate(1);
     wristMotor.burnFlash();
   }
 

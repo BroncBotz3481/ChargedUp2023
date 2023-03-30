@@ -206,7 +206,7 @@ new Trigger(
     new JoystickButton(m_operatorController.getHID(), 6).whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem, () -> { return 0.2; })));
 
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(3)) > 0.5)
-        .whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem,() -> -(m_operatorController.getRawAxis(3)) * .25)));
+        .whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem,() -> -(m_operatorController.getRawAxis(3)) * .15)));
     new JoystickButton(m_operatorController.getHID(), 2)
         .whileTrue(Commands.parallel(new SetWristCommand(WristPresets.FLAT, false),
                                      new SetElevatorCommand(ElevatorPresets.HOME, false),
