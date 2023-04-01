@@ -24,10 +24,13 @@ import frc.robot.commands.auto.Autos;
 import frc.robot.commands.bogey.ControlBogeyCommand;
 import frc.robot.commands.bogey.ManualBogeyCommand;
 import frc.robot.commands.bogey.SetBogeyCommand;
+import frc.robot.commands.drivebase.AbsoluteDrive;
 import frc.robot.commands.drivebase.ComboDriveCommand;
+import frc.robot.commands.drivebase.TeleopDrive;
 import frc.robot.commands.elevator.ControlElevatorCommand;
 import frc.robot.commands.elevator.ManualElevatorCommand;
 import frc.robot.commands.elevator.SetElevatorCommand;
+import frc.robot.commands.intake.SoftOutakeCommand;
 import frc.robot.commands.intake.SpinCommand;
 import frc.robot.commands.intake.SpitCommand;
 import frc.robot.commands.intake.StopIntakeCommand;
@@ -56,6 +59,8 @@ public class RobotContainer
   private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
   private final IntakeSubsystem   m_intakeSubsystem   = new IntakeSubsystem();
   private final WristSubsystem    m_wristSubsystem    = new WristSubsystem();
+  public static double slowmult = 1;
+
   //private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -63,7 +68,7 @@ public class RobotContainer
   private final CommandJoystick       throttleController   = new CommandJoystick(OperatorConstants.kThrottleControllerPort);
   private final CommandXboxController m_operatorController = new CommandXboxController(
       OperatorConstants.kOperatorControllerPort);
-      private final CommandJoystick    m_driverController     = new CommandJoystick(OperatorConstants.k_m_DriverControllerPort);
+      public final CommandJoystick    m_driverController     = new CommandJoystick(OperatorConstants.k_m_DriverControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -143,16 +148,71 @@ public class RobotContainer
             
 
 // Default Swerve Drive With Xbox Controller and Throttle
-    ComboDriveCommand closedFieldRel = new ComboDriveCommand(
-        drivebase,
-        () -> MathUtil.applyDeadband(m_driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),// Translation X
-        () -> MathUtil.applyDeadband(m_driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),// Translation Y
-        () -> m_driverController.getRawAxis(3),// Right X
-        () -> m_driverController.getRawAxis(4),// Right Y
-        () -> m_driverController.getRawAxis(5),// Left trigger
-        () -> m_driverController.getRawAxis(6),// Right trigger
-        () -> RobotContainer.convertThrottleInput(throttleController.getRawAxis(0)),// Throttle value.
-        false);
+    // ComboDriveCommand closedFieldRel = new ComboDriveCommand(
+    //     drivebase,
+    //     () -> MathUtil.applyDeadband(m_driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),// Translation X
+    //     () -> MathUtil.applyDeadband(m_driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),// Translation Y
+    //     () -> m_driverController.getRawAxis(3),// Right X
+    //     () -> m_driverController.getRawAxis(4),// Right Y
+    //     () -> m_driverController.getRawAxis(5),// Left trigger
+    //     () -> m_driverController.getRawAxis(6),// Right trigger
+    //     () -> RobotContainer.convertThrottleInput(throttleController.getRawAxis(0)),// Throttle value.
+    //     false);
+    // Default Swerve Drive With Xbox Controller and Throttle
+
+
+
+TeleopDrive closedFieldRel = new TeleopDrive(
+  drivebase,
+  () -> (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
+        ? m_driverController.getRawAxis(1)
+          // * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+          * slowmult
+        : 0,
+  () -> (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
+        ? m_driverController.getRawAxis(0)
+          // * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+          * slowmult
+        : 0,
+  () -> {
+    if (Math.abs(m_driverController.getRawAxis(2)) > .12) {
+      return m_driverController.getRawAxis(2) * .4;
+    } else if (Math.abs(m_driverController.getRawAxis(3)) > .12) {
+      return m_driverController.getRawAxis(3) * .4 * -1;
+    } else {
+      return 0;
+    }
+  },
+  () -> true, false);
+
+// Swerve Absolute Positioning Control on right Stick Xbox Controller
+new Trigger(
+  () -> Math.abs(m_driverController.getRawAxis(4)) > 0.5
+        || (Math.abs(m_driverController.getRawAxis(5)) > 0.5))
+  .whileTrue(new AbsoluteDrive(drivebase,
+                               // Applies deadbands and inverts controls because joysticks
+                               // are back-right positive while robot
+                               // controls are front-left positive
+                               () ->
+                                   (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
+                                   ? m_driverController.getRawAxis(1)
+                                    //  * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+                                    * slowmult
+                                    : 0,
+                               () ->
+                                   (Math.abs(m_driverController.getRawAxis(0)) > OperatorConstants.LEFT_X_DEADBAND)
+                                   ? m_driverController.getRawAxis(0)
+                                    //  * RobotContainer.convertThrottleInput(throttleController.getRawAxis(0))
+                                     * slowmult
+                                   : 0,
+                               () -> m_driverController.getRawAxis(4),
+                               () -> m_driverController.getRawAxis(5),
+                               false));
+
+
+
+    // Reset the robot gyroscope on Flight Joystick
+    new JoystickButton(m_driverController.getHID(), 1).onTrue((new InstantCommand(drivebase::zeroGyro)));
 //TeleopDrive closedFieldRel = new TeleopDrive(
 //  drivebase,
 //  () -> (Math.abs(m_driverController.getRawAxis(1)) > OperatorConstants.LEFT_Y_DEADBAND)
@@ -194,12 +254,12 @@ public class RobotContainer
 
 
     // Reset the robot gyroscope on Flight Joystick
-    new JoystickButton(driverController.getHID(), 3).onTrue((new InstantCommand(drivebase::zeroGyro)));
+    // new JoystickButton(driverController.getHID(), 3).onTrue((new InstantCommand(drivebase::zeroGyro)));
 
     // Point all modules toward the robot center, thus making the robot very
     // difficult to move. Forcing the robot to keep the current pose
     //Turtle Mode
-    new JoystickButton(driverController.getHID(), 2)
+    new JoystickButton(m_driverController.getHID(), 2)
         .whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
 
     drivebase.setDefaultCommand(closedFieldRel);
@@ -218,24 +278,21 @@ public class RobotContainer
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(3)) > 0.5)
         .whileTrue(new RepeatCommand(new ManualWristCommand(m_wristSubsystem,() -> -(m_operatorController.getRawAxis(3)) * .15)));
     new JoystickButton(m_operatorController.getHID(), 2)
-        .whileTrue(Commands.parallel(new SetWristCommand(WristPresets.FLAT, false),
-                                     new SetElevatorCommand(ElevatorPresets.HOME, false),
-                                     new SetBogeyCommand(BogeyPresets.HOME, false)));
+        .whileTrue(Commands.sequence(new SetWristCommand(WristPresets.HOME, false),
+                                     new SetElevatorCommand(ElevatorPresets.HOME, false)
+                                    ));
+
+    new JoystickButton(m_operatorController.getHID(), 1).whileTrue(new SetWristCommand(WristPresets.MID, false));
 
       
-    new JoystickButton(m_operatorController.getHID(), 4).whileTrue(Commands
-                                                                       .parallel(new SetElevatorCommand(ElevatorPresets.TRAY_HEIGHT,
-                                                                                                        false),
-                                                                                 new SpinCommand(m_intakeSubsystem)));
+    new JoystickButton(m_operatorController.getHID(), 4).whileTrue(new SetWristCommand(WristPresets.FLAT, false));
     //TODO: Is this a useful command now with the new intake?
     new JoystickButton(m_operatorController.getHID(), 3)
-        .whileTrue(Commands.parallel(new SetElevatorCommand(ElevatorPresets.SLIDE_HEIGHT, false),
-                                     new SetWristCommand(WristPresets.SLIDE_ANGLE, false),
-                                     new SpinCommand(m_intakeSubsystem)));
+        .whileTrue(new SetWristCommand(WristPresets.HOME, false));
 
-    new JoystickButton(m_operatorController.getHID(), 10).whileTrue(new SetBogeyCommand(BogeyPresets.HOME, false));
+    // new JoystickButton(m_operatorController.getHID(), 10).whileTrue(new SetBogeyCommand(BogeyPresets.HOME, false));
 
-    new JoystickButton(m_operatorController.getHID(), 9).whileTrue(new SetElevatorCommand(ElevatorPresets.HOME, false));
+    // new JoystickButton(m_operatorController.getHID(), 9).whileTrue(new SetElevatorCommand(ElevatorPresets.HOME, false));
 
     new Trigger(() -> Math.abs(m_operatorController.getRawAxis(5)) > 0.08)
         .whileTrue(new RepeatCommand(new ManualBogeyCommand(m_bogeySubsystem,
@@ -250,12 +307,41 @@ public class RobotContainer
         Commands.parallel(
           //new SetElevatorCommand(ElevatorPresets.LOW, false),
                           new SetBogeyCommand(BogeyPresets.LOW, false))); */
-    new POVButton(m_operatorController.getHID(), 270).whileTrue(
-          new SetElevatorCommand(ElevatorPresets.MID, false));
+    // new POVButton(m_operatorController.getHID(), 270).whileTrue(
+    //       new SetElevatorCommand(ElevatorPresets.MID, false));
 
-    new POVButton(m_operatorController.getHID(), 0).whileTrue(
-          //new SetElevatorCommand(ElevatorPresets.HIGH, false));
-          new SetBogeyCommand(BogeyPresets.HIGH, false));
+          // new POVButton(m_operatorController.getHID(), 0).whileTrue(
+          // new SetWristCommand(WristPresets.HOME, false) );
+    
+          // new POVButton(m_operatorController.getHID(), 270).whileTrue(
+          //   new SetWristCommand(WristPresets.MID, false) );
+
+          //   new POVButton(m_operatorController.getHID(), 180).whileTrue(
+          //     new SetWristCommand(WristPresets.FLAT, false) );
+
+          
+              //new POVButton(m_operatorController.getHID(), 0).whileTrue(
+               // Commands.sequence(new SetElevatorCommand(ElevatorPresets.HIGH, true),new SetWristCommand(WristPresets.MID, true) ));
+
+               new POVButton(m_operatorController.getHID(), 0).whileTrue(
+                  new SetElevatorCommand(ElevatorPresets.HIGH, false));
+          
+                new POVButton(m_operatorController.getHID(), 270).whileTrue(
+                  new SetElevatorCommand(ElevatorPresets.MID, false));
+
+                new POVButton(m_operatorController.getHID(), 180).whileTrue(
+                    new SetElevatorCommand(ElevatorPresets.LOW, false)) ;
+
+                new POVButton(m_operatorController.getHID(), 90).whileTrue(
+                    new SoftOutakeCommand(m_intakeSubsystem)) ;
+
+                  
+          
+    
+
+    // new POVButton(m_operatorController.getHID(), 0).whileTrue(
+    //       //new SetElevatorCommand(ElevatorPresets.HIGH, false));
+    //       new SetBogeyCommand(BogeyPresets.HIGH, false));
     //new POVButton(m_operatorController.getHID(), 0).whileTrue(Commands
                                                         //          .parallel(
                                                              //     new SetElevatorCommand(ElevatorPresets.HIGH,
@@ -277,7 +363,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return Autos.BasicBlueAutoMid1(drivebase, m_intakeSubsystem);
+    return Autos.BasicBlueAutoHigh1(drivebase, m_intakeSubsystem);
 
   }
 }

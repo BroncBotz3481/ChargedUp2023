@@ -69,8 +69,8 @@ public class SetElevatorCommand extends CommandBase
     {
       return Math.abs(ElevatorPolicy.rightEncoderPosition - ElevatorPolicy.setPosition) <
              ElevatorPolicy.acceptableTolerance;
-        } else {
+    } else {
             return false;
-        }
+    }
     }
 }

@@ -106,6 +106,11 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic()
   {
+    if(m_robotContainer.m_driverController.getHID().getRawButton(6)) {
+      RobotContainer.slowmult = .5;
+    } else {
+      RobotContainer.slowmult = 1;
+    }
   }
 
   @Override

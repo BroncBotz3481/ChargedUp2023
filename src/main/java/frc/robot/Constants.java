@@ -48,7 +48,7 @@ public final class Constants
 
     public static final double HIGH = -18;
     public static final double MID  = -10;
-    public static final double LOW = 0;
+    public static final double LOW = 2;
 
     public static final double TRAY_HEIGHT  = 125;
     public static final double SLIDE_HEIGHT = 75;
@@ -60,9 +60,9 @@ public final class Constants
   public static class WristPresets
   {
 
-    public static final double HOME        = 90;
-    public static final double FLAT        = 0;
-    public static final double MID         = 0.35;
+    public static final double HOME        = 0.44;
+    public static final double FLAT        = 0.24;
+    public static final double MID         = 0.36;
     public static final double SLIDE_ANGLE = 33.69;
   }
 

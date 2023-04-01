@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -89,7 +90,19 @@ public final class Autos
     //     // The drive subsystem. Used to properly set the requirements of path following
     //     // commands
     // );
-    return Commands.sequence(new FollowTrajectory(swerve, example1, true));
+    //!!!
+    // return Commands.sequence(new FollowTrajectory(swerve, example1, true));
+    return new SequentialCommandGroup(
+      new ParallelRaceGroup(
+        new SpitCommand(intake),
+        new WaitCommand(2)
+      ),
+      new ParallelRaceGroup(
+        new StopIntakeCommand(intake),
+        new WaitCommand(.5)
+      ),
+      Commands.sequence(new FollowTrajectory(swerve, example1, true)));
+      
   }
 
 //   public static CommandBase BasicBlueAutoMid1(SwerveSubsystem swerve, IntakeSubsystem intake)
